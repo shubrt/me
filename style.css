@@ -13,3 +13,8 @@ h1 {
 a {
   color: #0645ad;
 }
+
+footer {
+  margin-top: 60px;
+  font-size: 14px;
+}
