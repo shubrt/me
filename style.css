@@ -4,6 +4,14 @@ body {
   margin: 40px auto;
   padding: 0 20px;
   color: #222;
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  body {
+    margin: 20px auto;
+    font-size: 17px;
+  }
 }
 
 h1 {
