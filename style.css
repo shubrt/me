@@ -32,3 +32,13 @@ h2 {
   font-size: 20px;
   margin-top: 40px;
 }
+
+.cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.cols h1 {
+  grid-column: 1 / -1;
+}
