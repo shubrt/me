@@ -32,3 +32,14 @@ h2 {
   font-size: 20px;
   margin-top: 40px;
 }
+
+@media (prefers-color-scheme: light) {
+  body {
+    color: #222;
+    background: #fff;
+  }
+
+  a {
+    color: #0645ad;
+  }
+}
