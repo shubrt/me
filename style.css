@@ -1,10 +1,16 @@
+:root {
+  --fg: #e8e8e8;
+  --bg: #121212;
+  --link: #8ab4f8;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   max-width: 640px;
   margin: 40px auto;
   padding: 0 20px;
-  color: #e8e8e8;
-  background: #121212;
+  color: var(--fg);
+  background: var(--bg);
   line-height: 1.5;
 }
 
@@ -20,7 +26,7 @@ h1 {
 }
 
 a {
-  color: #8ab4f8;
+  color: var(--link);
 }
 
 footer {
@@ -34,12 +40,9 @@ h2 {
 }
 
 @media (prefers-color-scheme: light) {
-  body {
-    color: #222;
-    background: #fff;
-  }
-
-  a {
-    color: #0645ad;
+  :root {
+    --fg: #222;
+    --bg: #fff;
+    --link: #0645ad;
   }
 }
