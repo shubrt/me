@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+
+# no lockfile for a one person site, I keep switching package managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
