@@ -1,0 +1,11 @@
+[
+  {
+    "name": "shubrt.me",
+    "description": "This site. Astro and Tailwind, rebuilt from a static page.",
+    "url": "https://github.com/shubrt/me"
+  },
+  {
+    "name": "scratch",
+    "description": "A folder of throwaway experiments. Not on GitHub, and most of it should stay that way."
+  }
+]
