@@ -29,7 +29,9 @@ const { title, description = "Software developer from Mainz." } = Astro.props;
   </head>
   <body class="bg-white text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
     <Header />
-    <slot />
+    <main class="mx-auto max-w-2xl px-5 py-12">
+      <slot />
+    </main>
     <Footer />
   </body>
 </html>
