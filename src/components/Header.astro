@@ -9,8 +9,8 @@ const links = [
 
 <header class="mx-auto flex max-w-2xl items-center justify-between px-5 pt-8">
   <a href="/" class="font-semibold tracking-tight">shubrt</a>
-  <nav class="flex gap-4 text-sm text-neutral-400">
-    {links.map((l) => <a href={l.href} class="hover:text-neutral-100">{l.label}</a>)}
+  <nav class="flex items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
+    {links.map((l) => <a href={l.href} class="hover:text-neutral-900 dark:hover:text-neutral-100">{l.label}</a>)}
     <ThemeToggle />
   </nav>
 </header>
