@@ -1,0 +1,24 @@
+---
+import Base from "./Base.astro";
+
+interface Props {
+  title: string;
+  date: Date;
+  description?: string;
+  words: number;
+}
+
+const { title, date, description, words } = Astro.props;
+const minutes = Math.max(1, Math.round(words / 200));
+---
+
+<Base title={`${title} · Janis Schubert`} description={description}>
+  <article class="prose prose-neutral dark:prose-invert">
+    <h1 class="mb-2">{title}</h1>
+    <p class="mt-0 text-sm text-neutral-500">
+      <time datetime={date.toISOString()}>{date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" })}</time>
+      · {minutes} min read
+    </p>
+    <slot />
+  </article>
+</Base>
