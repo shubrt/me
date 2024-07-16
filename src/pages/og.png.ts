@@ -1,8 +1,7 @@
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
-import { readFile } from "node:fs/promises";
 
-const font = await readFile("./public/fonts/Inter-SemiBold.ttf");
+const font = await fetch("https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.18/files/inter-latin-600-normal.woff").then((r) => r.arrayBuffer());
 
 export async function GET() {
   const svg = await satori(
