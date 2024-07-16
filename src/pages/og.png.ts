@@ -8,8 +8,11 @@ export async function GET() {
     {
       type: "div",
       props: {
-        style: { display: "flex", width: "100%", height: "100%", background: "#0a0a0a", color: "#fafafa", padding: 80, fontSize: 64, fontFamily: "Inter" },
-        children: "Janis Schubert",
+        style: { display: "flex", flexDirection: "column", justifyContent: "flex-end", width: "100%", height: "100%", background: "#0a0a0a", color: "#fafafa", padding: 80, fontFamily: "Inter" },
+        children: [
+          { type: "div", props: { style: { fontSize: 72, fontWeight: 600 }, children: "Janis Schubert" } },
+          { type: "div", props: { style: { fontSize: 36, color: "#a3a3a3", marginTop: 16 }, children: "Software developer from Mainz" } },
+        ],
       },
     },
     { width: 1200, height: 630, fonts: [{ name: "Inter", data: font, weight: 600, style: "normal" }] },
