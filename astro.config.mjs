@@ -4,5 +4,6 @@ import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
   site: "https://shubrt.me",
+  trailingSlash: "never",
   integrations: [tailwind(), sitemap()],
 });
