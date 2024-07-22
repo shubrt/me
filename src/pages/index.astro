@@ -1,26 +1,13 @@
 ---
 import Base from "../layouts/Base.astro";
-import projects from "../data/projects.json";
 ---
 
 <Base title="Janis Schubert">
   <h1 class="text-3xl font-semibold tracking-tight">Janis Schubert</h1>
-  <p class="mt-4 text-lg leading-relaxed">
-    Software developer from Mainz. I build web things, mostly backend, sometimes frontend too.
-  </p>
+  <p class="mt-4 text-lg leading-relaxed">Software developer from Mainz. I build web things, mostly backend, sometimes frontend too.</p>
   <p class="mt-3 leading-relaxed text-neutral-600 dark:text-neutral-400">This page is deliberately small. I keep meaning to add more to it and then don't, which is probably fine.</p>
 
-  <h2 class="mt-12 text-xl font-semibold">Projects</h2>
-  <ul class="mt-3 space-y-3">
-    {
-      projects.map((p) => (
-        <li>
-          {p.url ? <a class="font-medium underline" href={p.url}>{p.name}</a> : <span class="font-medium">{p.name}</span>}
-          <p class="text-neutral-600 dark:text-neutral-400">{p.description}</p>
-        </li>
-      ))
-    }
-  </ul>
+  <p class="mt-8 leading-relaxed">A few things I work on are on the <a class="underline" href="/projects">projects page</a>.</p>
 
   <p class="mt-12">You can reach me at <a class="underline" href="mailto:shubrt.me@gmail.com">shubrt.me@gmail.com</a> or find me on <a class="underline" href="https://github.com/shubrt">GitHub</a>.</p>
 </Base>

@@ -1,0 +1,19 @@
+---
+import Base from "../layouts/Base.astro";
+import projects from "../data/projects.json";
+---
+
+<Base title="Projects · Janis Schubert">
+  <h1 class="text-3xl font-semibold tracking-tight">Projects</h1>
+  <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">Things I have built or am building. The list is short on purpose.</p>
+  <ul class="mt-8 space-y-3">
+    {
+      projects.map((p) => (
+        <li>
+          {p.url ? <a class="font-medium underline" href={p.url}>{p.name}</a> : <span class="font-medium">{p.name}</span>}
+          <p class="text-neutral-600 dark:text-neutral-400">{p.description}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Base>
