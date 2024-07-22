@@ -2,10 +2,12 @@
   {
     "name": "shubrt.me",
     "description": "This site. Astro and Tailwind, rebuilt from a static page.",
-    "url": "https://github.com/shubrt/me"
+    "url": "https://github.com/shubrt/me",
+    "language": "Astro"
   },
   {
     "name": "scratch",
-    "description": "A folder of throwaway experiments. Not on GitHub, and most of it should stay that way."
+    "description": "A folder of throwaway experiments. Not on GitHub, and most of it should stay that way.",
+    "language": "TypeScript"
   }
 ]
