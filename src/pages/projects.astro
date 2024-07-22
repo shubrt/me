@@ -2,12 +2,14 @@
 import Base from "../layouts/Base.astro";
 import projects from "../data/projects.json";
 import ProjectCard from "../components/ProjectCard.astro";
+
+const sorted = [...projects].sort((a, b) => b.updated.localeCompare(a.updated));
 ---
 
 <Base title="Projects · Janis Schubert">
   <h1 class="text-3xl font-semibold tracking-tight">Projects</h1>
   <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">Things I have built or am building. The list is short on purpose.</p>
   <ul class="mt-8 grid gap-3 sm:grid-cols-2">
-    {projects.map((p) => <ProjectCard {...p} />)}
+    {sorted.map((p) => <ProjectCard {...p} />)}
   </ul>
 </Base>
