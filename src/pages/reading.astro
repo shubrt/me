@@ -1,0 +1,20 @@
+---
+import Base from "../layouts/Base.astro";
+import books from "../data/reading.json";
+---
+
+<Base title="Reading · Janis Schubert">
+  <h1 class="text-3xl font-semibold tracking-tight">Reading</h1>
+  <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">Books I read or am reading. One line of opinion each, no ratings.</p>
+  <ul class="mt-8 space-y-4">
+    {
+      books.map((b) => (
+        <li>
+          <span class="font-medium">{b.title}</span>
+          <span class="text-neutral-500"> · {b.author}</span>
+          <p class="text-neutral-600 dark:text-neutral-400">{b.note}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Base>
