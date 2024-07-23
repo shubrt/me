@@ -8,6 +8,7 @@ const links = [
   { href: "/blog", label: "Blog" },
   { href: "/uses", label: "Uses" },
 ];
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
 <header class="mx-auto flex max-w-2xl items-center justify-between px-5 pt-8">
@@ -15,7 +16,7 @@ const links = [
   <nav class="flex items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
     {
       links.map((l) => (
-        <a href={l.href} class="hover:text-neutral-900 dark:hover:text-neutral-100">
+        <a href={l.href} class:list={["hover:text-neutral-900 dark:hover:text-neutral-100", { "text-neutral-900 dark:text-neutral-100": current === l.href }]}>
           {l.label}
         </a>
       ))
