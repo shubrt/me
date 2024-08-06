@@ -9,17 +9,9 @@
 </button>
 
 <script>
-  function bind() {
-    const button = document.getElementById("theme-toggle");
-    button?.addEventListener("click", () => {
-      const dark = document.documentElement.classList.toggle("dark");
-      localStorage.setItem("theme", dark ? "dark" : "light");
-    });
-  }
-  bind();
-  document.addEventListener("astro:after-swap", () => {
-    const dark = localStorage.getItem("theme") === "dark";
-    document.documentElement.classList.toggle("dark", dark);
-    bind();
+  const button = document.getElementById("theme-toggle");
+  button?.addEventListener("click", () => {
+    const dark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", dark ? "dark" : "light");
   });
 </script>

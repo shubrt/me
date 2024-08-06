@@ -1,7 +1,6 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -24,7 +23,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <ViewTransitions />
     <link rel="alternate" type="application/rss+xml" title="Janis Schubert" href="/rss.xml" />
     <script is:inline>
       const stored = localStorage.getItem("theme");
