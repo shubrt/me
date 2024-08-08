@@ -5,7 +5,11 @@ export default {
   darkMode: "class",
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Inter Variable", "system-ui", "sans-serif"],
+      },
+    },
   },
   plugins: [typography],
 };
