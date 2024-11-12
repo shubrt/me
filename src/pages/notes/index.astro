@@ -1,8 +1,23 @@
 ---
+import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
+
+const notes = await getCollection("notes");
 ---
 
 <Base title="Notes · Janis Schubert">
   <h1 class="text-2xl font-semibold tracking-tight">Notes</h1>
-  <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">Short notes on things I learned. Smaller than blog posts, which is the point. Nothing here yet.</p>
+  <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">Short notes on things I learned. Smaller than blog posts, which is the point.</p>
+  <ul class="mt-8 space-y-3">
+    {
+      notes.map((n) => (
+        <li>
+          <a class="font-medium underline" href={`/notes/${n.slug}`}>{n.data.title}</a>
+          <time class="ml-2 text-sm text-neutral-500" datetime={n.data.date.toISOString()}>
+            {n.data.date.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" })}
+          </time>
+        </li>
+      ))
+    }
+  </ul>
 </Base>
