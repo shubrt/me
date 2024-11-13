@@ -13,6 +13,7 @@ const notes = await getCollection("notes");
       notes.map((n) => (
         <li>
           <a class="font-medium underline" href={`/notes/${n.slug}`}>{n.data.title}</a>
+          <span class="ml-2 text-xs text-neutral-500">{n.data.tags.join(", ")}</span>
           <time class="ml-2 text-sm text-neutral-500" datetime={n.data.date.toISOString()}>
             {n.data.date.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" })}
           </time>
