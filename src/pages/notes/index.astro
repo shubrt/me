@@ -8,11 +8,11 @@ const notes = await getCollection("notes");
 <Base title="Notes · Janis Schubert">
   <h1 class="text-2xl font-semibold tracking-tight">Notes</h1>
   <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">Short notes on things I learned. Smaller than blog posts, which is the point.</p>
-  <ul class="mt-8 space-y-3">
+  <ul class="mt-8 divide-y divide-neutral-200 dark:divide-neutral-800">
     {
       notes.map((n) => (
-        <li>
-          <a class="font-medium underline" href={`/notes/${n.slug}`}>{n.data.title}</a>
+        <li class="py-2">
+          <a class="font-medium hover:underline" href={`/notes/${n.slug}`}>{n.data.title}</a>
           <span class="ml-2 text-xs text-neutral-500">{n.data.tags.join(", ")}</span>
           <time class="ml-2 text-sm text-neutral-500" datetime={n.data.date.toISOString()}>
             {n.data.date.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" })}
