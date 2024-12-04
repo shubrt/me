@@ -11,10 +11,12 @@ const notes = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf(
   <ul class="mt-8 divide-y divide-neutral-200 dark:divide-neutral-800">
     {
       notes.map((n) => (
-        <li class="py-2">
-          <a class="font-medium hover:underline" href={`/notes/${n.slug}`}>{n.data.title}</a>
-          <span class="ml-2 text-xs text-neutral-500">{n.data.tags.join(", ")}</span>
-          <time class="ml-2 text-sm text-neutral-500" datetime={n.data.date.toISOString()}>
+        <li class="flex items-baseline justify-between gap-4 py-2">
+          <div>
+            <a class="font-medium hover:underline" href={`/notes/${n.id}`}>{n.data.title}</a>
+            <span class="ml-2 text-xs text-neutral-500">{n.data.tags.join(", ")}</span>
+          </div>
+          <time class="shrink-0 text-sm text-neutral-500" datetime={n.data.date.toISOString()}>
             {n.data.date.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" })}
           </time>
         </li>

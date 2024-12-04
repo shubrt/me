@@ -5,7 +5,7 @@ import Prose from "../../components/Prose.astro";
 
 export async function getStaticPaths() {
   const notes = await getCollection("notes");
-  return notes.map((note) => ({ params: { slug: note.slug }, props: { note } }));
+  return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
 }
 
 const { note } = Astro.props;
@@ -17,6 +17,7 @@ const { Content } = await render(note);
     <h1 class="text-2xl font-semibold tracking-tight">{note.data.title}</h1>
     <p class="mt-2 text-sm text-neutral-500">
       <time datetime={note.data.date.toISOString()}>{note.data.date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" })}</time>
+      {note.data.tags.length > 0 && <span> · {note.data.tags.join(", ")}</span>}
     </p>
     <Prose class="mt-6">
       <Content />
