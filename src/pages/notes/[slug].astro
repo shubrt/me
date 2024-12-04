@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Prose from "../../components/Prose.astro";
 
@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 }
 
 const { note } = Astro.props;
-const { Content } = await note.render();
+const { Content } = await render(note);
 ---
 
 <Base title={`${note.data.title} · Notes`}>
