@@ -7,6 +7,8 @@ npm install
 npm run dev
 ```
 
+`npm run lint` runs Biome, `npm run format` fixes what it can.
+
 Deployed with Cloudflare Pages on every push to `main`. Build command is `npm run build`, output is `dist`.
 
 ## Notes
