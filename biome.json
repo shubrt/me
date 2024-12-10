@@ -1,0 +1,10 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "organizeImports": { "enabled": true },
+  "formatter": { "enabled": true, "indentStyle": "space", "lineWidth": 120 },
+  "linter": {
+    "enabled": true,
+    "rules": { "recommended": true }
+  },
+  "files": { "ignore": ["dist", ".astro", "node_modules"] }
+}
