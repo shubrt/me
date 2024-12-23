@@ -23,6 +23,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === "de" ? "de_DE" : "en_GB"} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script is:inline>
       const stored = localStorage.getItem("theme");
