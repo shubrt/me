@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import Prose from "../../components/Prose.astro";
+import { formatDate } from "../../lib/date";
 
 export async function getStaticPaths() {
   const notes = await getCollection("notes");
@@ -16,7 +17,7 @@ const { Content } = await render(note);
   <article>
     <h1 class="text-2xl font-semibold tracking-tight">{note.data.title}</h1>
     <p class="mt-2 text-sm text-neutral-500">
-      <time datetime={note.data.date.toISOString()}>{note.data.date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" })}</time>
+      <time datetime={note.data.date.toISOString()}>{formatDate(note.data.date, "long")}</time>
       {note.data.tags.length > 0 && <span> · {note.data.tags.join(", ")}</span>}
     </p>
     <Prose class="mt-6">

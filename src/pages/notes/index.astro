@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Base from "../../layouts/Base.astro";
+import { formatDate } from "../../lib/date";
 
 const notes = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
@@ -16,9 +17,7 @@ const notes = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf(
             <a class="font-medium hover:underline" href={`/notes/${n.id}`}>{n.data.title}</a>
             <span class="ml-2 text-xs text-neutral-500">{n.data.tags.join(", ")}</span>
           </div>
-          <time class="shrink-0 text-sm text-neutral-500" datetime={n.data.date.toISOString()}>
-            {n.data.date.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" })}
-          </time>
+          <time class="shrink-0 text-sm text-neutral-500" datetime={n.data.date.toISOString()}>{formatDate(n.data.date)}</time>
         </li>
       ))
     }

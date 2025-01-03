@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import { formatDate } from "../lib/date";
 
 const updated = new Date("2024-08-29");
 ---
@@ -7,7 +8,7 @@ const updated = new Date("2024-08-29");
 <Base title="Now · Janis Schubert">
   <h1 class="text-3xl font-semibold tracking-tight">Now</h1>
   <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">What I am up to at the moment. Inspired by the now page movement, updated when I remember.</p>
-  <p class="mt-2 text-sm text-neutral-500">Last updated <time datetime={updated.toISOString()}>{updated.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" })}</time></p>
+  <p class="mt-2 text-sm text-neutral-500">Last updated <time datetime={updated.toISOString()}>{formatDate(updated, "long")}</time></p>
 
   <h2 class="mt-10 text-xl font-semibold">Work</h2>
   <p class="mt-3 leading-relaxed">Backend work in TypeScript, a lot of it around integrating systems that were never meant to talk to each other. I have received more education in PDF generation this year than I ever asked for.</p>
