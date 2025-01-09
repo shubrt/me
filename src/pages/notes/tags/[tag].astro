@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../../layouts/Base.astro";
+import { formatDate } from "../../../lib/date";
+
+export async function getStaticPaths() {
+  const notes = await getCollection("notes");
+  const tags = new Set(notes.flatMap((n) => n.data.tags));
+  return [...tags].map((tag) => ({ params: { tag }, props: { tag, notes: notes.filter((n) => n.data.tags.includes(tag)) } }));
+}
+
+const { tag, notes } = Astro.props;
+const sorted = notes.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Base title={`Notes tagged ${tag} · Janis Schubert`}>
+  <h1 class="text-2xl font-semibold tracking-tight">Notes tagged “{tag}”</h1>
+  <ul class="mt-8 divide-y divide-neutral-200 dark:divide-neutral-800">
+    {
+      sorted.map((n) => (
+        <li class="flex items-baseline justify-between gap-4 py-2">
+          <a class="font-medium hover:underline" href={`/notes/${n.id}`}>{n.data.title}</a>
+          <time class="shrink-0 text-sm text-neutral-500" datetime={n.data.date.toISOString()}>{formatDate(n.data.date)}</time>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="mt-8"><a class="underline" href="/notes">All notes</a></p>
+</Base>

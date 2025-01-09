@@ -15,7 +15,11 @@ const notes = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf(
         <li class="flex items-baseline justify-between gap-4 py-2">
           <div>
             <a class="font-medium hover:underline" href={`/notes/${n.id}`}>{n.data.title}</a>
-            <span class="ml-2 text-xs text-neutral-500">{n.data.tags.join(", ")}</span>
+            <span class="ml-2 text-xs text-neutral-500">
+              {n.data.tags.map((t) => (
+                <a class="hover:underline" href={`/notes/tags/${t}`}>{t}</a>
+              ))}
+            </span>
           </div>
           <time class="shrink-0 text-sm text-neutral-500" datetime={n.data.date.toISOString()}>{formatDate(n.data.date)}</time>
         </li>
