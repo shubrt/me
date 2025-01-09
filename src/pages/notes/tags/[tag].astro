@@ -5,8 +5,8 @@ import { formatDate } from "../../../lib/date";
 
 export async function getStaticPaths() {
   const notes = await getCollection("notes");
-  const tags = new Set(notes.flatMap((n) => n.data.tags));
-  return [...tags].map((tag) => ({ params: { tag }, props: { tag, notes: notes.filter((n) => n.data.tags.includes(tag)) } }));
+  const tags = new Set(notes.flatMap((n) => n.data.tags.map((t) => t.toLowerCase())));
+  return [...tags].map((tag) => ({ params: { tag }, props: { tag, notes: notes.filter((n) => n.data.tags.some((t) => t.toLowerCase() === tag)) } }));
 }
 
 const { tag, notes } = Astro.props;
