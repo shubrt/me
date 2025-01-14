@@ -6,6 +6,6 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<div class:list={["prose prose-neutral max-w-[65ch] dark:prose-invert", className]}>
+<div class:list={["prose prose-neutral max-w-[65ch] prose-code:rounded prose-code:bg-neutral-100 prose-code:px-1 prose-code:font-normal prose-code:before:content-none prose-code:after:content-none dark:prose-invert dark:prose-code:bg-neutral-800", className]}>
   <slot />
 </div>
