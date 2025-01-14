@@ -6,4 +6,7 @@ export default defineConfig({
   site: "https://shubrt.me",
   trailingSlash: "never",
   integrations: [tailwind(), sitemap()],
+  markdown: {
+    shikiConfig: { theme: "github-dark-default" },
+  },
 });
