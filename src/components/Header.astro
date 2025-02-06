@@ -10,8 +10,6 @@ const links = [
   { href: "/uses", label: "Uses" },
 ];
 const current = Astro.url.pathname.replace(/\/$/, "") || "/";
-const isGerman = current.startsWith("/de");
-const switchHref = isGerman ? current.replace(/^\/de/, "") || "/" : `/de${current === "/" ? "" : current}`;
 ---
 
 <header class="mx-auto flex max-w-2xl items-center justify-between px-5 pt-5 sm:pt-8">
@@ -24,7 +22,6 @@ const switchHref = isGerman ? current.replace(/^\/de/, "") || "/" : `/de${curren
         </a>
       ))
     }
-    <a href={switchHref} hreflang={isGerman ? "en" : "de"} class="hover:text-neutral-900 dark:hover:text-neutral-100">{isGerman ? "EN" : "DE"}</a>
     <ThemeToggle />
   </nav>
 </header>
