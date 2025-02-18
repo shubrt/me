@@ -19,5 +19,19 @@
     "year": 2024,
     "finished": true,
     "note": "Reread after ten years. Half of it is obvious now, which I think is the point."
+  },
+  {
+    "title": "Tidy First?",
+    "author": "Kent Beck",
+    "year": 2024,
+    "finished": true,
+    "note": "Tiny book about tiny refactorings. The economics chapter is the part I did not expect."
+  },
+  {
+    "title": "Grokking Simplicity",
+    "author": "Eric Normand",
+    "year": 2025,
+    "finished": false,
+    "note": "Functional thinking without the category theory. Slower than I hoped, clearer than most."
   }
 ]
