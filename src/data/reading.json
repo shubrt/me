@@ -2,16 +2,22 @@
   {
     "title": "A Philosophy of Software Design",
     "author": "John Ousterhout",
+    "year": 2024,
+    "finished": true,
     "note": "Short, opinionated, and the chapter on deep modules changed how I split code."
   },
   {
     "title": "Designing Data-Intensive Applications",
     "author": "Martin Kleppmann",
+    "year": 2024,
+    "finished": false,
     "note": "Reading it slowly. Every chapter explains a thing I had only used by copying config."
   },
   {
     "title": "The Pragmatic Programmer",
     "author": "Thomas and Hunt",
+    "year": 2024,
+    "finished": true,
     "note": "Reread after ten years. Half of it is obvious now, which I think is the point."
   }
 ]
