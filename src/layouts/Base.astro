@@ -28,6 +28,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={lang === "de" ? "de_DE" : "en_GB"} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="Notes · Janis Schubert" href="/notes/rss.xml" />
     <script is:inline>
       const stored = localStorage.getItem("theme");
       const dark = stored ? stored === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
