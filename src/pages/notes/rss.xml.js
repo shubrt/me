@@ -11,6 +11,7 @@ export async function GET(context) {
       title: note.data.title,
       pubDate: note.data.date,
       link: `/notes/${note.id}`,
+      description: note.body?.split(/\n\s*\n/)[0] ?? "",
     })),
   });
 }
