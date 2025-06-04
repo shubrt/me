@@ -37,8 +37,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body class="bg-white font-mono text-neutral-900 antialiased dark:bg-[#0a0a0a] dark:text-neutral-100">
     <Header />
-    <main class="mx-auto max-w-2xl px-5 py-12">
-      <slot />
+    <main class="mx-auto max-w-2xl px-5">
+      <div class="border border-neutral-200 px-5 py-10 dark:border-neutral-800">
+        <slot />
+      </div>
     </main>
     <Footer />
   </body>

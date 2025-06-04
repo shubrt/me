@@ -2,25 +2,32 @@
 import ThemeToggle from "./ThemeToggle.astro";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
-  { href: "/now", label: "Now" },
-  { href: "/notes", label: "Notes" },
-  { href: "/uses", label: "Uses" },
+  { href: "/", label: "home" },
+  { href: "/projects", label: "projects" },
+  { href: "/now", label: "now" },
+  { href: "/notes", label: "notes" },
+  { href: "/uses", label: "uses" },
 ];
 const current = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
-<header class="mx-auto flex max-w-2xl items-center justify-between px-5 pt-5 sm:pt-8">
-  <a href="/" class="font-semibold tracking-tight">shubrt</a>
-  <nav class="flex items-center gap-3 text-sm sm:gap-4 text-neutral-600 dark:text-neutral-300">
+<header class="mx-auto max-w-2xl px-5 pt-5 sm:pt-8">
+  <div class="flex items-center justify-between rounded-t-lg border border-b-0 border-neutral-200 bg-neutral-100 px-3 py-2 dark:border-neutral-800 dark:bg-neutral-900">
+    <div class="flex gap-1.5" aria-hidden="true">
+      <span class="h-3 w-3 rounded-full bg-neutral-300 dark:bg-neutral-700"></span>
+      <span class="h-3 w-3 rounded-full bg-neutral-300 dark:bg-neutral-700"></span>
+      <span class="h-3 w-3 rounded-full bg-neutral-300 dark:bg-neutral-700"></span>
+    </div>
+    <span class="text-xs text-neutral-500">shubrt — zsh</span>
+    <ThemeToggle />
+  </div>
+  <nav class="flex flex-wrap gap-3 border border-b-0 border-neutral-200 px-3 py-2 text-sm text-neutral-600 dark:border-neutral-800 dark:text-neutral-300 sm:gap-4">
     {
       links.map((l) => (
-        <a href={l.href} class:list={["hover:text-neutral-900 dark:hover:text-neutral-100", { "text-neutral-900 dark:text-neutral-100": current === l.href }]}>
+        <a href={l.href} class:list={["hover:text-neutral-900 dark:hover:text-neutral-100", { "text-neutral-900 underline dark:text-neutral-100": current === l.href }]}>
           {l.label}
         </a>
       ))
     }
-    <ThemeToggle />
   </nav>
 </header>
