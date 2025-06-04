@@ -20,7 +20,8 @@ import TerminalLine from "../components/TerminalLine.astro";
 
 <script>
   const target = document.querySelector<HTMLElement>("[data-typed]");
-  if (target) {
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (target && !reduced) {
     const text = target.textContent ?? "";
     target.textContent = "";
     let i = 0;
