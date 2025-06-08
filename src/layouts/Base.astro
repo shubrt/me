@@ -51,6 +51,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   let index = -1;
   document.addEventListener("keydown", (e) => {
     if (e.key !== "j" && e.key !== "k") return;
+    if (!(e.target instanceof HTMLElement) || ["INPUT", "TEXTAREA"].includes(e.target.tagName)) return;
     index = e.key === "j" ? Math.min(index + 1, sections.length - 1) : Math.max(index - 1, 0);
     sections[index]?.scrollIntoView({ behavior: "smooth", block: "start" });
     sections[index]?.focus();
