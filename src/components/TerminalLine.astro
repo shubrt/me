@@ -6,7 +6,7 @@ interface Props {
 const { cmd } = Astro.props;
 ---
 
-<div class="mt-8">
+<div class="mt-8 outline-none" data-section tabindex="-1">
   <p class="text-sm text-neutral-500"><span class="select-none" aria-hidden="true">$ </span>{cmd}</p>
   <div class="mt-2">
     <slot />

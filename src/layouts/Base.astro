@@ -45,3 +45,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <Footer />
   </body>
 </html>
+
+<script>
+  const sections = [...document.querySelectorAll<HTMLElement>("main [data-section]")];
+  let index = -1;
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "j" && e.key !== "k") return;
+    index = e.key === "j" ? Math.min(index + 1, sections.length - 1) : Math.max(index - 1, 0);
+    sections[index]?.scrollIntoView({ behavior: "smooth", block: "start" });
+    sections[index]?.focus();
+  });
+</script>
