@@ -1,21 +1,26 @@
 ---
 import Base from "../layouts/Base.astro";
+import TerminalLine from "../components/TerminalLine.astro";
 ---
 
 <Base title="Uses · Janis Schubert">
-  <h1 class="text-2xl font-semibold tracking-tight">Uses</h1>
-  <p class="mt-4 leading-relaxed">Things I work with. Mostly so I remember what I changed and why.</p>
+  <TerminalLine cmd="cat uses.md">
+    <h1 class="text-2xl font-semibold tracking-tight">Uses</h1>
+    <p class="mt-3 leading-relaxed text-neutral-600 dark:text-neutral-400">Things I work with. Mostly so I remember what I changed and why.</p>
+  </TerminalLine>
 
-  <h2 class="mt-10 text-xl font-semibold">Hardware</h2>
-  <ul class="mt-3 list-disc pl-5">
-    <li>MacBook Pro 14", the fan almost never comes on</li>
-    <li>One external 27" display, I tried two and kept turning my head</li>
-  </ul>
+  <TerminalLine cmd="ls hardware/">
+    <ul class="list-disc pl-5">
+      <li>MacBook Pro 14", the fan almost never comes on</li>
+      <li>One external 27" display, I tried two and kept turning my head</li>
+    </ul>
+  </TerminalLine>
 
-  <h2 class="mt-10 text-xl font-semibold">Software</h2>
-  <ul class="mt-3 list-disc pl-5">
-    <li>VS Code with the default dark theme, I stopped changing themes every month</li>
-    <li>iTerm2 with zsh, no framework, a handful of aliases</li>
-    <li>Firefox for browsing, Chrome for devtools</li>
-  </ul>
+  <TerminalLine cmd="ls software/">
+    <ul class="list-disc pl-5">
+      <li>VS Code with the default dark theme, I stopped changing themes every month</li>
+      <li>iTerm2 with zsh, no framework, a handful of aliases</li>
+      <li>Firefox for browsing, Chrome for devtools</li>
+    </ul>
+  </TerminalLine>
 </Base>
