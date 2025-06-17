@@ -9,7 +9,7 @@ const notes = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf(
 <Base title="Notes · Janis Schubert">
   <h1 class="text-2xl font-semibold tracking-tight">Notes</h1>
   <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">Short notes on things I learned. Smaller than blog posts, which is the point.</p>
-  <input id="notes-search" type="search" placeholder="filter notes" aria-label="Filter notes" class="mt-6 w-full rounded border border-neutral-300 bg-transparent px-3 py-1.5 text-sm dark:border-neutral-700" />
+  <input id="notes-search" type="search" placeholder="grep notes" aria-label="Filter notes" class="mt-6 w-full border-0 border-b border-neutral-300 bg-transparent px-0 py-1.5 text-sm focus:border-neutral-900 focus:outline-none dark:border-neutral-700 dark:focus:border-neutral-100" />
   <ul class="mt-4 divide-y divide-neutral-200 dark:divide-neutral-800">
     {
       notes.map((n) => (
