@@ -9,10 +9,11 @@ const notes = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf(
 <Base title="Notes · Janis Schubert">
   <h1 class="text-2xl font-semibold tracking-tight">Notes</h1>
   <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">Short notes on things I learned. Smaller than blog posts, which is the point.</p>
-  <ul class="mt-8 divide-y divide-neutral-200 dark:divide-neutral-800">
+  <input id="notes-search" type="search" placeholder="filter notes" aria-label="Filter notes" class="mt-6 w-full rounded border border-neutral-300 bg-transparent px-3 py-1.5 text-sm dark:border-neutral-700" />
+  <ul class="mt-4 divide-y divide-neutral-200 dark:divide-neutral-800">
     {
       notes.map((n) => (
-        <li class="flex items-baseline justify-between gap-4 py-2">
+        <li class="flex items-baseline justify-between gap-4 py-2" data-note={n.data.title.toLowerCase()}>
           <div>
             <a class="font-medium hover:underline" href={`/notes/${n.id}`}>{n.data.title}</a>
             <span class="ml-2 text-xs text-neutral-500">
@@ -27,3 +28,15 @@ const notes = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf(
     }
   </ul>
 </Base>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>("#notes-search");
+  const items = [...document.querySelectorAll<HTMLElement>("[data-note]")];
+  input?.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    for (const li of items) {
+      const hay = li.dataset.note ?? "";
+      li.hidden = q.length > 0 && !hay.includes(q);
+    }
+  });
+</script>
