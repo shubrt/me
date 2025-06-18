@@ -25,7 +25,7 @@ const pushed = info ? new Date(info.pushedAt).toLocaleDateString("en-GB", { year
   <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">{description}</p>
   <div class="mt-3 flex items-center gap-3 text-xs">
     <span class:list={["inline-block rounded px-2 py-0.5", badge]}>{language}</span>
-    {info && <span class="text-neutral-500">★ {info.stars}</span>}
+    {info && info.stars > 0 && <span class="text-neutral-500">★ {info.stars}</span>}
     {pushed && <span class="text-neutral-500">pushed {pushed}</span>}
   </div>
 </li>
