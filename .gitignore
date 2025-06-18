@@ -2,6 +2,7 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+.env
 
 # no lockfile for a one person site, I keep switching package managers
 package-lock.json

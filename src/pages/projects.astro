@@ -1,9 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
-import projects from "../data/projects.json";
 import ProjectCard from "../components/ProjectCard.astro";
+import projects from "../data/projects.json";
+import { fetchRepo } from "../lib/github";
 
-const sorted = [...projects].sort((a, b) => b.updated.localeCompare(a.updated));
+const enriched = await Promise.all(
+  projects.map(async (p) => {
+    const match = p.url?.match(/github\.com\/([^/]+\/[^/]+)/);
+    const info = match ? await fetchRepo(match[1]) : null;
+    return { ...p, info };
+  }),
+);
+const sorted = enriched.sort((a, b) => (b.info?.pushedAt ?? b.updated).localeCompare(a.info?.pushedAt ?? a.updated));
 ---
 
 <Base title="Projects · Janis Schubert">
