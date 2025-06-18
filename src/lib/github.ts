@@ -20,7 +20,10 @@ export async function fetchRepo(fullName: string): Promise<RepoInfo | null> {
   if (import.meta.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${import.meta.env.GITHUB_TOKEN}`;
   try {
     const res = await fetch(`https://api.github.com/repos/${fullName}`, { headers });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.warn(`github: ${fullName} responded ${res.status}, using local data`);
+      return null;
+    }
     return mapRepo((await res.json()) as ApiRepo);
   } catch {
     return null;
