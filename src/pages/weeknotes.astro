@@ -13,7 +13,7 @@ const rendered = await Promise.all(entries.map(async (e) => ({ entry: e, Content
   <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">One short entry per week. What happened, what I learned, what I dropped.</p>
   {
     rendered.map(({ entry, Content }) => (
-      <article class="mt-10">
+      <article class="mt-10 border-t border-neutral-200 pt-6 dark:border-neutral-800">
         <h2 class="text-lg font-semibold">{entry.data.week}</h2>
         <p class="text-sm text-neutral-500">{formatDate(entry.data.date, "long")}</p>
         <Prose class="mt-3">
