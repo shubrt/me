@@ -4,7 +4,7 @@ import Base from "../layouts/Base.astro";
 import Prose from "../components/Prose.astro";
 import { formatDate } from "../lib/date";
 
-const entries = (await getCollection("weeknotes")).sort((a, b) => b.data.week.localeCompare(a.data.week));
+const entries = (await getCollection("weeknotes")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const rendered = await Promise.all(entries.map(async (e) => ({ entry: e, Content: (await render(e)).Content })));
 ---
 
