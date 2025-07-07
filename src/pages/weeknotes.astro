@@ -1,0 +1,25 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../layouts/Base.astro";
+import Prose from "../components/Prose.astro";
+import { formatDate } from "../lib/date";
+
+const entries = (await getCollection("weeknotes")).sort((a, b) => b.data.week.localeCompare(a.data.week));
+const rendered = await Promise.all(entries.map(async (e) => ({ entry: e, Content: (await render(e)).Content })));
+---
+
+<Base title="Weeknotes · Janis Schubert">
+  <h1 class="text-2xl font-semibold tracking-tight">Weeknotes</h1>
+  <p class="mt-4 leading-relaxed text-neutral-600 dark:text-neutral-400">One short entry per week. What happened, what I learned, what I dropped.</p>
+  {
+    rendered.map(({ entry, Content }) => (
+      <article class="mt-10">
+        <h2 class="text-lg font-semibold">{entry.data.week}</h2>
+        <p class="text-sm text-neutral-500">{formatDate(entry.data.date, "long")}</p>
+        <Prose class="mt-3">
+          <Content />
+        </Prose>
+      </article>
+    ))
+  }
+</Base>
