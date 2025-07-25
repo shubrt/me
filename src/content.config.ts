@@ -10,12 +10,4 @@ const notes = defineCollection({
   }),
 });
 
-const weeknotes = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/weeknotes" }),
-  schema: z.object({
-    week: z.string(),
-    date: z.date(),
-  }),
-});
-
-export const collections = { notes, weeknotes };
+export const collections = { notes };
