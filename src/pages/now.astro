@@ -2,7 +2,7 @@
 import Base from "../layouts/Base.astro";
 import { formatDate } from "../lib/date";
 
-const updated = new Date("2025-03-20");
+const updated = new Date("2025-07-25");
 ---
 
 <Base title="Now · Janis Schubert">
@@ -11,11 +11,11 @@ const updated = new Date("2025-03-20");
   <p class="mt-2 text-sm text-neutral-500">Last updated <time datetime={updated.toISOString()}>{formatDate(updated, "long")}</time></p>
 
   <h2 class="mt-10 text-xl font-semibold">Work</h2>
-  <p class="mt-3 leading-relaxed">Still backend in TypeScript. This year it is less glue code and more shaping how services talk to each other, which is the part I enjoy.</p>
+  <p class="mt-3 leading-relaxed">Backend in TypeScript, and more time in design discussions than in the editor lately. Learning to be fine with that.</p>
 
   <h2 class="mt-10 text-xl font-semibold">Learning</h2>
-  <p class="mt-3 leading-relaxed">Writing short notes here instead of long posts nowhere. Tailwind 4 taught me more CSS than Tailwind 3 ever did, oddly.</p>
+  <p class="mt-3 leading-relaxed">Making this site look like a terminal, and slowly finding out which parts of that are decoration. Notes are the one thing on here that keeps working.</p>
 
   <h2 class="mt-10 text-xl font-semibold">Not doing</h2>
-  <p class="mt-3 leading-relaxed">Keeping a reading list. Removed it today, it had become a list of guilt.</p>
+  <p class="mt-3 leading-relaxed">Weeknotes. Removed today after two entries. I notice a pattern.</p>
 </Base>
