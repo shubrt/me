@@ -9,6 +9,8 @@ type Cache = Record<string, RepoInfo>;
  */
 export async function repoInfo(fullName: string): Promise<RepoInfo | null> {
   const cached = (cache as Cache)[fullName] ?? null;
+  // Without a token the unauthenticated limit is 60 requests an hour, which CI shares with everyone.
   if (!import.meta.env.GITHUB_TOKEN) return cached;
-  return (await fetchRepo(fullName)) ?? cached;
+  const live = await fetchRepo(fullName);
+  return live ?? cached;
 }
