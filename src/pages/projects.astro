@@ -2,12 +2,12 @@
 import Base from "../layouts/Base.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import projects from "../data/projects.json";
-import { fetchRepo } from "../lib/github";
+import { repoInfo } from "../lib/repos";
 
 const enriched = await Promise.all(
   projects.map(async (p) => {
     const match = p.url?.match(/github\.com\/([^/]+\/[^/]+)/);
-    const info = match ? await fetchRepo(match[1]) : null;
+    const info = match ? await repoInfo(match[1]) : null;
     return { ...p, info };
   }),
 );
