@@ -6,7 +6,7 @@ import TerminalLine from "../components/TerminalLine.astro";
 <Base title="Janis Schubert">
   <TerminalLine cmd="whoami">
     <h1 class="text-2xl font-semibold tracking-tight">Janis Schubert</h1>
-    <p class="mt-3 leading-relaxed"><span data-typed>Software developer from Mainz. I build web things, mostly backend, sometimes frontend too.</span><span class="cursor" aria-hidden="true"></span></p>
+    <p class="mt-3 leading-relaxed">Software developer from Mainz. I build web things, mostly backend, sometimes frontend too.<span class="cursor" aria-hidden="true"></span></p>
   </TerminalLine>
 
   <TerminalLine cmd="ls projects">
@@ -17,18 +17,3 @@ import TerminalLine from "../components/TerminalLine.astro";
     <p>You can reach me at <a class="underline" href="mailto:shubrt.me@gmail.com">shubrt.me@gmail.com</a> or find me on <a class="underline" href="https://github.com/shubrt">GitHub</a>.</p>
   </TerminalLine>
 </Base>
-
-<script>
-  const target = document.querySelector<HTMLElement>("[data-typed]");
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (target && !reduced) {
-    const text = target.textContent ?? "";
-    target.textContent = "";
-    let i = 0;
-    const tick = () => {
-      target.textContent = text.slice(0, ++i);
-      if (i < text.length) setTimeout(tick, 18);
-    };
-    tick();
-  }
-</script>
