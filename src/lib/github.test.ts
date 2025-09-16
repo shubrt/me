@@ -9,4 +9,8 @@ describe("mapRepo", () => {
       language: "Astro",
     });
   });
+
+  it("passes a null language through instead of inventing one", () => {
+    expect(mapRepo({ stargazers_count: 0, pushed_at: "2025-09-16T18:00:00Z", language: null }).language).toBeNull();
+  });
 });
