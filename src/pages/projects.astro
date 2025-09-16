@@ -11,7 +11,8 @@ const enriched = await Promise.all(
     return { ...p, info };
   }),
 );
-const sorted = enriched.sort((a, b) => (b.info?.pushedAt ?? b.updated).localeCompare(a.info?.pushedAt ?? a.updated));
+const pushed = (p: (typeof enriched)[number]) => p.info?.pushedAt ?? `${p.updated}T00:00:00Z`;
+const sorted = enriched.sort((a, b) => pushed(b).localeCompare(pushed(a)));
 ---
 
 <Base title="Projects · Janis Schubert">
