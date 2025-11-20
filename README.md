@@ -1,10 +1,10 @@
 # shubrt.me
 
-My personal page, now built with [Astro](https://astro.build).
+My personal page. A pnpm workspace: the Astro site lives in `apps/site`, shared code goes into `packages/*`.
 
 ```sh
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 `npm run lint` runs Biome, `npm run format` fixes what it can.
