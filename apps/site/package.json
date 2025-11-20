@@ -7,15 +7,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "format": "biome check --write .",
-    "lint": "biome check .",
     "test": "vitest run",
     "refresh-repos": "node scripts/refresh-repos.ts"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
-    "@biomejs/biome": "^2.0.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.0",
     "astro": "^5.15.0",
