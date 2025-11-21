@@ -4,8 +4,8 @@ dist/
 .DS_Store
 .env
 
-# no lockfile for a one person site, I keep switching package managers
-package-lock.json
-yarn.lock
+# still no lockfile, see docs/monorepo.md
 pnpm-lock.yaml
+package-lock.json
+bun.lock
 bun.lockb
