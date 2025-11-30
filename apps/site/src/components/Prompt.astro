@@ -1,0 +1,40 @@
+---
+// Command prompt on the start page. The logic lives in @shubrt/term, this file only renders.
+---
+
+<div class="mt-8">
+  <div id="term-out" class="space-y-0.5 text-sm" aria-live="polite"></div>
+  <form id="term-form" class="mt-2 flex items-center gap-2">
+    <label for="term-in" class="select-none text-neutral-500">$</label>
+    <input id="term-in" type="text" autocomplete="off" spellcheck="false" class="w-full bg-transparent outline-none" placeholder="type help" />
+  </form>
+</div>
+
+<script>
+  import { Registry, help, whoami, parse } from "@shubrt/term";
+
+  const registry = new Registry().register(whoami);
+  registry.register(help(registry));
+
+  const out = document.getElementById("term-out") as HTMLDivElement;
+  const form = document.getElementById("term-form") as HTMLFormElement;
+  const input = document.getElementById("term-in") as HTMLInputElement;
+
+  const print = (text: string, cls = "") => {
+    const p = document.createElement("p");
+    p.textContent = text;
+    if (cls) p.className = cls;
+    out.append(p);
+  };
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const parsed = parse(input.value);
+    if (!parsed) return;
+    print(`$ ${input.value}`, "text-neutral-500");
+    const command = registry.get(parsed.name);
+    if (!command) print(`${parsed.name}: command not found. Try help.`, "text-red-600 dark:text-red-400");
+    else for (const line of command.run(parsed.args)) print(line);
+    input.value = "";
+  });
+</script>
