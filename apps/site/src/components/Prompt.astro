@@ -36,5 +36,6 @@
     if (!command) print(`${parsed.name}: command not found. Try help.`, "text-red-600 dark:text-red-400");
     else for (const line of command.run(parsed.args)) print(line);
     input.value = "";
+    input.focus();
   });
 </script>
