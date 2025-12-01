@@ -11,8 +11,9 @@
 </div>
 
 <script>
-  import { Registry, help, whoami, parse } from "@shubrt/term";
+  import { History, Registry, help, whoami, parse } from "@shubrt/term";
 
+  const history = new History();
   const registry = new Registry().register(whoami);
   registry.register(help(registry));
 
@@ -31,11 +32,23 @@
     e.preventDefault();
     const parsed = parse(input.value);
     if (!parsed) return;
+    history.push(input.value);
     print(`$ ${input.value}`, "text-neutral-500");
     const command = registry.get(parsed.name);
     if (!command) print(`${parsed.name}: command not found. Try help.`, "text-red-600 dark:text-red-400");
     else for (const line of command.run(parsed.args)) print(line);
     input.value = "";
     input.focus();
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowUp") {
+      const prev = history.back();
+      if (prev !== undefined) input.value = prev;
+      e.preventDefault();
+    } else if (e.key === "ArrowDown") {
+      input.value = history.forward();
+      e.preventDefault();
+    }
   });
 </script>
