@@ -5,6 +5,10 @@ export class History {
 
   push(line: string): void {
     if (line.trim() === "") return;
+    if (this.entries.at(-1) === line) {
+      this.cursor = this.entries.length;
+      return;
+    }
     this.entries.push(line);
     this.cursor = this.entries.length;
   }
