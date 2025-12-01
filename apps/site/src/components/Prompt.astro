@@ -11,10 +11,10 @@
 </div>
 
 <script>
-  import { History, Registry, help, whoami, parse } from "@shubrt/term";
+  import { History, Registry, clear, help, whoami, parse } from "@shubrt/term";
 
   const history = new History();
-  const registry = new Registry().register(whoami);
+  const registry = new Registry().register(whoami).register(clear);
   registry.register(help(registry));
 
   const out = document.getElementById("term-out") as HTMLDivElement;
@@ -36,6 +36,7 @@
     print(`$ ${input.value}`, "text-neutral-500");
     const command = registry.get(parsed.name);
     if (!command) print(`${parsed.name}: command not found. Try help.`, "text-red-600 dark:text-red-400");
+    else if (command.name === "clear") out.replaceChildren();
     else for (const line of command.run(parsed.args)) print(line);
     input.value = "";
     input.focus();
