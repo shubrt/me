@@ -6,6 +6,13 @@ export interface Project {
   language: string;
 }
 
+export interface Note {
+  title: string;
+  date: string;
+  url: string;
+}
+
 export interface Content {
   projects: Project[];
+  notes: Note[];
 }

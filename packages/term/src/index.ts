@@ -6,3 +6,5 @@ export { History } from "./history.ts";
 export { clear } from "./clear.ts";
 export { projects } from "./projects.ts";
 export type { Content, Project } from "./content.ts";
+export { notes } from "./notes.ts";
+export type { Note } from "./content.ts";
