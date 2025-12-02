@@ -1,5 +1,13 @@
 ---
 // Command prompt on the start page. The logic lives in @shubrt/term, this file only renders.
+import { getCollection } from "astro:content";
+import projectsData from "../data/projects.json";
+
+const noteEntries = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 20);
+const content = {
+  projects: projectsData,
+  notes: noteEntries.map((n) => ({ title: n.data.title, date: n.data.date.toISOString().slice(0, 10), url: `/notes/${n.id}` })),
+};
 ---
 
 <div class="mt-8">
@@ -10,11 +18,16 @@
   </form>
 </div>
 
-<script>
-  import { History, Registry, clear, help, whoami, parse } from "@shubrt/term";
+<script is:inline define:vars={{ content }}>
+  window.__content = content;
+</script>
 
+<script>
+  import { History, Registry, clear, help, notes, projects, whoami, parse, type Content } from "@shubrt/term";
+
+  const content = (window as unknown as { __content: Content }).__content;
   const history = new History();
-  const registry = new Registry().register(whoami).register(clear);
+  const registry = new Registry().register(whoami).register(clear).register(projects(content)).register(notes(content));
   registry.register(help(registry));
 
   const out = document.getElementById("term-out") as HTMLDivElement;
