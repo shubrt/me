@@ -23,7 +23,7 @@ const content = {
 </script>
 
 <script>
-  import { History, Registry, clear, help, notes, projects, whoami, parse, type Content } from "@shubrt/term";
+  import { History, Registry, clear, complete, help, notes, projects, whoami, parse, type Content } from "@shubrt/term";
 
   const content = (window as unknown as { __content: Content }).__content;
   const history = new History();
@@ -56,7 +56,10 @@ const content = {
   });
 
   input.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowUp") {
+    if (e.key === "Tab" && !input.value.includes(" ")) {
+      input.value = complete(input.value, registry.list().map((c) => c.name)).value;
+      e.preventDefault();
+    } else if (e.key === "ArrowUp") {
       const prev = history.back();
       if (prev !== undefined) input.value = prev;
       e.preventDefault();

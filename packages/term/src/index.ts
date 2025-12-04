@@ -8,3 +8,4 @@ export { projects } from "./projects.ts";
 export type { Content, Project } from "./content.ts";
 export { notes } from "./notes.ts";
 export type { Note } from "./content.ts";
+export { complete } from "./complete.ts";
