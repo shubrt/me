@@ -1,6 +1,11 @@
 # shubrt.me
 
-My personal page. A pnpm workspace: the Astro site lives in `apps/site`, shared code goes into `packages/*`.
+My personal page. A pnpm workspace:
+
+- `apps/site`: the Astro site
+- `packages/term`: the terminal core behind the prompt on the start page. Parsing, commands, history, completion. No DOM.
+
+Commits follow conventional commits, checked by commitlint on commit.
 
 ```sh
 pnpm install
