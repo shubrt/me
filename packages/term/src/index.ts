@@ -9,3 +9,4 @@ export type { Content, Project } from "./content.ts";
 export { notes } from "./notes.ts";
 export type { Note } from "./content.ts";
 export { complete } from "./complete.ts";
+export { initial, reduce, type Action, type Line, type State } from "./reducer.ts";
