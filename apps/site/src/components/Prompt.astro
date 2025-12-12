@@ -24,7 +24,7 @@ const content = {
 </script>
 
 <script>
-  import { History, Registry, clear, complete, help, notes, projects, whoami, parse, type Content } from "@shubrt/term";
+  import { History, Registry, clear, complete, help, initial, notes, projects, reduce, whoami, parse, type Action, type Content } from "@shubrt/term";
 
   const content = (window as unknown as { __content: Content }).__content;
   const history = new History();
@@ -36,24 +36,33 @@ const content = {
   const input = document.getElementById("term-in") as HTMLInputElement;
   const hint = document.getElementById("term-hint") as HTMLParagraphElement;
 
-  const print = (text: string, cls = "") => {
-    const p = document.createElement("p");
-    p.textContent = text;
-    if (cls) p.className = cls;
-    out.append(p);
+  let state = initial;
+
+  const render = () => {
+    out.replaceChildren(
+      ...state.lines.map((l) => {
+        const p = document.createElement("p");
+        p.textContent = l.kind === "input" ? `$ ${l.text}` : l.text;
+        p.className = l.kind === "input" ? "text-neutral-500" : l.kind === "error" ? "text-red-600 dark:text-red-400" : "";
+        return p;
+      }),
+    );
+    input.value = state.input;
   };
+
+  const dispatch = (action: Action) => {
+    state = reduce(state, action, registry);
+    render();
+  };
+
+  input.addEventListener("input", () => dispatch({ type: "type", value: input.value }));
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const parsed = parse(input.value);
-    if (!parsed) return;
-    history.push(input.value);
-    print(`$ ${input.value}`, "text-neutral-500");
-    const command = registry.get(parsed.name);
-    if (!command) print(`${parsed.name}: command not found. Try help.`, "text-red-600 dark:text-red-400");
-    else if (command.name === "clear") out.replaceChildren();
-    else for (const line of command.run(parsed.args)) print(line);
-    input.value = "";
+    const line = input.value;
+    history.push(line);
+    if (parse(line)?.name === "clear") dispatch({ type: "clear" });
+    dispatch({ type: "submit" });
     input.focus();
   });
 
