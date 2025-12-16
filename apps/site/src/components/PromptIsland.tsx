@@ -14,7 +14,7 @@ export default function Prompt() {
 
   return (
     <div className="mt-8">
-      <div className="space-y-0.5 text-sm" aria-live="polite">
+      <div className="max-h-80 space-y-0.5 overflow-y-auto text-sm" aria-live="polite">
         {state.lines.map((l, i) => (
           <p key={i} className={l.kind === "input" ? "text-neutral-500" : l.kind === "error" ? "text-red-600 dark:text-red-400" : ""}>
             {l.kind === "input" ? `$ ${l.text}` : l.text}
@@ -28,7 +28,7 @@ export default function Prompt() {
           dispatch({ type: "submit" });
         }}
       >
-        <label htmlFor="term-in" className="select-none text-neutral-500">
+        <label htmlFor="term-in" className="select-none text-neutral-600 dark:text-neutral-400">
           $
         </label>
         <input
