@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import Prompt from "../components/Prompt.astro";
+import PromptIsland from "../components/PromptIsland.tsx";
 ---
 
 <Base title="Janis Schubert">
@@ -9,7 +9,7 @@ import Prompt from "../components/Prompt.astro";
 
   <p class="mt-8 leading-relaxed">A few things I work on are on the <a class="underline" href="/projects">projects page</a>.</p>
 
-  <Prompt />
+  <PromptIsland client:load />
 
   <p class="mt-8">You can reach me at <a class="underline" href="mailto:shubrt.me@gmail.com">shubrt.me@gmail.com</a> or find me on <a class="underline" href="https://github.com/shubrt">GitHub</a>.</p>
 </Base>
