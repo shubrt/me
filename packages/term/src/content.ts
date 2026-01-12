@@ -15,4 +15,5 @@ export interface Note {
 export interface Content {
   projects: Project[];
   notes: Note[];
+  uses: string[];
 }
