@@ -16,4 +16,5 @@ export interface Content {
   projects: Project[];
   notes: Note[];
   uses: string[];
+  now: string[];
 }
