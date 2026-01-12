@@ -1,14 +1,7 @@
 export { parse, type Parsed } from "./parse.ts";
 export { Registry, type Command } from "./registry.ts";
-export { help } from "./help.ts";
-export { whoami } from "./whoami.ts";
+export { clear, help, notes, now, projects, uses, whoami } from "./commands.ts";
+export type { Content, Note, Project } from "./content.ts";
 export { History } from "./history.ts";
-export { clear } from "./clear.ts";
-export { projects } from "./projects.ts";
-export type { Content, Project } from "./content.ts";
-export { notes } from "./notes.ts";
-export type { Note } from "./content.ts";
 export { complete } from "./complete.ts";
 export { initial, reduce, type Action, type Line, type State } from "./reducer.ts";
-export { uses } from "./uses.ts";
-export { now } from "./now.ts";
