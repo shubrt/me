@@ -17,6 +17,17 @@ export const whoami: Command = {
 
 export const clear: Command = { name: "clear", help: "clear the screen", run: () => [] };
 
+/** Side effects live in the UI. The command only says what should happen. */
+export const theme: Command = {
+  name: "theme",
+  help: "theme dark|light",
+  run: (args) => {
+    const want = args[0];
+    if (want !== "dark" && want !== "light") return ["usage: theme dark|light"];
+    return [`theme: ${want}`];
+  },
+};
+
 export function projects(content: Content): Command {
   return {
     name: "projects",
