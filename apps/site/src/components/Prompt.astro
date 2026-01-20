@@ -65,7 +65,10 @@ const content = {
     if (parse(line)?.name === "clear") dispatch({ type: "clear" });
     dispatch({ type: "submit" });
     const last = state.lines.at(-1)?.text;
-    if (last === "theme: dark" || last === "theme: light") document.documentElement.classList.toggle("dark", last.endsWith("dark"));
+    if (last === "theme: dark" || last === "theme: light") {
+      document.documentElement.classList.toggle("dark", last.endsWith("dark"));
+      localStorage.setItem("theme", last.endsWith("dark") ? "dark" : "light");
+    }
     input.focus();
   });
 
