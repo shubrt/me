@@ -28,6 +28,22 @@ export const theme: Command = {
   },
 };
 
+const links: Record<string, string> = {
+  github: "https://github.com/shubrt",
+  mail: "mailto:shubrt.me@gmail.com",
+  notes: "/notes",
+  rss: "/notes/rss.xml",
+};
+
+export const open: Command = {
+  name: "open",
+  help: `open ${Object.keys(links).join("|")}`,
+  run: (args) => {
+    const target = links[args[0] ?? ""];
+    return target ? [`open: ${target}`] : [`open: unknown target. Try ${Object.keys(links).join(", ")}.`];
+  },
+};
+
 export function projects(content: Content): Command {
   return {
     name: "projects",
