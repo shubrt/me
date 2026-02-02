@@ -56,6 +56,9 @@ const content = {
     render();
   };
 
+  dispatch({ type: "type", value: "whoami" });
+  dispatch({ type: "submit" });
+
   input.addEventListener("input", () => dispatch({ type: "type", value: input.value }));
 
   form.addEventListener("submit", (e) => {
