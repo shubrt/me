@@ -24,7 +24,7 @@ const content = {
 </script>
 
 <script>
-  import { History, Registry, clear, complete, help, initial, notes, open, projects, reduce, theme, whoami, parse, type Action, type Content } from "@shubrt/term";
+  import { History, Registry, clear, complete, createScheduler, help, initial, notes, open, projects, reduce, theme, whoami, parse, type Action, type Content } from "@shubrt/term";
 
   const content = (window as unknown as { __content: Content }).__content;
   const history = new History();
@@ -52,7 +52,24 @@ const content = {
     out.scrollTop = out.scrollHeight;
   };
 
+  const scheduler = createScheduler(
+    (line) => {
+      state = { ...state, lines: [...state.lines, line] };
+      render();
+    },
+    { delay: reduced ? 0 : 30 },
+  );
+
   const dispatch = (action: Action) => {
+    if (action.type === "submit") {
+      const before = state.lines.length;
+      const next = reduce(state, action, registry);
+      const [echo, ...rest] = next.lines.slice(before);
+      state = { ...next, lines: echo ? [...state.lines, echo] : state.lines };
+      render();
+      scheduler.push(rest);
+      return;
+    }
     state = reduce(state, action, registry);
     render();
   };
