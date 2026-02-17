@@ -36,6 +36,7 @@ const content = {
   const input = document.getElementById("term-in") as HTMLInputElement;
   const hint = document.getElementById("term-hint") as HTMLParagraphElement;
 
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let state = initial;
 
   const render = () => {

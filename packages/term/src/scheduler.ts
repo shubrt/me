@@ -1,7 +1,7 @@
 import type { Line } from "./reducer.ts";
 
 export interface SchedulerOptions {
-  /** Milliseconds between lines. */
+  /** Milliseconds between lines. 0 prints everything at once. */
   delay: number;
   setTimeout?: (fn: () => void, ms: number) => unknown;
 }
@@ -27,6 +27,10 @@ export function createScheduler(emit: (line: Line) => void, options: SchedulerOp
 
   return {
     push(lines: Line[]) {
+      if (options.delay === 0) {
+        for (const l of lines) emit(l);
+        return;
+      }
       queue.push(...lines);
       if (!running) {
         running = true;
