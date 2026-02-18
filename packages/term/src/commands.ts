@@ -48,7 +48,11 @@ export function projects(content: Content): Command {
   return {
     name: "projects",
     help: "things I build",
-    run: () => content.projects.map((p) => `${p.name.padEnd(12)} ${p.description}${p.url ? `  ${p.url}` : ""}`),
+    run: () =>
+      content.projects.map((p) => {
+        const meta = [p.stars !== undefined ? `★ ${p.stars}` : null, p.pushedAt ? `pushed ${p.pushedAt.slice(0, 10)}` : null].filter(Boolean).join("  ");
+        return `${p.name.padEnd(12)} ${p.description}${meta ? `  ${meta}` : ""}`;
+      }),
   };
 }
 

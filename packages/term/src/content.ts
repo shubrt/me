@@ -4,6 +4,8 @@ export interface Project {
   description: string;
   url?: string;
   language: string;
+  stars?: number;
+  pushedAt?: string;
 }
 
 export interface Note {
