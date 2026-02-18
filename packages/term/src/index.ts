@@ -6,3 +6,4 @@ export { History } from "./history.ts";
 export { complete } from "./complete.ts";
 export { initial, reduce, type Action, type Line, type State } from "./reducer.ts";
 export { createScheduler } from "./scheduler.ts";
+export { blocks, fmt } from "./format.ts";

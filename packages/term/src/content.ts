@@ -6,6 +6,8 @@ export interface Project {
   language: string;
   stars?: number;
   pushedAt?: string;
+  /** Commits per week, last 12 weeks. */
+  activity?: number[];
 }
 
 export interface Note {
