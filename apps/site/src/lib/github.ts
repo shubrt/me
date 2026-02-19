@@ -32,8 +32,12 @@ export async function fetchRepo(fullName: string): Promise<RepoInfo | null> {
       console.warn(`github: ${fullName} responded ${res.status}, using local data`);
       return null;
     }
-    const stats = await fetch(`https://api.github.com/repos/${fullName}/stats/commit_activity`, { headers });
-    const weeks = stats.ok ? ((await stats.json()) as Array<{ total: number }>) : [];
+    let stats = await fetch(`https://api.github.com/repos/${fullName}/stats/commit_activity`, { headers });
+    if (stats.status === 202) {
+      await new Promise((r) => setTimeout(r, 1500));
+      stats = await fetch(`https://api.github.com/repos/${fullName}/stats/commit_activity`, { headers });
+    }
+    const weeks = stats.ok && stats.status !== 202 ? ((await stats.json()) as Array<{ total: number }>) : [];
     return mapRepo((await res.json()) as ApiRepo, weeks);
   } catch {
     return null;
