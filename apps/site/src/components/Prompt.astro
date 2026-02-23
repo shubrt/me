@@ -11,7 +11,7 @@ const content = {
 ---
 
 <div class="mt-8">
-  <pre class="mb-3 select-none text-xs leading-tight text-neutral-500" aria-hidden="true">{` ( o.o )
+  <pre id="face" class="mb-3 select-none text-xs leading-tight text-neutral-500" aria-hidden="true">{` ( o.o )
   > ^ <`}</pre>
   <div id="term-out" class="max-h-80 space-y-0.5 overflow-y-auto text-sm" aria-live="polite"></div>
   <form id="term-form" class="mt-2 flex items-center gap-2">
@@ -39,6 +39,18 @@ const content = {
   const hint = document.getElementById("term-hint") as HTMLParagraphElement;
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const face = document.getElementById("face");
+  if (face && !reduced) {
+    const open = face.textContent ?? "";
+    const closed = open.replace("o.o", "-.-");
+    setInterval(() => {
+      face.textContent = closed;
+      setTimeout(() => {
+        face.textContent = open;
+      }, 120);
+    }, 4000 + Math.random() * 3000);
+  }
   let state = initial;
 
   const render = () => {
