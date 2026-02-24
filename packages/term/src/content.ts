@@ -1,14 +1,8 @@
 /** Everything the commands can print. Passed in at startup so the package knows nothing about files or Astro. */
-export interface Project {
-  name: string;
-  description: string;
-  url?: string;
-  language: string;
-  stars?: number;
-  pushedAt?: string;
-  /** Commits per week, last 12 weeks. */
-  activity?: number[];
-}
+import type { Repo } from "@shubrt/contracts";
+
+/** A project is a repo from contracts, with everything but the name optional for hand-written entries. */
+export type Project = Partial<Repo> & { name: string; description: string };
 
 export interface Note {
   title: string;
