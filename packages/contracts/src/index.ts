@@ -6,6 +6,7 @@ export const repoSchema = z.object({
   url: z.string().url(),
   language: z.string().nullable(),
   stars: z.number().int().nonnegative(),
+  // GitHub sends "2026-02-24T19:00:00Z". A bare local time would be a bug upstream, reject it.
   pushedAt: z.string().datetime({ offset: true }),
   activity: z.array(z.number().int().nonnegative()).length(12),
 });

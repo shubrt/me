@@ -16,6 +16,10 @@ describe("repoSchema", () => {
     expect(repoSchema.safeParse(valid).success).toBe(true);
   });
 
+  it("rejects a pushedAt without offset", () => {
+    expect(repoSchema.safeParse({ ...valid, pushedAt: "2026-02-24T19:00:00" }).success).toBe(false);
+  });
+
   it("insists on twelve weeks of activity", () => {
     expect(repoSchema.safeParse({ ...valid, activity: [1, 2, 3] }).success).toBe(false);
   });
