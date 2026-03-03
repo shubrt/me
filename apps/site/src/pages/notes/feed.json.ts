@@ -1,6 +1,7 @@
+import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
-export async function GET(context) {
+export const GET: APIRoute = async (context) => {
   const notes = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   const feed = {
     version: "https://jsonfeed.org/version/1.1",
@@ -17,4 +18,4 @@ export async function GET(context) {
     })),
   };
   return new Response(JSON.stringify(feed, null, 2), { headers: { "Content-Type": "application/feed+json" } });
-}
+};
