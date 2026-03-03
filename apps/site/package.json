@@ -11,13 +11,13 @@
     "refresh-repos": "node scripts/refresh-repos.ts"
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.11",
-    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/rss": "^4.0.15",
+    "@astrojs/sitemap": "^3.6.0",
     "@shubrt/contracts": "workspace:*",
     "@shubrt/term": "workspace:*",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.2.0",
-    "astro": "^5.16.0",
+    "astro": "^6.0.0",
     "tailwindcss": "^4.2.0",
     "vitest": "^3.2.4"
   }
