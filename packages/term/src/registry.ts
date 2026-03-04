@@ -31,4 +31,8 @@ export class Registry {
   list(): Command[] {
     return [...this.commands.values()].sort((a, b) => a.name.localeCompare(b.name));
   }
+
+  aliasesOf(name: string): string[] {
+    return [...this.aliases].filter(([, target]) => target === name).map(([alias]) => alias);
+  }
 }
