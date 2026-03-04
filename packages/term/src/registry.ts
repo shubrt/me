@@ -17,8 +17,15 @@ export class Registry {
     return this;
   }
 
+  private aliases = new Map<string, string>();
+
+  alias(alias: string, target: string): this {
+    this.aliases.set(alias, target);
+    return this;
+  }
+
   get(name: string): Command | undefined {
-    return this.commands.get(name);
+    return this.commands.get(this.aliases.get(name) ?? name);
   }
 
   list(): Command[] {

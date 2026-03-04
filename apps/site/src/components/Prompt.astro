@@ -31,6 +31,7 @@ const content = {
   const content = (window as unknown as { __content: Content }).__content;
   const history = new History();
   const registry = new Registry().register(whoami).register(clear).register(theme).register(open).register(projects(content)).register(notes(content));
+  registry.alias("ls", "projects").alias("cat", "whoami");
   registry.register(help(registry));
 
   const out = document.getElementById("term-out") as HTMLDivElement;
