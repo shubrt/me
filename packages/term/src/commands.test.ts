@@ -27,3 +27,14 @@ describe("content commands", () => {
     expect(uses(content).run([])).toEqual(["Ghostty", "Zed"]);
   });
 });
+
+describe("aliases", () => {
+  it("resolve to the target and show up in help", async () => {
+    const { Registry } = await import("./registry.ts");
+    const { help, whoami } = await import("./commands.ts");
+    const registry = new Registry().register(whoami).alias("cat", "whoami");
+    registry.register(help(registry));
+    expect(registry.get("cat")?.name).toBe("whoami");
+    expect(help(registry).run([]).find((l) => l.startsWith("whoami"))).toContain("(also: cat)");
+  });
+});
