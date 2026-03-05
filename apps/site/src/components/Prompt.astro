@@ -91,6 +91,7 @@ const content = {
 
   dispatch({ type: "type", value: "whoami" });
   dispatch({ type: "submit" });
+  if (matchMedia("(pointer: fine)").matches) input.focus({ preventScroll: true });
 
   input.addEventListener("input", () => dispatch({ type: "type", value: input.value }));
 
