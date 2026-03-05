@@ -22,6 +22,10 @@ export const whoami: Command = {
 
 export const clear: Command = { name: "clear", help: "clear the screen", run: () => [] };
 
+export function version(v: string): Command {
+  return { name: "version", help: "which build is this", run: () => [`shubrt.me ${v}`] };
+}
+
 /** Side effects live in the UI. The command only says what should happen. */
 export const theme: Command = {
   name: "theme",

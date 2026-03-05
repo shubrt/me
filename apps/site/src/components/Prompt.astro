@@ -4,7 +4,9 @@ import { getCollection } from "astro:content";
 import projectsData from "../data/projects.json";
 
 const noteEntries = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 20);
+const version = `${new Date().toISOString().slice(0, 10)}`;
 const content = {
+  version,
   projects: projectsData,
   notes: noteEntries.map((n) => ({ title: n.data.title, date: n.data.date.toISOString().slice(0, 10), url: `/notes/${n.id}` })),
 };
@@ -26,11 +28,11 @@ const content = {
 </script>
 
 <script>
-  import { History, Registry, clear, complete, createScheduler, help, initial, notes, open, projects, reduce, theme, whoami, parse, type Action, type Content } from "@shubrt/term";
+  import { History, Registry, clear, complete, createScheduler, help, initial, notes, open, projects, reduce, theme, version, whoami, parse, type Action, type Content } from "@shubrt/term";
 
   const content = (window as unknown as { __content: Content }).__content;
   const history = new History();
-  const registry = new Registry().register(whoami).register(clear).register(theme).register(open).register(projects(content)).register(notes(content));
+  const registry = new Registry().register(whoami).register(clear).register(theme).register(open).register(version((content as unknown as { version: string }).version)).register(projects(content)).register(notes(content));
   registry.alias("ls", "projects").alias("cat", "whoami");
   registry.register(help(registry));
 
