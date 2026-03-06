@@ -17,3 +17,9 @@ Started in May 2025: monospace font, fake prompt lines above sections, a window 
 ## What I actually want
 
 The commands should do something. A prompt where typing `projects` lists projects and `whoami` prints the intro. Not a decoration of a terminal, a small one. That is a bigger build than an evening, so it goes on the list for winter.
+
+## Part two, March 2026
+
+The prompt is real. `packages/term` parses, dispatches and streams, the site renders. Fourteen commands, tab completion, history, a face that blinks.
+
+What I notice: the interesting part is not the shell. It is the moment the output looks like something is working for you. A command that streams three lines and a timing feels like an agent. A command that dumps a list feels like a menu. The rewrite should lean into the first one.
