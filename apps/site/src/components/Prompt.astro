@@ -28,7 +28,7 @@ const content = {
 </script>
 
 <script>
-  import { History, Registry, clear, complete, createScheduler, help, initial, notes, open, projects, reduce, theme, version, whoami, parse, type Action, type Content } from "@shubrt/term";
+  import { History, Registry, clear, complete, createScheduler, help, tk, initial, notes, open, projects, reduce, theme, version, whoami, parse, type Action, type Content } from "@shubrt/term";
 
   const content = (window as unknown as { __content: Content }).__content;
   const history = new History();
@@ -61,7 +61,9 @@ const content = {
       ...state.lines.map((l) => {
         const p = document.createElement("p");
         p.textContent = l.kind === "input" ? `$ ${l.text}` : l.text;
-        p.className = l.kind === "input" ? "text-neutral-500" : l.kind === "error" ? "text-red-600 dark:text-red-400" : "";
+        p.className =
+          l.kind === "input" ? "text-neutral-500" : l.kind === "error" ? "text-red-600 dark:text-red-400" : l.kind === "meta" ? "text-xs text-neutral-500" : "";
+        if (l.kind === "meta") p.textContent = `${l.text} · ${tk(state.lines.map((x) => x.text).join(" "))} tok`;
         return p;
       }),
     );
