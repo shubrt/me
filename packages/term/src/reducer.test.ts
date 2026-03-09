@@ -12,6 +12,7 @@ describe("reduce", () => {
     expect(s.lines).toEqual([
       { kind: "input", text: "echo hi there" },
       { kind: "output", text: "hi there" },
+      { kind: "meta", text: "1 lines · 0.0 ms" },
     ]);
   });
 
