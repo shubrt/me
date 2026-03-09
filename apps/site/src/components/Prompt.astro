@@ -104,8 +104,8 @@ const content = {
     const line = input.value;
     history.push(line);
     if (parse(line)?.name === "clear") dispatch({ type: "clear" });
-    dispatch({ type: "submit" });
-    const last = state.lines.at(-1)?.text;
+    dispatch({ type: "submit", now: () => performance.now() });
+    const last = state.lines.filter((l) => l.kind !== "meta").at(-1)?.text;
     if (last?.startsWith("open: ") && !last.includes("unknown")) location.assign(last.slice(6));
     if (last === "theme: dark" || last === "theme: light") {
       document.documentElement.classList.toggle("dark", last.endsWith("dark"));
