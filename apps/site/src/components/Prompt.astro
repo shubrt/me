@@ -28,19 +28,13 @@ const content = {
 </script>
 
 <script>
-  import { History, Registry, clear, complete, createScheduler, help, tk, initial, notes, open, projects, reduce, theme, version, whoami, parse, type Action, type Content } from "@shubrt/term";
+  import { complete, createSession, tk, type Content } from "@shubrt/term";
 
-  const content = (window as unknown as { __content: Content }).__content;
-  const history = new History();
-  const registry = new Registry().register(whoami).register(clear).register(theme).register(open).register(version((content as unknown as { version: string }).version)).register(projects(content)).register(notes(content));
-  registry.alias("ls", "projects").alias("cat", "whoami");
-  registry.register(help(registry));
-
+  const content = (window as unknown as { __content: Content & { version: string } }).__content;
   const out = document.getElementById("term-out") as HTMLDivElement;
   const form = document.getElementById("term-form") as HTMLFormElement;
   const input = document.getElementById("term-in") as HTMLInputElement;
   const hint = document.getElementById("term-hint") as HTMLParagraphElement;
-
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const face = document.getElementById("face");
@@ -54,78 +48,55 @@ const content = {
       }, 120);
     }, 4000 + Math.random() * 3000);
   }
-  let state = initial;
 
-  const render = () => {
-    out.replaceChildren(
-      ...state.lines.map((l) => {
-        const p = document.createElement("p");
-        p.textContent = l.kind === "input" ? `$ ${l.text}` : l.text;
-        p.className =
-          l.kind === "input" ? "text-neutral-500" : l.kind === "error" ? "text-red-600 dark:text-red-400" : l.kind === "meta" ? "text-xs text-neutral-500" : "";
-        if (l.kind === "meta") p.textContent = `${l.text} · ${tk(state.lines.map((x) => x.text).join(" "))} tok`;
-        return p;
-      }),
-    );
-    input.value = state.input;
-    out.scrollTop = out.scrollHeight;
-  };
-
-  const scheduler = createScheduler(
-    (line) => {
-      state = { ...state, lines: [...state.lines, line] };
-      render();
+  const session = createSession({
+    content,
+    delay: reduced ? 0 : 30,
+    onChange: (state) => {
+      out.replaceChildren(
+        ...state.lines.map((l) => {
+          const p = document.createElement("p");
+          p.textContent = l.kind === "input" ? `$ ${l.text}` : l.kind === "meta" ? `${l.text} · ${tk(state.lines.map((x) => x.text).join(" "))} tok` : l.text;
+          p.className =
+            l.kind === "input" ? "text-neutral-500" : l.kind === "error" ? "text-red-600 dark:text-red-400" : l.kind === "meta" ? "text-xs text-neutral-500" : "";
+          return p;
+        }),
+      );
+      input.value = state.input;
+      out.scrollTop = out.scrollHeight;
+      const last = state.lines.filter((l) => l.kind !== "meta").at(-1)?.text;
+      if (last?.startsWith("open: ") && !last.includes("unknown")) location.assign(last.slice(6));
+      if (last === "theme: dark" || last === "theme: light") {
+        document.documentElement.classList.toggle("dark", last.endsWith("dark"));
+        localStorage.setItem("theme", last.endsWith("dark") ? "dark" : "light");
+      }
     },
-    { delay: reduced ? 0 : 30 },
-  );
+  });
 
-  const dispatch = (action: Action) => {
-    if (action.type === "submit") {
-      const before = state.lines.length;
-      const next = reduce(state, action, registry);
-      const [echo, ...rest] = next.lines.slice(before);
-      state = { ...next, lines: echo ? [...state.lines, echo] : state.lines };
-      render();
-      scheduler.push(rest);
-      return;
-    }
-    state = reduce(state, action, registry);
-    render();
-  };
-
-  dispatch({ type: "type", value: "whoami" });
-  dispatch({ type: "submit" });
+  session.dispatch({ type: "type", value: "whoami" });
+  session.dispatch({ type: "submit" });
   if (matchMedia("(pointer: fine)").matches) input.focus({ preventScroll: true });
 
-  input.addEventListener("input", () => dispatch({ type: "type", value: input.value }));
+  input.addEventListener("input", () => session.dispatch({ type: "type", value: input.value }));
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const line = input.value;
-    history.push(line);
-    if (parse(line)?.name === "clear") dispatch({ type: "clear" });
-    dispatch({ type: "submit", now: () => performance.now() });
-    const last = state.lines.filter((l) => l.kind !== "meta").at(-1)?.text;
-    if (last?.startsWith("open: ") && !last.includes("unknown")) location.assign(last.slice(6));
-    if (last === "theme: dark" || last === "theme: light") {
-      document.documentElement.classList.toggle("dark", last.endsWith("dark"));
-      localStorage.setItem("theme", last.endsWith("dark") ? "dark" : "light");
-    }
+    session.dispatch({ type: "submit", now: () => performance.now() });
     input.focus();
   });
 
   input.addEventListener("keydown", (e) => {
     if (e.key === "Tab" && !input.value.includes(" ")) {
-      const result = complete(input.value, registry.list().map((c) => c.name));
-      input.value = result.value;
+      const result = complete(input.value, session.registry.list().map((c) => c.name));
+      session.dispatch({ type: "type", value: result.value });
       hint.textContent = result.candidates.length > 1 ? result.candidates.join("  ") : "";
       e.preventDefault();
     } else if (e.key === "ArrowUp") {
-      const prev = history.back();
-      if (prev !== undefined) input.value = prev;
+      const prev = session.history.back();
+      if (prev !== undefined) session.dispatch({ type: "type", value: prev });
       e.preventDefault();
     } else if (e.key === "ArrowDown") {
-      input.value = history.forward();
+      session.dispatch({ type: "type", value: session.history.forward() });
       e.preventDefault();
     }
   });
