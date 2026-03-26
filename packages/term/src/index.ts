@@ -7,3 +7,4 @@ export { complete } from "./complete.ts";
 export { initial, reduce, type Action, type Line, type State } from "./reducer.ts";
 export { createScheduler } from "./scheduler.ts";
 export { blocks, fmt, tk } from "./format.ts";
+export { createSession, defaultRegistry, type SessionOptions } from "./session.ts";
