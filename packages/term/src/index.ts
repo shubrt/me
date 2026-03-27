@@ -1,5 +1,5 @@
 export { parse, type Parsed } from "./parse.ts";
-export { Registry, type Command } from "./registry.ts";
+export { CommandError, Registry, type Command } from "./registry.ts";
 export { clear, help, notes, now, open, projects, theme, uses, version, whoami } from "./commands.ts";
 export type { Content, Note, Project } from "./content.ts";
 export { History } from "./history.ts";

@@ -3,9 +3,12 @@
  * HTML, colours or timing. That is deliberate: the same registry should work
  * in a test, in the browser and, one day, in an actual terminal.
  */
+export class CommandError extends Error {}
+
 export interface Command {
   name: string;
   help: string;
+  /** Throw a CommandError for user-facing problems. Anything else is a bug. */
   run: (args: string[]) => string[];
 }
 

@@ -1,5 +1,5 @@
 import { parse } from "./parse.ts";
-import type { Registry } from "./registry.ts";
+import { CommandError, type Registry } from "./registry.ts";
 
 export interface Line {
   kind: "input" | "output" | "error" | "meta";
@@ -30,7 +30,13 @@ export function reduce(state: State, action: Action, registry: Registry): State 
         return { lines: [...state.lines, echo, { kind: "error", text: `${parsed.name}: command not found. Try help.` }], input: "" };
       }
       const started = action.now?.() ?? 0;
-      const out = command.run(parsed.args).map((text): Line => ({ kind: "output", text }));
+      let out: Line[];
+      try {
+        out = command.run(parsed.args).map((text): Line => ({ kind: "output", text }));
+      } catch (err) {
+        if (!(err instanceof CommandError)) throw err;
+        out = [{ kind: "error", text: `${parsed.name}: ${err.message}` }];
+      }
       const ms = (action.now?.() ?? 0) - started;
       const meta: Line = { kind: "meta", text: `${out.length} lines · ${ms.toFixed(1)} ms` };
       return { lines: [...state.lines, echo, ...out, meta], input: "" };

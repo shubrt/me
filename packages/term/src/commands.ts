@@ -1,6 +1,6 @@
 import type { Content } from "./content.ts";
 import { blocks } from "./format.ts";
-import type { Command, Registry } from "./registry.ts";
+import { CommandError, type Command, type Registry } from "./registry.ts";
 
 export function help(registry: Registry): Command {
   return {
@@ -32,7 +32,7 @@ export const theme: Command = {
   help: "theme dark|light",
   run: (args) => {
     const want = args[0];
-    if (want !== "dark" && want !== "light") return ["usage: theme dark|light"];
+    if (want !== "dark" && want !== "light") throw new CommandError("usage: theme dark|light");
     return [`theme: ${want}`];
   },
 };
@@ -49,7 +49,8 @@ export const open: Command = {
   help: `open ${Object.keys(links).join("|")}`,
   run: (args) => {
     const target = links[args[0] ?? ""];
-    return target ? [`open: ${target}`] : [`open: unknown target. Try ${Object.keys(links).join(", ")}.`];
+    if (!target) throw new CommandError(`unknown target. Try ${Object.keys(links).join(", ")}.`);
+    return [`open: ${target}`];
   },
 };
 
