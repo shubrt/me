@@ -1,4 +1,4 @@
-import { clear, exit, help, notes, now, open, projects, theme, uses, whoami } from "./commands.ts";
+import { clear, exit, help, notes, now, open, projects, sudo, theme, uses, whoami } from "./commands.ts";
 import type { Content } from "./content.ts";
 import { History } from "./history.ts";
 import { type Action, type Line, type State, initial, reduce } from "./reducer.ts";
@@ -47,7 +47,7 @@ export function createSession(options: SessionOptions) {
 
 export function defaultRegistry(content: Content): Registry {
   const registry = new Registry();
-  registry.register(whoami).register(clear).register(exit).register(theme).register(open).register(projects(content)).register(notes(content)).register(uses(content)).register(now(content));
+  registry.register(whoami).register(clear).register(exit).register(sudo).register(theme).register(open).register(projects(content)).register(notes(content)).register(uses(content)).register(now(content));
   registry.alias("ls", "projects").alias("cat", "whoami");
   registry.register(help(registry));
   return registry;

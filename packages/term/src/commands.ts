@@ -22,6 +22,12 @@ export const whoami: Command = {
 
 export const clear: Command = { name: "clear", help: "clear the screen", run: () => [] };
 
+export const sudo: Command = {
+  name: "sudo",
+  help: "no",
+  run: (args) => [`${args[0] ?? "sudo"}: permission denied. This incident will not be reported, nobody is watching.`],
+};
+
 export const exit: Command = {
   name: "exit",
   help: "leave",
