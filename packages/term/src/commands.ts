@@ -22,6 +22,12 @@ export const whoami: Command = {
 
 export const clear: Command = { name: "clear", help: "clear the screen", run: () => [] };
 
+export const exit: Command = {
+  name: "exit",
+  help: "leave",
+  run: () => ["There is no exit. This is a website. Close the tab, or type help."],
+};
+
 export function version(v: string): Command {
   return { name: "version", help: "which build is this", run: () => [`shubrt.me ${v}`] };
 }
