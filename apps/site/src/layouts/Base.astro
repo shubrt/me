@@ -10,7 +10,7 @@ interface Props {
   noindex?: boolean;
 }
 
-const { title, description = "Software developer from Mainz.", lang = "en", noindex = false } = Astro.props;
+const { title, description = "Janis Schubert, software developer from Mainz. A small terminal instead of a landing page.", lang = "en", noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
