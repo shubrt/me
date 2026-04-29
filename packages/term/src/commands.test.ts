@@ -14,8 +14,8 @@ const content: Content = {
 
 describe("content commands", () => {
   it("projects prints one line per project with the url", () => {
-    expect(projects(content).run([])).toEqual(["me    this site"]);
-    expect(projects({ ...content, projects: [{ ...content.projects[0]!, stars: 3, pushedAt: "2026-02-18T19:00:00Z" }] }).run([])).toEqual(["me    this site  ★ 3  pushed 2026-02-18"]);
+    expect(projects(content).run([]).slice(2)).toEqual(["me    this site"]);
+    expect(projects({ ...content, projects: [{ ...content.projects[0]!, stars: 3, pushedAt: "2026-02-18T19:00:00Z" }] }).run([]).slice(2)).toEqual(["me    this site  ★ 3  pushed 2026-02-18"]);
   });
 
   it("notes takes a count and ignores nonsense", () => {

@@ -1,8 +1,9 @@
+import { STEP } from "./commands.ts";
 import { parse } from "./parse.ts";
 import { CommandError, type Registry } from "./registry.ts";
 
 export interface Line {
-  kind: "input" | "output" | "error" | "meta";
+  kind: "input" | "output" | "error" | "meta" | "step";
   text: string;
 }
 
@@ -32,7 +33,7 @@ export function reduce(state: State, action: Action, registry: Registry): State 
       const started = action.now?.() ?? 0;
       let out: Line[];
       try {
-        out = command.run(parsed.args).map((text): Line => ({ kind: "output", text }));
+        out = command.run(parsed.args).map((text): Line => (text.startsWith(STEP) ? { kind: "step", text: text.slice(STEP.length) } : { kind: "output", text }));
       } catch (err) {
         if (!(err instanceof CommandError)) throw err;
         out = [{ kind: "error", text: `${parsed.name}: ${err.message}` }];

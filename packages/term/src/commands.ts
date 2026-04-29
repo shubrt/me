@@ -66,6 +66,9 @@ export const open: Command = {
   },
 };
 
+/** Lines prefixed with "> " are steps: what an agent would say while working. The ui renders them differently. */
+export const STEP = "> ";
+
 export function projects(content: Content): Command {
   return {
     name: "projects",
@@ -73,11 +76,12 @@ export function projects(content: Content): Command {
     run: () => {
       const width = Math.max(...content.projects.map((p) => p.name.length), 4) + 2;
       const max = Math.max(0, ...content.projects.flatMap((p) => p.activity ?? []));
-      return content.projects.map((p) => {
+      const steps = [`${STEP}reading projects.json`, `${STEP}asking github for ${content.projects.filter((p) => p.url).length} repos`];
+      return steps.concat(content.projects.map((p) => {
         const spark = p.activity ? `${blocks(p.activity, max)}  ` : "";
         const meta = [p.stars !== undefined ? `★ ${p.stars}` : null, p.pushedAt ? `pushed ${p.pushedAt.slice(0, 10)}` : null].filter(Boolean).join("  ");
         return `${p.name.padEnd(width)}${spark}${p.description}${meta ? `  ${meta}` : ""}`;
-      });
+      }));
     },
   };
 }
