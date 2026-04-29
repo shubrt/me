@@ -26,3 +26,14 @@ describe("reduce", () => {
     expect(s).toEqual({ lines: [], input: "abc" });
   });
 });
+
+describe("steps", () => {
+  it("turns > prefixed lines into step lines", () => {
+    const r = new Registry().register({ name: "work", help: "", run: () => ["> thinking", "done"] });
+    const s = reduce({ ...initial, input: "work" }, { type: "submit" }, r);
+    expect(s.lines.slice(1, 3)).toEqual([
+      { kind: "step", text: "thinking" },
+      { kind: "output", text: "done" },
+    ]);
+  });
+});
