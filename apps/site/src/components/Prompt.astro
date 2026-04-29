@@ -58,7 +58,8 @@ const content = {
           const p = document.createElement("p");
           p.textContent = l.kind === "input" ? `$ ${l.text}` : l.kind === "meta" ? `${l.text} · ${tk(state.lines.map((x) => x.text).join(" "))} tok` : l.text;
           p.className =
-            l.kind === "input" ? "text-neutral-500" : l.kind === "error" ? "text-red-700 dark:text-red-400" : l.kind === "meta" ? "text-xs text-neutral-500" : "";
+            l.kind === "input" ? "text-neutral-500" : l.kind === "error" ? "text-red-700 dark:text-red-400" : l.kind === "meta" ? "text-xs text-neutral-500" : l.kind === "step" ? "step text-neutral-600 dark:text-neutral-400" : "";
+          if (l.kind === "step") p.textContent = `⠿ ${l.text}`;
           return p;
         }),
       );
