@@ -21,3 +21,13 @@ describe("createSession", () => {
     expect(session.registry.get("ls")?.name).toBe("projects");
   });
 });
+
+describe("help", () => {
+  it("lists every registered command once, sorted", () => {
+    const session = createSession({ content, delay: 0, onChange: () => {} });
+    const names = session.registry.list().map((c) => c.name);
+    expect(names).toEqual([...names].sort());
+    expect(new Set(names).size).toBe(names.length);
+    expect(names).toContain("help");
+  });
+});
