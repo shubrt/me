@@ -6,6 +6,7 @@ export function help(registry: Registry): Command {
   return {
     name: "help",
     help: "list the available commands",
+    // Evaluated on run, not on registration, so help itself and late commands show up.
     run: () =>
       registry.list().map((c) => {
         const aliases = registry.aliasesOf(c.name);
