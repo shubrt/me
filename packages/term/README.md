@@ -1,5 +1,7 @@
 # @shubrt/term
 
+> Frozen since May 2026. Bug fixes only. The rewrite in docs/rewrite.md replaces this package with a session library that keeps the ideas and drops the code.
+
 The terminal without a screen: parsing, commands, state. No DOM, no framework. The site renders whatever this produces.
 
 ## Commands
