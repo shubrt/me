@@ -20,3 +20,15 @@ Notes to myself, collected since the terminal prototype started doing real thing
 - Do not port the old pages. Start from the prototype and the docs, not from the Astro templates.
 - Do not keep Tailwind by default. The terminal needs maybe two hundred lines of CSS and one font.
 - Do not touch it until there is a full evening. Half-evenings produced the weeknotes.
+
+## Plan, May 2026
+
+1. New app, not a refactor. `apps/web`, the old site stays in `apps/site` until the new one deploys, then it goes.
+2. One React island for the terminal. The session library stays framework-free and gets a reducer the island subscribes to. React is the right tool once the whole page is the terminal, see the December note.
+3. Output as rows, not lines. Command row, step rows with timing, result blocks. The step/meta kinds in term are the sketch.
+4. Contracts own every data shape. Repos, whoami, the lot. Zod, one file, tests.
+5. Cloudflare Workers with static assets instead of Pages. Same edge, and the worker can grow if it has to.
+6. No Tailwind, no notes, no now page. Everything the terminal cannot say does not go on the page.
+7. Tooling from the pushdraft repo: vp, sherif, commitlint. It works there, copy it.
+
+Astro major: whatever is current when I start. The site is static, the version matters less than it used to.
