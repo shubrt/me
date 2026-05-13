@@ -32,3 +32,10 @@ Notes to myself, collected since the terminal prototype started doing real thing
 7. Tooling from the pushdraft repo: vp, sherif, commitlint. It works there, copy it.
 
 Astro major: whatever is current when I start. The site is static, the version matters less than it used to.
+
+## Decisions
+
+- Name of the session library: `libs/session`. `packages/term` was never about terminals, it was about state.
+- Mascot stays, drawn properly this time. Two lines of ascii were a placeholder that people commented on more than anything else.
+- The age based version number replaces `version`. It changes every day and means something.
+- Start in August. Vacation, no meetings, full evenings.
