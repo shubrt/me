@@ -1,5 +1,7 @@
 # shubrt.me
 
+> August 2026: `apps/site` and `packages/*` are frozen. The rewrite described in `docs/rewrite.md` replaces them.
+
 My personal page. A pnpm workspace:
 
 - `apps/site`: the Astro site
