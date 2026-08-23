@@ -318,10 +318,12 @@ input {
   animation-duration: 2.4s;
 }
 .profile-main:hover .g-wink {
-  /* `forwards` deviates from the design prototype on purpose: with the
-     default fill none, Safari can hold the last composited steps() frame
-     (eye closed) instead of reverting to the base opacity after the run. */
-  animation: m-wink-once 760ms steps(1, end) 1 forwards;
+  /* Deviates from the design prototype on purpose: a run-once hover wink
+     relies on the animation ENDING cleanly, and Safari can freeze the last
+     composited steps() frame (eye closed) at that boundary. This infinite
+     variant never ends: it winks once at 80-560ms and then idles open for
+     the rest of the 40s cycle, so there is no end state to get stuck on. */
+  animation: m-wink-hover 40s steps(1, end) infinite;
 }
 
 @keyframes m-tilt {
@@ -393,16 +395,16 @@ input {
     opacity: 0;
   }
 }
-@keyframes m-wink-once {
+@keyframes m-wink-hover {
   0%,
-  8% {
+  0.2% {
     opacity: 0;
   }
-  10%,
-  72% {
+  0.3%,
+  1.3% {
     opacity: 1;
   }
-  75%,
+  1.4%,
   100% {
     opacity: 0;
   }
