@@ -9,15 +9,7 @@ export {
   type SessionData,
   type Step,
 } from "./registry.ts";
-export {
-  commandRow,
-  cookedRow,
-  expandStep,
-  line,
-  pendingRow,
-  statusRow,
-  type Row,
-} from "./rows.ts";
+export { commandRow, cookedRow, expandStep, line, pendingRow, type Row } from "./rows.ts";
 export {
   contextUsage,
   createInitialState,

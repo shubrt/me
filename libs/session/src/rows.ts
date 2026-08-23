@@ -94,11 +94,6 @@ export function cookedRow(out: number, seconds: number, tools: number): Row {
   );
 }
 
-/** Gold status line, used e.g. for the social buttons without a link. */
-export function statusRow(text: string): Row {
-  return line("⚠", "mk-gold", text, "tx-gold", "slot gap-lg");
-}
-
 /** One flow step turns into a flat list of terminal rows. */
 export function expandStep(step: Step, data: SessionData): Row[] {
   const out: Row[] = [];
