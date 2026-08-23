@@ -50,7 +50,7 @@ using `wrangler deploy`. Required repo secrets: `CLOUDFLARE_API_TOKEN` and
 
 ```bash
 vp run build
-npx wrangler deploy
+vp run -F @shubrt/web deploy
 ```
 
 ## License
