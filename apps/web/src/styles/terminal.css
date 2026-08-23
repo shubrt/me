@@ -318,7 +318,10 @@ input {
   animation-duration: 2.4s;
 }
 .profile-main:hover .g-wink {
-  animation: m-wink-once 760ms steps(1, end) 1;
+  /* `forwards` deviates from the design prototype on purpose: with the
+     default fill none, Safari can hold the last composited steps() frame
+     (eye closed) instead of reverting to the base opacity after the run. */
+  animation: m-wink-once 760ms steps(1, end) 1 forwards;
 }
 
 @keyframes m-tilt {
