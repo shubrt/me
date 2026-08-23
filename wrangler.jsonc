@@ -2,6 +2,8 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "shubrt-me",
   "compatibility_date": "2026-08-01",
+  // Binds shubrt.me on deploy; the zone must live in the same account.
+  "routes": [{ "pattern": "shubrt.me", "custom_domain": true }],
   // No worker script: static assets ride the fast path without a cold start.
   "assets": {
     "directory": "./apps/web/dist",
