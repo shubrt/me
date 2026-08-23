@@ -25,8 +25,17 @@ const lidR = cells("w");
 // The wink duplicates the right lid in its own group: blink and wink both
 // animate opacity, and on a shared group the later animation would win.
 const wink = lidR;
-// Together these two turn the straight mouth into a smile: cover hides the
-// middle of the mouth row, hole opens one row below in the panel color.
+// Small arms outside the body grid; the viewBox extends to -2..13 for them.
+// Always visible, they only ride the m-all tilt.
+const arms = [
+  { x: -1, y: 7 },
+  { x: -2, y: 8 },
+  { x: 11, y: 7 },
+  { x: 12, y: 8 },
+];
+// These three turn the straight mouth into a smile: cover hides the middle
+// of the mouth row, hole opens one row below in the panel color, and the
+// chin fills the bottom gap while the smile shows.
 const smCover = [
   { x: 4, y: 7 },
   { x: 5, y: 7 },
@@ -37,12 +46,20 @@ const smHole = [
   { x: 5, y: 8 },
   { x: 6, y: 8 },
 ];
+const smChin = [
+  { x: 3, y: 9 },
+  { x: 4, y: 9 },
+  { x: 5, y: 9 },
+  { x: 6, y: 9 },
+  { x: 7, y: 9 },
+];
 ---
 
-<svg class="mascot" viewBox="0 0 11 10" aria-hidden="true">
+<svg class="mascot" viewBox="-2 0 15 10" aria-hidden="true">
   <g class="m-all" fill="currentColor">
     <g class="m-body">{body.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
     <g class="g-ant">{ant.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
+    <g class="g-arms">{arms.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
     <g class="g-lidL">{lidL.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
     <g class="g-lidR">{lidR.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
     <g class="g-wink">{wink.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
@@ -50,5 +67,6 @@ const smHole = [
     <g class="g-smHole">
       {smHole.map((c) => <rect x={c.x} y={c.y} width="1" height="1" fill="#090807" />)}
     </g>
+    <g class="g-smChin">{smChin.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
   </g>
 </svg>
