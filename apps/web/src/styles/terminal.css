@@ -276,7 +276,7 @@ input {
 
 /* ---------- mascot: pixel grid with a few small tells ---------- */
 .mascot {
-  width: 62px;
+  width: 84px;
   height: 56px;
   flex: 0 0 auto;
   color: var(--accent);
@@ -291,7 +291,8 @@ input {
 .g-lidR,
 .g-wink,
 .g-smCover,
-.g-smHole {
+.g-smHole,
+.g-smChin {
   opacity: 0;
 }
 
@@ -309,7 +310,8 @@ input {
   animation: m-wink 23s steps(1, end) 6s infinite;
 }
 .g-smCover,
-.g-smHole {
+.g-smHole,
+.g-smChin {
   animation: m-smile 17s steps(1, end) 11s infinite;
 }
 .is-busy .g-ant {
@@ -809,7 +811,7 @@ input {
     padding: 15px;
   }
   .mascot {
-    width: 50px;
+    width: 69px;
     height: 46px;
   }
   .command-nav {
@@ -873,7 +875,7 @@ input {
     gap: 10px;
   }
   .mascot {
-    width: 44px;
+    width: 60px;
     height: 40px;
   }
   .command-stats {
@@ -898,7 +900,8 @@ input {
   .g-lidR,
   .g-wink,
   .g-smCover,
-  .g-smHole {
+  .g-smHole,
+  .g-smChin {
     animation: none;
   }
   .profile-main:hover .g-wink {
