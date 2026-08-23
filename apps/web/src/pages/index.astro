@@ -39,8 +39,16 @@ const description =
     <meta name="twitter:description" content={description} />
   </head>
   <body>
+    {/* Startup: the app icon opens on a dark desktop, then the window scales in.
+        Pure CSS — the veil fades itself out and the terminal's win-open
+        animation ends at the resting state, so no JS is needed to run it. */}
+    <div class="boot" aria-hidden="true">
+      <div class="boot-icon"><Mascot variant="boot" /></div>
+      <div class="boot-label">shubrt.me</div>
+      <div class="boot-note">opening session</div>
+    </div>
     <div class="page">
-      <main class="terminal">
+      <main class="terminal is-opening">
         <header class="windowbar">
           <div class="traffic">
             <span class="dot dot-red"></span>
@@ -101,5 +109,14 @@ const description =
         </div>
       </main>
     </div>
+    <script>
+      // Drop the boot overlay once its fade finishes. It is already
+      // invisible and pointer-events: none by then, this is only cleanup.
+      // Under reduced motion the veil never animates and stays display: none.
+      const boot = document.querySelector(".boot");
+      boot?.addEventListener("animationend", (ev) => {
+        if (ev.target === boot) boot.remove();
+      });
+    </script>
   </body>
 </html>
