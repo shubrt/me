@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "shubrt-me",
+  "compatibility_date": "2026-08-01",
+  // No worker script: static assets ride the fast path without a cold start.
+  "assets": {
+    "directory": "./apps/web/dist",
+    "not_found_handling": "404-page",
+  },
+}

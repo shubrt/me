@@ -1,0 +1,29 @@
+packages:
+  - "apps/*"
+  - "libs/*"
+  - "tools/*"
+
+allowBuilds:
+  bun: true
+  esbuild: true
+  sharp: true
+  workerd: true
+
+# Hoist type packages to the root node_modules so tsc can name inferred
+# types by bare specifier during declaration checks (avoids TS2742 under
+# pnpm's isolated store).
+publicHoistPattern:
+  - "*types*"
+
+catalog:
+  astro: ^7.2.4
+  "@astrojs/react": ^6.0.4
+  "@astrojs/check": ^0.9.10
+  react: ^19.2.0
+  react-dom: ^19.2.0
+  "@types/react": ^19.2.0
+  "@types/react-dom": ^19.2.0
+  zod: ^4.4.3
+  typescript: ^5.9.2
+  vite-plus: ^0.1.21
+  wrangler: ^4.0.0
