@@ -1,0 +1,54 @@
+---
+// Pixel-grid mark, 11x10, one <rect> per set cell. Letters name animation
+// groups: # body, a antenna, e left lid, w right lid; dots are holes
+// (eyes and mouth). All motion is CSS in terminal.css.
+const grid = [
+  "....aaa....",
+  ".....a.....",
+  ".#########.",
+  "###########",
+  "##ee###ww##",
+  "##ee###ww##",
+  "###########",
+  "###.....###",
+  "###########",
+  ".##.....##.",
+];
+
+const cells = (ch: string) =>
+  grid.flatMap((row, y) => [...row].flatMap((c, x) => (c === ch ? [{ x, y }] : [])));
+
+const body = cells("#");
+const ant = cells("a");
+const lidL = cells("e");
+const lidR = cells("w");
+// The wink duplicates the right lid in its own group: blink and wink both
+// animate opacity, and on a shared group the later animation would win.
+const wink = lidR;
+// Together these two turn the straight mouth into a smile: cover hides the
+// middle of the mouth row, hole opens one row below in the panel color.
+const smCover = [
+  { x: 4, y: 7 },
+  { x: 5, y: 7 },
+  { x: 6, y: 7 },
+];
+const smHole = [
+  { x: 4, y: 8 },
+  { x: 5, y: 8 },
+  { x: 6, y: 8 },
+];
+---
+
+<svg class="mascot" viewBox="0 0 11 10" aria-hidden="true">
+  <g class="m-all" fill="currentColor">
+    <g class="m-body">{body.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
+    <g class="g-ant">{ant.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
+    <g class="g-lidL">{lidL.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
+    <g class="g-lidR">{lidR.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
+    <g class="g-wink">{wink.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
+    <g class="g-smCover">{smCover.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
+    <g class="g-smHole">
+      {smHole.map((c) => <rect x={c.x} y={c.y} width="1" height="1" fill="#090807" />)}
+    </g>
+  </g>
+</svg>

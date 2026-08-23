@@ -1,11 +1,37 @@
-node_modules/
-dist/
-.astro/
-.DS_Store
-.env
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# still no lockfile, see docs/monorepo.md
-pnpm-lock.yaml
-package-lock.json
-bun.lock
-bun.lockb
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# misc
+.DS_Store
+*.pem
+/.t3code/
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env*
+!/.env.example
+
+# typescript
+dist/
+.cache
+
+# production build
+.output/
+
+# vite plus
+.vite/
+
+# astro
+.astro/
+
+# wrangler
+.wrangler/

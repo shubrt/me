@@ -1,29 +1,58 @@
 # shubrt.me
 
-> August 2026: `apps/site` and `packages/*` are frozen. The rewrite described in `docs/rewrite.md` replaces them.
+Personal site: a coding-agent terminal as a portfolio. Astro 7 with a single
+React island, deployed as static assets on Cloudflare Workers.
 
-My personal page. A pnpm workspace:
+Production runs at `https://shubrt.me`.
 
-- `apps/site`: the Astro site
-- `packages/term`: the terminal core behind the prompt on the start page. Parsing, commands, history, completion. No DOM.
+## Packages
 
-Commits follow conventional commits, checked by commitlint on commit.
+- `apps/web`: Astro site, the terminal shell and the one React island
+- `libs/session`: terminal core — commands, reducer, scheduling; no React, no DOM
+- `libs/contracts`: zod schemas and types for every data shape
 
-```sh
-pnpm install
-pnpm dev
+GitHub repo data is fetched at build time and cached in
+`apps/web/data/repos.cache.json`; the committed cache is the fallback when the
+API is unreachable. A daily deploy cron keeps repos and the age-based version
+fresh.
+
+## Local setup
+
+Requirements: [Vite+](https://viteplus.dev) (`vp`), Node 22+ and Bun 1.3.10+.
+
+```bash
+vp i
+vp run -F @shubrt/web dev
 ```
 
-`npm run lint` runs Biome, `npm run format` fixes what it can.
+`GITHUB_TOKEN` is optional; without it the unauthenticated GitHub rate limit
+applies, which is enough for local builds.
 
-Deployed with Cloudflare Pages on every push to `main`. Build command is `npm run build`, output is `dist`.
+## Checks
 
-## Notes
+```bash
+vp run qa
+```
 
-The `/notes` page will hold short notes, one thing learned per note. Not a blog. Content will live in a collection once there is content.
+`qa` runs formatting, linting, `sherif`, typechecks and the test suite. Tests
+live in each package's `test/` directory and run from the repository root:
 
-## Pages
+```bash
+vp test run     # single pass
+vp test watch   # watch mode
+```
 
-- `/`, `/uses`, `/now`, `/imprint`: plain Astro pages in `src/pages`
-- `/projects`: `src/data/projects.json`, enriched from the GitHub API at build time
-- `/notes`: markdown in `src/content/notes`, one note per file, with RSS and JSON feeds
+## Deploy
+
+Every push to `main` (and a daily cron) builds and deploys via GitHub Actions
+using `wrangler deploy`. Required repo secrets: `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID`. Manual deploy:
+
+```bash
+vp run build
+npx wrangler deploy
+```
+
+## License
+
+Private, all rights reserved.
