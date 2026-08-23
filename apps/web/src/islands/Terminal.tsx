@@ -5,7 +5,6 @@ import {
   prepareData,
   reduce,
   resolve,
-  statusRow,
   contextUsage,
   type Row,
   type SessionData,
@@ -111,8 +110,8 @@ export default function Terminal({ repos, whoami, seed, children }: Props) {
       if (ev.key.length === 1 || ev.key === "Backspace") input.focus();
     };
 
-    // The profile chips and the static social buttons live outside React's
-    // tree, so both are handled by delegation.
+    // The profile chips are static children outside React's tree, so they
+    // are handled by delegation.
     const onDocClick = (ev: MouseEvent) => {
       const target = ev.target instanceof Element ? ev.target : null;
       const chip = target?.closest("[data-cmd]");
@@ -120,15 +119,6 @@ export default function Terminal({ repos, whoami, seed, children }: Props) {
         const name = chip.getAttribute("data-cmd") ?? "";
         dispatch({ type: "input", value: name, caret: name.length });
         inputRef.current?.focus();
-        return;
-      }
-      const social = target?.closest("[data-social]");
-      if (social) {
-        stick.current = true;
-        dispatch({
-          type: "note",
-          row: statusRow(`${social.getAttribute("data-social")} link not set yet`),
-        });
       }
     };
 
