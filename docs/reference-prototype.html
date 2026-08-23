@@ -115,6 +115,26 @@
           @keyframes m-wink-once { 0%, 8% { opacity: 0 } 10%, 72% { opacity: 1 } 75%, 100% { opacity: 0 } }
           @keyframes m-smile { 0%, 1% { opacity: 0 } 1.2%, 7.5% { opacity: 1 } 7.7%, 100% { opacity: 0 } }
 
+          /* ---------- startup: app icon on the desktop, then the window ---------- */
+          .boot { position: fixed; z-index: 50; inset: 0; pointer-events: none; display: grid; gap: 18px; place-content: center; justify-items: center; background: radial-gradient(120% 90% at 50% 40%, #17130f 0%, #000 70%); animation: boot-veil 1.5s ease-in 1.15s forwards; }
+          .boot-icon { display: grid; width: 132px; height: 132px; place-items: center; border: 1px solid rgba(255,255,255,0.14); border-radius: 30px; background: linear-gradient(180deg, #ff9878 0%, var(--accent) 58%, #e8613b 100%); box-shadow: 0 26px 60px rgba(255,128,92,0.22), inset 0 1px 0 rgba(255,255,255,0.35); animation: boot-icon 1.6s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+          .boot-glyph { width: 78px; height: 56px; shape-rendering: crispEdges; }
+          .boot-label { color: #e9e7e2; font-size: 0.82rem; letter-spacing: 0.02em; animation: boot-label 1.4s ease-out both; }
+          .boot-note { color: #5f5d59; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; animation: boot-label 1.6s ease-out 0.25s both; }
+          .terminal.is-opening { animation: win-open 1.77s cubic-bezier(0.16, 0.9, 0.3, 1) both; }
+
+          @keyframes boot-veil { 0%, 62% { opacity: 1; visibility: visible } 100% { opacity: 0; visibility: hidden } }
+          @keyframes boot-icon {
+            0% { opacity: 0; transform: scale(0.42) }
+            26% { opacity: 1; transform: scale(1.04) }
+            38% { transform: scale(0.97) }
+            48%, 64% { transform: scale(1) }
+            72% { transform: scale(0.94) }
+            100% { opacity: 0; transform: scale(1.55) }
+          }
+          @keyframes boot-label { 0%, 22% { opacity: 0; transform: translateY(4px) } 55% { opacity: 1; transform: none } 78% { opacity: 1 } 100% { opacity: 0 } }
+          @keyframes win-open { 0%, 64% { opacity: 0; transform: scale(0.9) translateY(10px) } 100% { opacity: 1; transform: none } }
+
           /* ---------- repo table: every row is a link to github ---------- */
           .repo-row { display: grid; width: 100%; grid-template-columns: 26px minmax(120px, 1fr) 104px 58px 92px 48px; gap: 10px; align-items: center; min-height: 32px; border-bottom: 1px solid #1e1c1b; color: inherit; font-size: 0.74rem; text-decoration: none; }
           .repo-row:hover { background: #131110; color: inherit; }
@@ -234,12 +254,21 @@
           @media (prefers-reduced-motion: reduce) {
             .cursor, .m-all, .g-ant, .g-lidL, .g-lidR, .g-wink, .g-smCover, .g-smHole, .g-smChin { animation: none; }
             .profile-main:hover .g-wink { animation: none; }
+            .boot { display: none; }
+            .terminal.is-opening { animation: none; }
           }
         </style>
       </helmet>
 
+      <sc-if value="{{ booting }}" hint-placeholder-val="{{ true }}">
+      <div class="boot" aria-hidden="true">
+        <div class="boot-icon"><svg class="boot-glyph" viewBox="-2 0 15 10" aria-hidden="true"><g fill="#fff"><g class="m-body"><rect x="1" y="2" width="1" height="1"></rect><rect x="2" y="2" width="1" height="1"></rect><rect x="3" y="2" width="1" height="1"></rect><rect x="4" y="2" width="1" height="1"></rect><rect x="5" y="2" width="1" height="1"></rect><rect x="6" y="2" width="1" height="1"></rect><rect x="7" y="2" width="1" height="1"></rect><rect x="8" y="2" width="1" height="1"></rect><rect x="9" y="2" width="1" height="1"></rect><rect x="0" y="3" width="1" height="1"></rect><rect x="1" y="3" width="1" height="1"></rect><rect x="2" y="3" width="1" height="1"></rect><rect x="3" y="3" width="1" height="1"></rect><rect x="4" y="3" width="1" height="1"></rect><rect x="5" y="3" width="1" height="1"></rect><rect x="6" y="3" width="1" height="1"></rect><rect x="7" y="3" width="1" height="1"></rect><rect x="8" y="3" width="1" height="1"></rect><rect x="9" y="3" width="1" height="1"></rect><rect x="10" y="3" width="1" height="1"></rect><rect x="0" y="4" width="1" height="1"></rect><rect x="1" y="4" width="1" height="1"></rect><rect x="4" y="4" width="1" height="1"></rect><rect x="5" y="4" width="1" height="1"></rect><rect x="6" y="4" width="1" height="1"></rect><rect x="9" y="4" width="1" height="1"></rect><rect x="10" y="4" width="1" height="1"></rect><rect x="0" y="5" width="1" height="1"></rect><rect x="1" y="5" width="1" height="1"></rect><rect x="4" y="5" width="1" height="1"></rect><rect x="5" y="5" width="1" height="1"></rect><rect x="6" y="5" width="1" height="1"></rect><rect x="9" y="5" width="1" height="1"></rect><rect x="10" y="5" width="1" height="1"></rect><rect x="0" y="6" width="1" height="1"></rect><rect x="1" y="6" width="1" height="1"></rect><rect x="2" y="6" width="1" height="1"></rect><rect x="3" y="6" width="1" height="1"></rect><rect x="4" y="6" width="1" height="1"></rect><rect x="5" y="6" width="1" height="1"></rect><rect x="6" y="6" width="1" height="1"></rect><rect x="7" y="6" width="1" height="1"></rect><rect x="8" y="6" width="1" height="1"></rect><rect x="9" y="6" width="1" height="1"></rect><rect x="10" y="6" width="1" height="1"></rect><rect x="0" y="7" width="1" height="1"></rect><rect x="1" y="7" width="1" height="1"></rect><rect x="2" y="7" width="1" height="1"></rect><rect x="8" y="7" width="1" height="1"></rect><rect x="9" y="7" width="1" height="1"></rect><rect x="10" y="7" width="1" height="1"></rect><rect x="0" y="8" width="1" height="1"></rect><rect x="1" y="8" width="1" height="1"></rect><rect x="2" y="8" width="1" height="1"></rect><rect x="3" y="8" width="1" height="1"></rect><rect x="4" y="8" width="1" height="1"></rect><rect x="5" y="8" width="1" height="1"></rect><rect x="6" y="8" width="1" height="1"></rect><rect x="7" y="8" width="1" height="1"></rect><rect x="8" y="8" width="1" height="1"></rect><rect x="9" y="8" width="1" height="1"></rect><rect x="10" y="8" width="1" height="1"></rect><rect x="1" y="9" width="1" height="1"></rect><rect x="2" y="9" width="1" height="1"></rect><rect x="8" y="9" width="1" height="1"></rect><rect x="9" y="9" width="1" height="1"></rect></g><g class="g-ant"><rect x="4" y="0" width="1" height="1"></rect><rect x="5" y="0" width="1" height="1"></rect><rect x="6" y="0" width="1" height="1"></rect><rect x="5" y="1" width="1" height="1"></rect></g><g class="g-arms"><rect x="-1" y="7" width="1" height="1"></rect><rect x="-2" y="8" width="1" height="1"></rect><rect x="11" y="7" width="1" height="1"></rect><rect x="12" y="8" width="1" height="1"></rect></g></g></svg></div>
+        <div class="boot-label">shubrt.me</div>
+        <div class="boot-note">opening session</div>
+      </div>
+      </sc-if>
       <div class="page" data-screen-label="Agent terminal">
-        <main class="terminal">
+        <main class="{{ terminalCls }}">
           <header class="windowbar">
             <div class="traffic">
               <span class="dot dot-red"></span>
@@ -496,7 +525,8 @@
             menuIndex: 0,
             dismissed: false,
             tokens: this.round100(this.rnd(11200, 13800)),
-            busy: false
+            busy: false,
+            booting: true
           };
 
           this.onChange = this.onChange.bind(this);
@@ -1018,6 +1048,7 @@
         }
 
         componentDidMount() {
+          this.bootTimer = window.setTimeout(function () { this.setState({ booting: false }); }.bind(this), 2100);
           if (this.inputRef.current) { this.inputRef.current.focus(); }
           document.addEventListener("keydown", this.onDocKey);
         }
@@ -1030,6 +1061,7 @@
         }
 
         componentWillUnmount() {
+          if (this.bootTimer) { window.clearTimeout(this.bootTimer); }
           document.removeEventListener("keydown", this.onDocKey);
           if (this.spin) { window.clearInterval(this.spin); }
           if (this.timer) { window.clearTimeout(this.timer); }
@@ -1141,6 +1173,8 @@
 
           return {
             rows: this.state.rows,
+            booting: this.state.booting,
+            terminalCls: this.state.booting ? "terminal is-opening" : "terminal",
             version: this.ageVersion(),
             profileCls: this.state.busy ? "profile-panel is-busy" : "profile-panel",
             input: this.state.input,

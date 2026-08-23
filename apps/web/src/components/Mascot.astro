@@ -2,6 +2,12 @@
 // Pixel-grid mark, 11x10, one <rect> per set cell. Letters name animation
 // groups: # body, a antenna, e left lid, w right lid; dots are holes
 // (eyes and mouth). All motion is CSS in terminal.css.
+//
+// variant "boot" is the white glyph inside the startup app icon: body,
+// antenna and arms only, no tilt, no lid/wink/smile groups.
+type Props = { variant?: "full" | "boot" };
+const { variant = "full" } = Astro.props;
+
 const grid = [
   "....aaa....",
   ".....a.....",
@@ -55,8 +61,34 @@ const smChin = [
 ];
 ---
 
-<svg class="mascot" viewBox="-2 0 15 10" aria-hidden="true">
-  <g class="m-all" fill="currentColor">
+{
+  variant === "boot" && (
+    <svg class="boot-glyph" viewBox="-2 0 15 10" aria-hidden="true">
+      <g fill="#fff">
+        <g class="m-body">
+          {body.map((c) => (
+            <rect x={c.x} y={c.y} width="1" height="1" />
+          ))}
+        </g>
+        <g class="g-ant">
+          {ant.map((c) => (
+            <rect x={c.x} y={c.y} width="1" height="1" />
+          ))}
+        </g>
+        <g class="g-arms">
+          {arms.map((c) => (
+            <rect x={c.x} y={c.y} width="1" height="1" />
+          ))}
+        </g>
+      </g>
+    </svg>
+  )
+}
+
+{
+  variant === "full" && (
+    <svg class="mascot" viewBox="-2 0 15 10" aria-hidden="true">
+      <g class="m-all" fill="currentColor">
     <g class="m-body">{body.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
     <g class="g-ant">{ant.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
     <g class="g-arms">{arms.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
@@ -68,5 +100,7 @@ const smChin = [
       {smHole.map((c) => <rect x={c.x} y={c.y} width="1" height="1" fill="#090807" />)}
     </g>
     <g class="g-smChin">{smChin.map((c) => <rect x={c.x} y={c.y} width="1" height="1" />)}</g>
-  </g>
-</svg>
+      </g>
+    </svg>
+  )
+}
