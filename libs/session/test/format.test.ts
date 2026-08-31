@@ -29,4 +29,9 @@ describe("ageVersion", () => {
     expect(ageVersion(new Date(2026, 7, 22))).toBe("v27.11.4");
     expect(ageVersion(new Date(2026, 8, 18))).toBe("v28.0.0");
   });
+
+  it("borrows a month when the day is before the birthday", () => {
+    // 17 Sep: one day short of the birthday, so 27 years, 11 months, 30 days.
+    expect(ageVersion(new Date(2026, 8, 17))).toBe("v27.11.30");
+  });
 });
