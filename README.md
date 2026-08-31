@@ -53,6 +53,11 @@ vp run build
 vp run -F @shubrt/web deploy
 ```
 
+## Docs
+
+- `docs/implementation-plan.md`: the brief the first version was built from
+- `docs/reference-prototype.html`: the static prototype the terminal design follows
+
 ## License
 
 Private, all rights reserved.
