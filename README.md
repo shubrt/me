@@ -18,7 +18,7 @@ fresh.
 
 ## Local setup
 
-Requirements: [Vite+](https://viteplus.dev) (`vp`), Node 22+ and Bun 1.3.10+.
+Requirements: [Vite+](https://viteplus.dev) (`vp`), pnpm 11, Node 22+ and Bun 1.3.10+.
 
 ```bash
 vp i
