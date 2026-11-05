@@ -1,0 +1,22 @@
+/* The page ends at 1280: above that the rule runs full width, the text does not. */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px 16px;
+  padding: 18px max(var(--gutter), (100% - 1208px) / 2);
+  border-top: 1px solid var(--hairline);
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.footer .links {
+  display: flex;
+  gap: 11px;
+}
+
+/* Tap target above 24px; the footer padding gives these 2px back. */
+.footer a {
+  padding-block: 2px;
+}

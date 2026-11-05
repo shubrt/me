@@ -1,0 +1,836 @@
+/* "Sound familiar?": eight windows pile up, merge into one card, and the card runs down the
+   guide line onto the first step. chaos.astro drives [data-state] on .chaos:
+   idle (not in view yet), play (the sequence), mess (windows back in their end state),
+   tidy (the card). The rules outside the motion block are the static result, which is all
+   that no-JS and reduced-motion visitors get. */
+.chaos {
+  position: relative;
+  z-index: 2;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.chaos h2 {
+  font-size: clamp(32px, 4.6vw, 58px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+.chaos .box {
+  container-type: inline-size;
+}
+
+/* --cx/--cy: the point the windows merge into, on the same grid as their coordinates. */
+.chaos .stage {
+  --u: min(1px, 100cqw / 1120);
+  --cx: 560;
+  --cy: 171;
+  position: relative;
+  width: calc(var(--u) * 1120);
+  height: calc(var(--u) * 600);
+  margin: 22px auto 0;
+  font-size: calc(var(--u) * 16);
+}
+
+.chaos .pile {
+  position: absolute;
+  inset: 0;
+}
+
+.chaos .window {
+  --px: var(--x);
+  --py: var(--y);
+  --pw: var(--w);
+  --ph: var(--h);
+  --dx: calc(var(--u) * (var(--cx) - var(--px) - var(--pw) / 2));
+  --dy: calc(var(--u) * (var(--cy) - var(--py) - var(--ph) / 2));
+  position: absolute;
+  left: calc(var(--u) * var(--px));
+  top: calc(var(--u) * var(--py));
+  width: calc(var(--u) * var(--pw));
+  height: calc(var(--u) * var(--ph));
+  overflow: hidden;
+  rotate: var(--r);
+  font-size: calc(var(--u) * 14);
+  line-height: 1.35;
+  text-align: left;
+  background: #fff;
+  border-radius: calc(var(--u) * 11);
+  box-shadow:
+    0 0 0 calc(var(--u) * 1) #e1e1dd,
+    0 calc(var(--u) * 16) calc(var(--u) * 44) rgba(0, 0, 0, 0.13);
+}
+
+.chaos .bar {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 5);
+  height: calc(var(--u) * 32);
+  padding: 0 calc(var(--u) * 12);
+  font-size: calc(var(--u) * 12);
+  color: #70706a;
+  background: #fafaf8;
+  border-bottom: calc(var(--u) * 1) solid #ecece8;
+}
+
+.chaos .bar > i {
+  flex: none;
+  width: calc(var(--u) * 9);
+  height: calc(var(--u) * 9);
+  background: #e0e0dc;
+  border-radius: 50%;
+}
+
+.chaos .bar > span {
+  flex: 1;
+  margin-right: calc(var(--u) * 32);
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* scene: chat */
+.chaos .message {
+  display: flex;
+  gap: calc(var(--u) * 9);
+  padding: calc(var(--u) * 7) calc(var(--u) * 12) calc(var(--u) * 3);
+}
+
+.chaos .avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: calc(var(--u) * 28);
+  height: calc(var(--u) * 28);
+  font-size: calc(var(--u) * 12);
+  font-weight: 600;
+  border-radius: calc(var(--u) * 7);
+}
+
+.chaos .message b {
+  font-size: calc(var(--u) * 13);
+  font-weight: 600;
+}
+
+.chaos .message em {
+  margin-left: calc(var(--u) * 6);
+  font-size: calc(var(--u) * 11);
+  font-style: normal;
+  color: #747470;
+}
+
+.chaos .message p {
+  font-size: calc(var(--u) * 14.5);
+  line-height: 1.3;
+}
+
+/* scene: calendar */
+.chaos .calendar {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: calc(100% - var(--u) * 32);
+}
+
+.chaos .calendar > span {
+  height: calc(var(--u) * 22);
+  font-size: calc(var(--u) * 11);
+  line-height: calc(var(--u) * 22);
+  text-align: center;
+  color: #77776f;
+  border-right: calc(var(--u) * 1) solid #f1f1ed;
+  border-bottom: calc(var(--u) * 1) solid #ecece8;
+}
+
+.chaos .slot {
+  position: absolute;
+  left: calc(var(--c) * 20% + var(--u) * 2);
+  top: calc(var(--u) * (24 + var(--y)));
+  width: calc(20% - var(--u) * 4);
+  height: calc(var(--u) * var(--h));
+  padding: calc(var(--u) * 2) calc(var(--u) * 5);
+  overflow: hidden;
+  font-size: calc(var(--u) * 10.5);
+  font-weight: 500;
+  line-height: 1.2;
+  background: #e9edf6;
+  border-left: calc(var(--u) * 2.5) solid #8099cc;
+  border-radius: calc(var(--u) * 3);
+}
+
+.chaos .slot.highlight {
+  background: #fdeae3;
+  border-left-color: var(--acc);
+}
+
+/* scene: spreadsheet */
+.chaos .sheet {
+  display: grid;
+  grid-template-columns: calc(var(--u) * 24) 1.5fr 1fr 1fr 1fr;
+  font-size: calc(var(--u) * 13.5);
+}
+
+.chaos .sheet span {
+  position: relative;
+  height: calc(var(--u) * 30);
+  padding: 0 calc(var(--u) * 8);
+  line-height: calc(var(--u) * 30);
+  white-space: nowrap;
+  border-right: calc(var(--u) * 1) solid #e6e6e2;
+  border-bottom: calc(var(--u) * 1) solid #e6e6e2;
+}
+
+.chaos .sheet .header {
+  height: calc(var(--u) * 24);
+  font-size: calc(var(--u) * 11);
+  line-height: calc(var(--u) * 24);
+  text-align: center;
+  color: #8a8a84;
+  background: #f4f4f1;
+}
+
+.chaos .sheet .number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.chaos .sheet .bold {
+  font-weight: 700;
+}
+
+.chaos .sheet i {
+  position: absolute;
+  right: calc(var(--u) * 8);
+  top: 0;
+  font-style: normal;
+}
+
+.chaos .sheet .value {
+  opacity: 0;
+}
+
+.chaos .sheet .error {
+  font-weight: 700;
+  color: #d4322c;
+}
+
+.chaos .note {
+  position: absolute;
+  right: calc(var(--u) * 10);
+  bottom: calc(var(--u) * 3);
+  padding: calc(var(--u) * 7) calc(var(--u) * 11);
+  font-size: calc(var(--u) * 13.5);
+  font-weight: 700;
+  background: #ffe98f;
+  box-shadow: 0 calc(var(--u) * 5) calc(var(--u) * 12) rgba(0, 0, 0, 0.14);
+  transform: rotate(-3deg);
+}
+
+/* scene: macro */
+.chaos .code {
+  padding: calc(var(--u) * 10) calc(var(--u) * 12);
+  font:
+    calc(var(--u) * 12.5)/1.5 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  letter-spacing: 0;
+  white-space: pre;
+}
+
+.chaos .comment {
+  color: #2a8250;
+}
+
+.chaos .dialog {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--u) * 92);
+  width: calc(var(--u) * 300);
+  margin-left: calc(var(--u) * -150);
+  padding: calc(var(--u) * 12) calc(var(--u) * 14);
+  font-size: calc(var(--u) * 14);
+  background: #fff;
+  border-radius: calc(var(--u) * 9);
+  box-shadow:
+    0 0 0 calc(var(--u) * 1) #cfcfca,
+    0 calc(var(--u) * 12) calc(var(--u) * 30) rgba(0, 0, 0, 0.24);
+}
+
+.chaos .dialog b {
+  display: block;
+  font-size: calc(var(--u) * 15);
+  font-weight: 700;
+}
+
+.chaos .dialog p {
+  margin-top: calc(var(--u) * 2);
+  font-size: calc(var(--u) * 13.5);
+  color: var(--muted);
+}
+
+.chaos .buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: calc(var(--u) * 6);
+  margin-top: calc(var(--u) * 9);
+}
+
+.chaos .buttons span {
+  padding: calc(var(--u) * 3) calc(var(--u) * 12);
+  font-size: calc(var(--u) * 13);
+  border-radius: calc(var(--u) * 5);
+  box-shadow: inset 0 0 0 calc(var(--u) * 1) #cfcfca;
+}
+
+.chaos .buttons .primary {
+  color: #fff;
+  background: var(--ink);
+  box-shadow: none;
+}
+
+.chaos .foot {
+  position: absolute;
+  left: calc(var(--u) * 12);
+  right: calc(var(--u) * 12);
+  bottom: calc(var(--u) * 8);
+  font-size: calc(var(--u) * 13.5);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* scene: files */
+.chaos .file {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 8);
+  height: calc(var(--u) * 34);
+  padding: 0 calc(var(--u) * 12);
+  font-size: calc(var(--u) * 14);
+  white-space: nowrap;
+  border-bottom: calc(var(--u) * 1) solid #f1f1ed;
+}
+
+.chaos .file u {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: calc(var(--u) * 20);
+  height: calc(var(--u) * 22);
+  font-size: calc(var(--u) * 7.5);
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+  background: #2a8250;
+  border-radius: calc(var(--u) * 3);
+}
+
+.chaos .file small {
+  margin-left: auto;
+  font-size: calc(var(--u) * 12);
+  color: #747470;
+}
+
+/* scene: paper */
+.chaos .paper {
+  padding: calc(var(--u) * 11) calc(var(--u) * 13);
+}
+
+.chaos .paper > p {
+  font-size: calc(var(--u) * 14.5);
+  line-height: 1.3;
+}
+
+.chaos .task {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 9);
+  padding: calc(var(--u) * 6) 0;
+  font-size: calc(var(--u) * 14);
+  border-top: calc(var(--u) * 1) solid #f1f1ed;
+}
+
+.chaos .task:first-of-type {
+  margin-top: calc(var(--u) * 8);
+}
+
+.chaos .task small {
+  margin-left: auto;
+  font-size: calc(var(--u) * 12.5);
+  font-weight: 600;
+  color: #d4322c;
+}
+
+.chaos .mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: calc(var(--u) * 19);
+  height: calc(var(--u) * 19);
+  border-radius: 50%;
+}
+
+.chaos .mark svg {
+  width: calc(var(--u) * 11);
+  height: calc(var(--u) * 11);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chaos .mark.ok {
+  color: #179550;
+  background: #e2f5e9;
+}
+
+.chaos .mark.no {
+  color: #d4322c;
+  background: #fde7e6;
+}
+
+/* scene: reply all */
+.chaos .reply {
+  display: flex;
+  gap: calc(var(--u) * 7);
+  padding: calc(var(--u) * 7) calc(var(--u) * 12);
+  font-size: calc(var(--u) * 14);
+  line-height: 1.3;
+  border-bottom: calc(var(--u) * 1) solid #f1f1ed;
+}
+
+.chaos .reply b {
+  flex: none;
+  width: calc(var(--u) * 58);
+  font-weight: 600;
+}
+
+/* scene: the computer under the desk */
+.chaos .computer {
+  position: relative;
+  height: calc(100% - var(--u) * 32);
+  background: var(--soft);
+}
+
+.chaos .computer > p {
+  padding: calc(var(--u) * 10) calc(var(--u) * 13) 0;
+  font-size: calc(var(--u) * 14.5);
+  line-height: 1.3;
+}
+
+.chaos .desk {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--u) * 30);
+  height: calc(var(--u) * 9);
+  background: #c9c4b8;
+}
+
+.chaos .tower {
+  position: absolute;
+  left: calc(50% - var(--u) * 44);
+  bottom: 0;
+  width: calc(var(--u) * 88);
+  height: calc(var(--u) * 118);
+  background: #dcdcd6;
+  border-radius: calc(var(--u) * 4) calc(var(--u) * 4) 0 0;
+  box-shadow: inset 0 0 0 calc(var(--u) * 1) #b8b8b1;
+}
+
+.chaos .tower i {
+  position: absolute;
+  left: calc(var(--u) * 12);
+  top: calc(var(--u) * 14);
+  width: calc(var(--u) * 64);
+  height: calc(var(--u) * 7);
+  background: #c6c6bf;
+  border-radius: calc(var(--u) * 1);
+}
+
+.chaos .tower u {
+  position: absolute;
+  right: calc(var(--u) * 12);
+  top: calc(var(--u) * 34);
+  width: calc(var(--u) * 8);
+  height: calc(var(--u) * 8);
+  background: #3bb36b;
+  border-radius: 50%;
+}
+
+.chaos .sign {
+  position: absolute;
+  left: calc(50% + var(--u) * 28);
+  bottom: calc(var(--u) * 30);
+  padding: calc(var(--u) * 8) calc(var(--u) * 10);
+  font-size: calc(var(--u) * 13.5);
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: center;
+  background: #ffe98f;
+  transform: rotate(5deg);
+  box-shadow: 0 calc(var(--u) * 5) calc(var(--u) * 12) rgba(0, 0, 0, 0.14);
+}
+
+.chaos .uptime {
+  position: absolute;
+  left: calc(var(--u) * 13);
+  bottom: calc(var(--u) * 8);
+  font-size: calc(var(--u) * 12.5);
+  color: var(--muted);
+}
+
+/* Toasts only ever show during the sequence. */
+.chaos .toast {
+  --px: var(--x);
+  --py: var(--y);
+  --tw: max(190px, calc(var(--u) * 262));
+  position: absolute;
+  left: min(calc(var(--u) * var(--px)), 100% - var(--tw));
+  top: calc(var(--u) * var(--py));
+  z-index: 3;
+  width: var(--tw);
+  padding: calc(var(--u) * 8) calc(var(--u) * 11);
+  rotate: var(--r);
+  font-size: max(11px, calc(var(--u) * 13.5));
+  font-weight: 500;
+  line-height: 1.25;
+  background: #fff;
+  border-radius: calc(var(--u) * 9);
+  box-shadow:
+    0 0 0 calc(var(--u) * 1) #deded9,
+    0 calc(var(--u) * 8) calc(var(--u) * 20) rgba(0, 0, 0, 0.14);
+  opacity: 0;
+}
+
+.chaos .toast.hot {
+  background: var(--acc-wash);
+}
+
+.chaos .card {
+  position: absolute;
+  left: calc(50% - var(--u) * 230);
+  top: calc(var(--u) * 96);
+  z-index: 4;
+  width: calc(var(--u) * 460);
+  padding: calc(var(--u) * 26);
+  font-size: calc(var(--u) * 30);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.035em;
+  background: #fff;
+  border-radius: calc(var(--u) * 14);
+  box-shadow:
+    0 0 0 calc(var(--u) * 1) #e1e1dd,
+    0 calc(var(--u) * 18) calc(var(--u) * 46) rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.chaos .check {
+  display: grid;
+  place-items: center;
+  width: calc(var(--u) * 46);
+  height: calc(var(--u) * 46);
+  margin: 0 auto calc(var(--u) * 12);
+  color: #fff;
+  background: var(--ink);
+  border-radius: 50%;
+}
+
+.chaos .check svg {
+  width: calc(var(--u) * 21);
+  height: calc(var(--u) * 21);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The button needs JS, so it only exists with it. Floors keep it tappable on a shrunken stage. */
+.chaos .fix {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 5;
+  display: none;
+  width: fit-content;
+  height: max(44px, calc(var(--u) * 52));
+  margin-inline: auto;
+  padding: 0 max(18px, calc(var(--u) * 26));
+  font-size: max(15px, calc(var(--u) * 18));
+  font-weight: 600;
+  border-radius: calc(var(--u) * 9);
+  box-shadow: 0 calc(var(--u) * 10) calc(var(--u) * 26) rgba(0, 0, 0, 0.28);
+}
+
+html.js .chaos .fix {
+  display: inline-flex;
+}
+
+.chaos .fix span + span,
+.chaos[data-state="tidy"] .fix span {
+  display: none;
+}
+
+.chaos[data-state="tidy"] .fix span + span {
+  display: inline;
+}
+
+.chaos[data-state="tidy"] .fix {
+  color: var(--ink);
+  background: none;
+  box-shadow: inset 0 0 0 calc(var(--u) * 1) #cfcfca;
+}
+
+.chaos[data-state="tidy"] .window {
+  opacity: 0;
+}
+
+.chaos[data-state="tidy"] .card {
+  visibility: visible;
+}
+
+/* Phones get their own grid, 360 wide and much taller, from the --m* coordinates. Window
+   content runs at 80 percent of the grid, so a window keeps the look of a small desktop one. */
+@media (max-width: 639px) {
+  .chaos .stage {
+    --mu: min(1.15px, 100cqw / 360);
+    --u: var(--mu);
+    --cx: 180;
+    --cy: 280;
+    width: calc(var(--u) * 360);
+    height: calc(var(--u) * 716);
+  }
+
+  .chaos .window {
+    --px: var(--mx);
+    --py: var(--my);
+    --pw: var(--mw);
+    --ph: var(--mh);
+  }
+
+  .chaos .window > * {
+    --u: calc(var(--mu) * 0.8);
+  }
+
+  .chaos .toast {
+    --px: var(--mx);
+    --py: var(--my);
+    --tw: calc(var(--u) * 222);
+    rotate: var(--mr);
+    font-size: max(11px, calc(var(--u) * 12.5));
+  }
+
+  .chaos .card {
+    left: calc(50% - var(--u) * 160);
+    top: calc(var(--u) * 200);
+    width: calc(var(--u) * 320);
+    padding: calc(var(--u) * 24) calc(var(--u) * 18);
+    font-size: calc(var(--u) * 25);
+  }
+
+  /* The names hide under the next window, the errors have to fit. */
+  .chaos .sheet {
+    grid-template-columns: calc(var(--u) * 24) minmax(0, 1fr) 1fr 1.3fr 1.3fr;
+  }
+
+  .chaos .sheet span {
+    overflow: hidden;
+  }
+
+  .chaos .dialog {
+    left: calc(var(--u) * 10);
+    right: calc(var(--u) * 10);
+    width: auto;
+    margin-left: 0;
+  }
+
+  .chaos .sign {
+    left: auto;
+    right: calc(var(--u) * 8);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .chaos[data-state="idle"] .window {
+    opacity: 0;
+  }
+
+  html.js .chaos[data-state="idle"] .fix {
+    visibility: hidden;
+  }
+
+  .chaos[data-state="play"] .pile {
+    animation: chaos-shake 0.09s linear 6.3s 14;
+  }
+
+  .chaos[data-state="play"] .window {
+    animation: chaos-open 0.28s var(--t) both;
+  }
+
+  .chaos[data-state="play"] .toast {
+    animation:
+      chaos-pin 0.14s var(--a) both,
+      chaos-out 0.25s 7.7s forwards;
+  }
+
+  .chaos[data-state="play"] .fix {
+    animation: chaos-reveal 0.35s 8.1s both;
+  }
+
+  .chaos[data-state="play"] .message {
+    animation: chaos-pin 0.25s calc(var(--t) + 0.2s + var(--i) * 0.384s) both;
+  }
+
+  .chaos[data-state="play"] .slot {
+    animation: chaos-pin 0.12s calc(var(--t) + 0.15s + var(--i) * 0.074s) both;
+  }
+
+  .chaos[data-state="play"] .sheet .value {
+    opacity: 1;
+    animation: chaos-out 0.1s calc(var(--t) + 0.62s + var(--i) * 0.081s) both;
+  }
+
+  .chaos[data-state="play"] .sheet .error {
+    animation: chaos-in 0.1s calc(var(--t) + 0.62s + var(--i) * 0.081s) both;
+  }
+
+  .chaos[data-state="play"] .note {
+    animation: chaos-in 0.2s calc(var(--t) + 0.1s) both;
+  }
+
+  .chaos[data-state="play"] .dialog {
+    animation: chaos-open 0.22s calc(var(--t) + 0.806s) both;
+  }
+
+  .chaos[data-state="play"] .foot {
+    animation: chaos-in 0.25s calc(var(--t) + 1.302s) both;
+  }
+
+  .chaos[data-state="play"] .file {
+    animation: chaos-pin 0.16s calc(var(--t) + 0.2s + var(--i) * 0.099s) both;
+  }
+
+  .chaos[data-state="play"] .task {
+    animation: chaos-pin 0.2s calc(var(--t) + 0.4s + var(--i) * 0.31s) both;
+  }
+
+  .chaos[data-state="play"] .reply {
+    animation: chaos-pin 0.2s calc(var(--t) + 0.2s + var(--i) * 0.26s) both;
+  }
+
+  .chaos[data-state="play"] .sign {
+    animation: chaos-pop 0.22s cubic-bezier(0.3, 1.5, 0.5, 1) calc(var(--t) + 0.558s) both;
+  }
+
+  .chaos[data-state="tidy"] .window {
+    animation: chaos-tidy 0.6s cubic-bezier(0.6, 0, 0.2, 1) calc(var(--i) * 0.07s) both;
+  }
+
+  .chaos[data-state="tidy"] .card {
+    animation:
+      chaos-pin 0.4s 0.75s both,
+      chaos-dock 0.95s cubic-bezier(0.6, 0, 0.3, 1) 2.2s forwards,
+      chaos-back 0.01s 3.5s forwards;
+  }
+
+  /* Hidden from the click until the card lands, so anyone who never clicks still sees the node. */
+  html:has(.chaos[data-state="tidy"]) [data-first-node] {
+    animation: chaos-pop 0.3s cubic-bezier(0.3, 1.5, 0.5, 1) 3.05s both;
+  }
+}
+
+@keyframes chaos-open {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--u) * 16)) scale(0.965);
+  }
+}
+
+@keyframes chaos-pin {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--u) * 7));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Keeps the button out of the tab order until it fades in. */
+@keyframes chaos-reveal {
+  from {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(calc(var(--u) * 7));
+  }
+
+  to {
+    visibility: visible;
+  }
+}
+
+@keyframes chaos-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes chaos-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes chaos-pop {
+  from {
+    transform: scale(0);
+  }
+}
+
+@keyframes chaos-shake {
+  25% {
+    transform: translate(calc(var(--u) * -3), calc(var(--u) * 2));
+  }
+
+  50% {
+    transform: translate(calc(var(--u) * 3), calc(var(--u) * -2));
+  }
+
+  75% {
+    transform: translate(calc(var(--u) * -2), calc(var(--u) * -3));
+  }
+}
+
+@keyframes chaos-tidy {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0.3);
+    rotate: 0deg;
+  }
+}
+
+/* Set on click: --dock is the way from card centre to node centre, --dock-s their width ratio. */
+@keyframes chaos-dock {
+  to {
+    opacity: 0;
+    transform: translateY(var(--dock)) scale(var(--dock-s));
+  }
+}
+
+@keyframes chaos-back {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

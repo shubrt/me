@@ -1,0 +1,19 @@
+---
+import { t, toLocalePath, type Lang } from "../helper/i18n.ts";
+import "./footer.css";
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+---
+
+<footer class="footer">
+  <span>Janis Schubert</span>
+  <div class="links">
+    <a href="https://github.com/shubrt">GitHub</a>
+    <a href={toLocalePath(lang, "/impressum/")}>{t(lang, "Impressum", "Legal notice")}</a>
+    <a href={toLocalePath(lang, "/datenschutz/")}>{t(lang, "Datenschutz", "Privacy")}</a>
+  </div>
+</footer>

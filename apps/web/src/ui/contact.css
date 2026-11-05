@@ -1,0 +1,215 @@
+.contact {
+  padding-bottom: 64px;
+  text-align: center;
+}
+
+.contact img {
+  width: 176px;
+  height: 176px;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+
+.contact .who {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.contact h2 {
+  margin-top: 14px;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+}
+
+.contact .lead {
+  max-width: 560px;
+  margin: 8px auto 0;
+  font-size: 18px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.contact form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  max-width: 600px;
+  margin: 26px auto 0;
+  text-align: left;
+}
+
+/* Off-screen rather than display:none, so bots still fill it in. */
+.contact .trap {
+  position: absolute;
+  left: -9999px;
+}
+
+.contact .field input,
+.contact .field textarea {
+  display: block;
+  width: 100%;
+  height: 46px;
+  padding: 10px 13px 11px;
+  border: 1px solid #d0d0cc;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 15px;
+}
+
+.contact .field input {
+  padding-block: 9px 12px;
+}
+
+.contact .field textarea {
+  height: 96px;
+  resize: none;
+}
+
+/* Without visible labels the placeholder has to pass 4.5:1. */
+.contact .field ::placeholder {
+  color: #747470;
+  opacity: 1;
+}
+
+.contact .wide,
+.contact fieldset,
+.contact .btn {
+  grid-column: 1 / -1;
+}
+
+.contact fieldset {
+  display: flex;
+  gap: 6px;
+  min-width: 0;
+  border: 0;
+}
+
+.contact .option {
+  position: relative;
+  flex: 1;
+}
+
+/* The radio stays focusable and clickable, stretched invisibly over its pill. */
+.contact .option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.contact .option span {
+  display: block;
+  padding: 7px 0;
+  border: 1px solid #d0d0cc;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.contact .option input:checked + span {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+
+/* Ink, not white: white on --acc is only 3.4:1 at this size. */
+.contact .option input[value="agent"]:checked + span {
+  border-color: var(--acc);
+  background: var(--acc);
+  color: var(--ink);
+}
+
+.contact .option input:focus-visible + span {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.contact .btn {
+  width: 100%;
+}
+
+.contact .btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.contact .status p {
+  display: none;
+  margin-top: 14px;
+  font-size: 15px;
+  scroll-margin-top: 40vh;
+}
+
+.contact .status p:is(:target, .on) {
+  display: block;
+}
+
+.contact:has(#sent:is(:target, .on)) :is(form, .note) {
+  display: none;
+}
+
+.contact #sent {
+  margin-top: 26px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  outline: 0;
+}
+
+.contact .note {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.contact .status a,
+.contact .note a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .contact h2 {
+    font-size: 48px;
+  }
+
+  .contact .lead {
+    font-size: 17px;
+  }
+
+  /* Below 16px iOS zooms the page when a field gets focus. */
+  .contact .field input,
+  .contact .field textarea {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .contact form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact fieldset {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .contact .option span {
+    padding: 11px 0;
+  }
+}
+
+/* Forced colours drop backgrounds, which is all that marks the selection. */
+@media (forced-colors: active) {
+  .contact .option input[value]:checked + span {
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+    forced-color-adjust: none;
+  }
+}

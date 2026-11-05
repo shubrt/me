@@ -1,0 +1,228 @@
+/* The three step sections: guide line, number circle, bento with diagram and tiles. */
+.steps .bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.steps .title {
+  display: flex;
+  grid-column: span 4;
+  flex-direction: column;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--ink);
+  color: #fff;
+}
+
+.steps .accent .title {
+  background: var(--acc);
+}
+
+.steps .title h2 {
+  margin-top: auto;
+  font-size: 62px;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+}
+
+.steps .title h3 {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.steps .title p {
+  margin-top: 6px;
+  font-size: 16.5px;
+  line-height: 1.38;
+  color: #d6d6d1;
+}
+
+/* White fails AA at this size on the approved orange (3.4:1), near-black passes (5.8:1). */
+.steps .accent .title p {
+  color: var(--ink);
+}
+
+/* Large text only needs 3:1, and at 22px only bold counts as large. */
+.steps .accent .title h3 {
+  font-weight: 700;
+}
+
+.steps .main {
+  grid-column: span 8;
+  padding: 22px 24px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px #e1e1dd;
+}
+
+.steps .accent .main {
+  box-shadow: inset 0 0 0 1px #f6c9b6;
+}
+
+.steps .diagram {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.steps .narrow {
+  display: none;
+}
+
+.steps .tile {
+  position: relative;
+  display: flex;
+  grid-column: span 4;
+  flex-direction: column;
+  padding: 20px 20px 10px;
+  border-radius: 16px;
+  background: var(--soft);
+}
+
+.steps .accent .tile {
+  background: var(--acc-tint);
+}
+
+.steps .tile h4 {
+  padding-right: 36px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.028em;
+}
+
+.steps .tile p {
+  margin-top: 3px;
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.steps .picture {
+  width: 100%;
+  height: auto;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.steps .mark {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.steps .accent .mark {
+  background: var(--acc);
+}
+
+/* 13px diagram text only reaches the 11px minimum down to this width, so it grows a little.
+   Media queries count a classic 15px scrollbar as width, the diagrams do not get that space. */
+@media (width < 1136px) {
+  .steps .main {
+    padding-inline: 16px;
+  }
+
+  .steps .title h2 {
+    font-size: 54px;
+  }
+
+  .steps svg text:is([font-size="12.5"], [font-size="13"], [font-size="13.5"], [font-size="14"]) {
+    font-size: 14.5px;
+  }
+}
+
+@media (width < 1024px) {
+  .steps .title,
+  .steps .main {
+    grid-column: 1 / -1;
+  }
+
+  .steps .title h2 {
+    font-size: 62px;
+  }
+}
+
+@media (720px <= width < 1024px) {
+  .steps .main {
+    padding-inline: 24px;
+  }
+
+  .steps .tile {
+    padding: 14px 12px 8px;
+  }
+
+  .steps .tile h4 {
+    padding-right: 30px;
+    font-size: 18px;
+  }
+
+  .steps .tile p {
+    font-size: 14px;
+  }
+
+  .steps .mark {
+    top: 10px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+  }
+
+  /* Three tiles in a row leave about 215px: the picture bleeds to the tile edge and its text
+     grows, so it stays above 11px rendered. */
+  .steps .picture {
+    width: calc(100% + 24px);
+    margin-inline: -12px;
+  }
+
+  .steps .picture text:not([font-size="30"]) {
+    font-size: 17px;
+  }
+
+  /* The table rows in the Agent picture, "Rechnungen" needs the room at that size. */
+  .steps .picture rect[width="96"] {
+    x: 194px;
+    width: 108px;
+  }
+}
+
+@media (width < 720px) {
+  .steps .main {
+    padding: 16px 12px;
+  }
+
+  .steps .wide {
+    display: none;
+  }
+
+  .steps .narrow {
+    display: block;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  .steps .tile {
+    grid-column: 1 / -1;
+    padding: 18px 16px 10px;
+  }
+
+  .steps .picture {
+    max-width: 380px;
+    margin-inline: auto;
+  }
+}

@@ -1,0 +1,88 @@
+---
+import { renderHubDiagram, renderLanesDiagram, renderMailDiagram } from "./steps-diagrams.ts";
+import { t, type Lang } from "../helper/i18n.ts";
+import { listAgentTiles, listStructureTiles, listWorkflowTiles } from "./steps-tiles.ts";
+import "./steps.css";
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+
+const steps = [
+  {
+    id: "structure",
+    title: t(lang, "Struktur", "Structure"),
+    tag: t(lang, "Die Basis.", "The foundation."),
+    text: t(
+      lang,
+      "Jede Information bekommt einen festen Platz und eine klare Quelle.",
+      "Every piece of information gets one place and one clear source.",
+    ),
+    diagram: renderHubDiagram(lang),
+    tiles: listStructureTiles(lang),
+  },
+  {
+    id: "workflow",
+    title: "Workflow",
+    tag: t(lang, "Der Ablauf.", "The process."),
+    text: t(
+      lang,
+      "Was sich wiederholt, läuft von selbst. Fehler und Lücken entstehen gar nicht erst.",
+      "What repeats runs by itself. Errors and gaps never get in.",
+    ),
+    diagram: renderLanesDiagram(lang),
+    tiles: listWorkflowTiles(lang),
+  },
+  {
+    id: "agent",
+    title: "Agent",
+    tag: t(lang, "Der Rest.", "The rest."),
+    text: t(
+      lang,
+      "KI übernimmt, was keine Regel abdeckt. Das ist weniger, als die meisten denken.",
+      "AI takes over what no rule covers. That is less than most people think.",
+    ),
+    diagram: renderMailDiagram(lang),
+    tiles: listAgentTiles(lang),
+  },
+];
+---
+
+<div class="steps">
+  {
+    steps.map((step, i) => {
+      const isAgent = step.id === "agent";
+      return (
+        <>
+          <div class:list={["guide", { "to-accent": isAgent }]} />
+          <section id={step.id} class:list={{ accent: isAgent }}>
+            <div class:list={["node", { accent: isAgent }]} data-first-node={i === 0 ? "" : undefined}>
+              {i + 1}
+            </div>
+            <div class="bento wrap">
+              <div class="title">
+                <h2>{step.title}</h2>
+                <h3>{step.tag}</h3>
+                <p>{step.text}</p>
+              </div>
+              <div class="main" set:html={step.diagram} />
+              {step.tiles.map((tile, j) => (
+                <div class="tile">
+                  <i class="mark" aria-hidden="true">
+                    {"abc"[j]}
+                  </i>
+                  <h4>{tile.title}</h4>
+                  <p>{tile.text}</p>
+                  <Fragment set:html={tile.picture} />
+                </div>
+              ))}
+            </div>
+          </section>
+        </>
+      );
+    })
+  }
+  <div class="guide from-accent"></div>
+</div>

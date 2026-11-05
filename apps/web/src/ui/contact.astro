@@ -1,0 +1,162 @@
+---
+import { Picture } from "astro:assets";
+import portrait from "../asset/portrait.jpg";
+import { t, type Lang } from "../helper/i18n.ts";
+import "./contact.css";
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+
+const MAILTO = "mailto:shubrt.me@gmail.com";
+const email = t(lang, "E-Mail", "Email");
+const about = t(lang, "Worum geht es? Optional", "What is it about? Optional");
+const topics = [
+  { value: "structure", label: t(lang, "1 Struktur", "1 Structure") },
+  { value: "workflow", label: "2 Workflow" },
+  { value: "agent", label: "3 Agent" },
+  { value: "unsure", label: t(lang, "Noch unklar", "Not sure yet") },
+];
+---
+
+<section class="contact wrap" id="contact">
+  <Picture
+    src={portrait}
+    formats={["avif", "webp"]}
+    densities={[2]}
+    quality={80}
+    width={176}
+    height={176}
+    loading="lazy"
+    alt={t(
+      lang,
+      "Porträt von Janis Schubert, lächelnd, mit Brille und Bart",
+      "Portrait of Janis Schubert, smiling, with glasses and a beard",
+    )}
+  />
+  <p class="who">{t(lang, "Janis Schubert, Software-Architekt", "Janis Schubert, software architect")}</p>
+  <h2>{t(lang, "Reden wir.", "Let's talk.")}</h2>
+  <p class="lead">
+    {
+      t(
+        lang,
+        "30 Minuten, kostenlos. Danach steht fest, wo es losgeht, auch wenn die Antwort lautet: Das braucht keine KI.",
+        "30 minutes, free. After that it is clear where to begin, even if the answer is: this does not need AI.",
+      )
+    }
+  </p>
+
+  <form method="post" action="/api/contact">
+    <input type="hidden" name="lang" value={lang} />
+    <div class="trap" aria-hidden="true">
+      <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+    </div>
+
+    <label class="field">
+      <span class="sr-only">Name</span>
+      <input type="text" name="name" required maxlength="120" autocomplete="name" placeholder="Name" />
+    </label>
+    <label class="field">
+      <span class="sr-only">{email}</span>
+      <input type="email" name="email" required maxlength="254" autocomplete="email" placeholder={email} />
+    </label>
+
+    <fieldset>
+      <legend class="sr-only">{t(lang, "Wo anfangen?", "Where to start?")}</legend>
+      {
+        topics.map(({ value, label }) => (
+          <label class="option">
+            <input type="radio" name="topic" value={value} />
+            <span>{label}</span>
+          </label>
+        ))
+      }
+    </fieldset>
+
+    <label class="field wide">
+      <span class="sr-only">{about}</span>
+      <textarea name="message" maxlength="5000" placeholder={about}></textarea>
+    </label>
+    <button class="btn" type="submit">{t(lang, "Erstgespräch vereinbaren", "Book an intro call")}</button>
+  </form>
+
+  <!-- Shown by the script, or by :target after the no-JS redirect from /api/contact. -->
+  <div class="status" role="status">
+    <p id="sent" tabindex="-1">{t(lang, "Danke. Ich melde mich.", "Thanks. I'll be in touch.")}</p>
+    <p id="error">
+      {t(lang, "Das hat nicht geklappt.", "That did not work.")}{" "}
+      <a href={MAILTO}>{t(lang, "Bitte direkt per E-Mail schreiben.", "Please send an email instead.")}</a>
+    </p>
+  </div>
+
+  <p class="note">
+    {t(lang, "Die Angaben nutze ich nur für die Antwort. Oder", "I only use these details to reply. Or")}{" "}
+    <a href={MAILTO}>{t(lang, "direkt per E-Mail", "send an email")}</a>.
+  </p>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("#contact form");
+  const button = form?.querySelector("button");
+  const sent = document.getElementById("sent");
+  const error = document.getElementById("error");
+
+  if (form && button && sent && error) {
+    for (const chip of document.querySelectorAll<HTMLAnchorElement>("a[data-topic]")) {
+      chip.addEventListener("click", (event) => selectTopic(event, chip, form));
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      error.classList.remove("on");
+
+      const isAccepted = await sendInquiry(form);
+
+      button.disabled = false;
+      if (isAccepted) {
+        sent.classList.add("on");
+        sent.focus();
+      } else {
+        error.classList.add("on");
+      }
+    });
+  }
+
+  // Towers chips pick their topic. Focus lands on the radio, not on a text field,
+  // so phones do not open the keyboard.
+  function selectTopic(event: Event, chip: HTMLAnchorElement, form: HTMLFormElement) {
+    // Once the form is swapped for the thanks there is nothing to fill in.
+    if (!form.offsetParent) return;
+
+    event.preventDefault();
+
+    const radio = form.querySelector<HTMLInputElement>(`[value="${chip.dataset.topic}"]`);
+    if (!radio) return;
+
+    radio.checked = true;
+    const isCalm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    form.scrollIntoView({ behavior: isCalm ? "instant" : "smooth", block: "center" });
+    radio.focus({ preventScroll: true });
+  }
+
+  // A request that fails counts as not accepted.
+  async function sendInquiry(form: HTMLFormElement) {
+    const body = new FormData(form);
+    body.set("elapsed", String(performance.now()));
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body,
+      });
+
+      return response.ok;
+    } catch {
+      return false;
+    }
+  }
+</script>

@@ -1,0 +1,274 @@
+---
+import { t, type Lang } from "../helper/i18n.ts";
+import "./hero.css";
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+
+const question = t(lang, "Welche Rechnungen sind überfällig?", "Which invoices are overdue?");
+const open = t(lang, "offen", "open");
+
+// `isGap`: empty until Workflow fills it. `was`: the raw value Workflow replaces.
+type Cell = { text: string; tag?: "overdue" | "paid"; isGap?: true; was?: string };
+
+const overdue: Cell = { text: t(lang, "Überfällig", "Overdue"), tag: "overdue" };
+const paid: Cell = { text: t(lang, "Bezahlt", "Paid"), tag: "paid" };
+
+const rows: (string | Cell)[][] = [
+  [
+    "Müller GmbH",
+    t(lang, "12.10.", "Oct 12"),
+    t(lang, "8.400 €", "€8,400"),
+    { ...overdue, was: open },
+  ],
+  [
+    "Weber & Sohn",
+    { text: t(lang, "05.10.", "Oct 5"), isGap: true },
+    t(lang, "3.200 €", "€3,200"),
+    { ...overdue, isGap: true },
+  ],
+  [
+    "Kaya Logistik",
+    t(lang, "30.09.", "Sep 30"),
+    { text: t(lang, "4.600 €", "€4,600"), isGap: true },
+    { ...overdue, was: open },
+  ],
+  ["Novak KG", t(lang, "01.10.", "Oct 1"), t(lang, "6.100 €", "€6,100"), paid],
+  [
+    "Lindner AG",
+    { text: t(lang, "15.10.", "Oct 15"), isGap: true },
+    t(lang, "2.200 €", "€2,200"),
+    { ...overdue, isGap: true },
+  ],
+];
+
+// Positions are --u units on the 700 wide table; `mx` (percent) and `my` (px) are the stacked layout.
+const cards = [
+  {
+    kind: "sheet",
+    badge: "XLS",
+    text: t(lang, "rechnungen_final_v3.xlsx", "invoices_final_v3.xlsx"),
+    x: 16,
+    y: 22,
+    r: -5,
+    mx: 1,
+    my: 6,
+  },
+  {
+    kind: "pdf",
+    badge: "PDF",
+    text: t(lang, "Rechnung Weber", "Invoice Weber"),
+    x: 300,
+    y: 8,
+    r: 4,
+    mx: 1,
+    my: 62,
+  },
+  {
+    kind: "mail",
+    badge: t(lang, "Mail", "Email"),
+    text: t(lang, "AW: AW: Zahlung Kaya", "RE: RE: Kaya payment"),
+    x: 448,
+    y: 92,
+    r: -3,
+    mx: 34,
+    my: 168,
+  },
+  {
+    kind: "sheet",
+    badge: "XLS",
+    text: t(lang, "Kopie von Liste (2).xlsx", "Copy of list (2).xlsx"),
+    x: 60,
+    y: 118,
+    r: 3,
+    mx: 1,
+    my: 216,
+  },
+  { kind: "image", badge: "JPG", text: "Scan_0041.jpg", x: 300, y: 190, r: -6, mx: 3, my: 118 },
+  {
+    kind: "pdf",
+    badge: "PDF",
+    text: t(lang, "Novak_alt.pdf", "Novak_old.pdf"),
+    x: 500,
+    y: 240,
+    r: 5,
+    mx: 54,
+    my: 262,
+  },
+];
+
+const exchanges = [
+  {
+    id: "exchange-first",
+    answer: t(lang, "2 Rechnungen, 8.400 €", "2 invoices, €8,400"),
+    verdict: "no",
+    mark: "M4 4l8 8M12 4l-8 8",
+  },
+  {
+    id: "exchange-second",
+    answer: t(lang, "4 Rechnungen, 18.400 €", "4 invoices, €18,400"),
+    verdict: "ok",
+    mark: "M3 8.5l3.2 3.2L13 4.5",
+  },
+];
+
+const SPARK_PATH =
+  "M12 1.5c.9 5.6 5 9.6 10.5 10.5C17 12.9 12.9 17 12 22.5 11.1 17 7 12.9 1.5 12 7 11.1 11.1 7.1 12 1.5z";
+
+function isOverdue(cell: string | Cell | undefined) {
+  return typeof cell === "object" && cell.tag === "overdue";
+}
+---
+
+<section class="hero">
+  <h1>
+    <span class="word-structure">{t(lang, "Struktur.", "Structure.")}</span>{" "}
+    <span class="word-workflow">Workflow.</span>{" "}
+    <span class="word-agent">Agent.</span>
+  </h1>
+  <p class="line">
+    {
+      t(
+        lang,
+        "Erst die Daten, dann die KI. Software-Architektur für Startups und Mittelstand.",
+        "Data first, AI second. Software architecture for startups and SMEs.",
+      )
+    }
+  </p>
+  <div class="actions">
+    <a class="btn" href="#contact">{t(lang, "Erstgespräch vereinbaren", "Book an intro call")}</a>
+    <a class="link" href="#structure">
+      {t(lang, "So arbeite ich", "How I work")}
+      <span aria-hidden="true">↓</span>
+    </a>
+  </div>
+
+  <div class="wrap fit">
+    <div
+      class="stage"
+      role="img"
+      aria-label={t(
+        lang,
+        "Beispiel: Mit verstreuten Daten gibt eine KI eine falsche Antwort, mit strukturierten die richtige.",
+        "Example: an AI gives a wrong answer on scattered data and the right one on structured data.",
+      )}
+      data-nosnippet
+    >
+      <div class="window invoices">
+        <div class="bar">
+          <i></i><i></i><i></i>
+          <span class="title">{t(lang, "Rechnungen", "Invoices")}</span>
+          <small>{t(lang, "Beispieldaten", "Sample data")}</small>
+        </div>
+        <div class="table">
+          <div class="head">
+            <span>{t(lang, "Kunde", "Customer")}</span>
+            <span>{t(lang, "Fällig", "Due")}</span>
+            <span class="right">{t(lang, "Betrag", "Amount")}</span>
+            <span>Status</span>
+          </div>
+          {
+            rows.map((cells, n) => (
+              <div class="row" style={`--n:${n}`}>
+                {isOverdue(cells.at(-1)) && <span class="selection" />}
+                {cells.map((cell, column) => {
+                  const { text, tag, isGap, was }: Cell = typeof cell === "string" ? { text: cell } : cell;
+                  return (
+                    <span class:list={["cell", { right: column === 2 }]}>
+                      {isGap && <u />}
+                      {was && <i>{was}</i>}
+                      <b class:list={{ fill: isGap || was }}>
+                        {tag ? <span class:list={["tag", tag]}>{text}</span> : text}
+                      </b>
+                    </span>
+                  );
+                })}
+              </div>
+            ))
+          }
+          <div class="sweep"></div>
+        </div>
+      </div>
+
+      {
+        cards.map(({ kind, badge, text, x, y, r, mx, my }, i) => (
+          <div
+            class="card"
+            style={`--x:${x};--y:${y};--r:${r};--tx:${300 - x};--ty:${150 - y};--i:${i};--mx:${mx};--my:${my}`}
+          >
+            <em class={kind}>{badge}</em>
+            {text}
+          </div>
+        ))
+      }
+      <div class="card note" style="--x:60;--y:212;--r:6;--tx:240;--ty:-60;--i:6;--mx:62;--my:52">
+        {t(lang, "Lindner anrufen!", "Call Lindner!")}
+      </div>
+
+      <div class="window chat">
+        <div class="chat-body">
+          <div class="chat-head">
+            <svg class="spark" viewBox="0 0 24 24"><path fill="currentColor" d={SPARK_PATH}></path></svg>
+            {t(lang, "KI-Assistent", "AI assistant")}
+          </div>
+          <div class="messages">
+            {
+              exchanges.map(({ id, answer, verdict, mark }) => (
+                <div class:list={["exchange", id]}>
+                  <div class="question">{question}</div>
+                  <div class="answer-row">
+                    <span class="avatar">
+                      <svg class="spark" viewBox="0 0 24 24">
+                        <path fill="currentColor" d={SPARK_PATH} />
+                      </svg>
+                    </span>
+                    <span class="dots">
+                      <i style="--j:0" />
+                      <i style="--j:1" />
+                      <i style="--j:2" />
+                    </span>
+                    <span class="answer">{answer}</span>
+                    <span class:list={["verdict", verdict]}>
+                      <svg viewBox="0 0 16 16">
+                        <path d={mark} />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+          <div class="input">
+            <span class="placeholder">{t(lang, "Frage stellen …", "Ask a question …")}</span>
+            <span class="typed typed-first">{question}</span>
+            <span class="typed typed-second">{question}</span>
+            <span class="send">
+              <svg viewBox="0 0 16 16"><path d="M8 13V3.5M3.5 8L8 3.5 12.5 8"></path></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // The timeline starts once the chat is visible: at load on desktop, after a short
+  // scroll on phones, where the question would otherwise play below the fold.
+  const hero = document.querySelector(".hero");
+  const chat = hero?.querySelector(".chat");
+  if (hero && chat) {
+    new IntersectionObserver(
+      ([entry], observer) => {
+        if (!entry?.isIntersecting) return;
+        hero.classList.add("play");
+        setTimeout(() => hero.classList.add("done"), 10_000);
+        observer.disconnect();
+      },
+      { threshold: 0.35 },
+    ).observe(chat);
+  }
+</script>
