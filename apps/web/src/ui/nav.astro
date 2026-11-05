@@ -1,0 +1,33 @@
+---
+import { Image } from "astro:assets";
+import portrait from "../asset/portrait.jpg";
+import { t, toLocalePath, type Lang } from "../helper/i18n.ts";
+import "./nav.css";
+import LangSwitch from "./lang-switch.astro";
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+
+const links = [
+  { href: "#structure", label: t(lang, "Struktur", "Structure") },
+  { href: "#workflow", label: "Workflow" },
+  { href: "#agent", label: "Agent" },
+];
+---
+
+<nav class="nav" aria-label={t(lang, "Hauptnavigation", "Main navigation")}>
+  <a class="brand" href={toLocalePath(lang)}>shubrt</a>
+  <div class="links">
+    {links.map(({ href, label }) => <a href={href}>{label}</a>)}
+  </div>
+  <div class="actions">
+    <LangSwitch lang={lang} />
+    <a class="btn" href="#contact">
+      <Image src={portrait} alt="" width={25} height={25} densities={[1, 2]} loading="eager" />
+      {t(lang, "Erstgespräch", "Intro call")}
+    </a>
+  </div>
+</nav>

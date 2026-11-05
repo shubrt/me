@@ -1,0 +1,128 @@
+---
+import { t, type Lang } from "../helper/i18n.ts";
+import "./towers.css";
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+
+const start = t(lang, "Start bei", "Start at");
+// A step is a column and a block of every tower. Blocks run bottom to top, in the
+// coordinates of the 300 wide picture with its ground at y=226.
+const steps = [
+  {
+    topic: "structure",
+    word: t(lang, "Struktur", "Structure"),
+    width: 220,
+    y: 168,
+    caption: t(
+      lang,
+      "Daten liegen in Excel, Postfächern und Köpfen.",
+      "Data lives in spreadsheets, inboxes and heads.",
+    ),
+    alt: t(
+      lang,
+      "Nur lose Steine, der Block Struktur fehlt noch.",
+      "Only loose bricks. The Structure block is still missing.",
+    ),
+  },
+  {
+    topic: "workflow",
+    word: "Workflow",
+    width: 170,
+    y: 108,
+    caption: t(
+      lang,
+      "Daten sind da, aber jemand pflegt sie von Hand.",
+      "The data exists, but someone maintains it by hand.",
+    ),
+    alt: t(
+      lang,
+      "Struktur steht, als Nächstes fehlt der Block Workflow.",
+      "Structure is in place. The Workflow block is next.",
+    ),
+  },
+  {
+    topic: "agent",
+    word: "Agent",
+    width: 120,
+    y: 48,
+    caption: t(
+      lang,
+      "Alles läuft, aber Denkarbeit bleibt liegen.",
+      "Everything runs, but the thinking piles up.",
+    ),
+    alt: t(
+      lang,
+      "Struktur und Workflow stehen, als Nächstes fehlt der Block Agent.",
+      "Structure and Workflow are in place. The Agent block is next.",
+    ),
+  },
+];
+
+function resolveBlockState(block: number, column: number) {
+  if (block < column) return "done";
+  if (block === column) return "next";
+  return "ahead";
+}
+---
+
+<section class="towers wrap">
+  <h2>{t(lang, "Wo anfangen?", "Where to start?")}</h2>
+  <div class="grid">
+    {
+      steps.map(({ topic, word, caption, alt }, column) => (
+        <div class="column">
+          <svg viewBox="0 46 300 184" role="img" aria-label={alt}>
+            <path d="M0 226H300" />
+            {steps.map(({ width, y }, block) => (
+              <rect
+                class={resolveBlockState(block, column)}
+                x={150 - width / 2}
+                y={y}
+                width={width}
+                height="56"
+                rx="7"
+              />
+            ))}
+            {column === 0 && (
+              <g class="debris">
+                <rect x="45" y="207" width="34" height="14" rx="2" fill="#0a0a0a" transform="rotate(-1 62 214)" />
+                <rect x="58" y="202" width="26" height="16" rx="2" fill="#0a0a0a" transform="rotate(20 71 210)" />
+                <rect x="76" y="210" width="34" height="14" rx="2" fill="#0a0a0a" transform="rotate(-11 93 217)" />
+                <rect x="90" y="210" width="26" height="16" rx="2" fill="#a8a8a2" transform="rotate(16 103 218)" />
+                <rect x="104" y="204" width="20" height="20" rx="2" fill="#a8a8a2" transform="rotate(-10 114 214)" />
+                <rect x="123" y="208" width="26" height="16" rx="2" fill="#0a0a0a" transform="rotate(8 136 216)" />
+                <rect x="134" y="210" width="34" height="14" rx="2" fill="#a8a8a2" transform="rotate(-20 151 217)" />
+                <rect x="153" y="202" width="26" height="16" rx="2" fill="#a8a8a2" transform="rotate(10 166 210)" />
+                <rect x="165" y="204" width="34" height="14" rx="2" fill="#fff" transform="rotate(-10 182 211)" />
+                <rect x="179" y="210" width="34" height="14" rx="2" fill="#0a0a0a" transform="rotate(15 196 217)" />
+                <rect x="193" y="208" width="26" height="16" rx="2" fill="#fff" transform="rotate(1 206 216)" />
+                <rect x="209" y="206" width="20" height="20" rx="2" fill="#0a0a0a" transform="rotate(-21 219 216)" />
+                <rect x="225" y="206" width="30" height="18" rx="2" fill="#a8a8a2" transform="rotate(-3 240 215)" />
+                <rect x="243" y="212" width="34" height="14" rx="2" fill="#0a0a0a" transform="rotate(16 260 219)" />
+              </g>
+            )}
+            {/* The missing first block keeps its label clear of the debris. */}
+            {steps.map(({ word: label, y }, block) => (
+              <text class={resolveBlockState(block, column)} x="150" y={column + block === 0 ? 188 : y + 34}>
+                {label}
+              </text>
+            ))}
+          </svg>
+          <p>{caption}</p>
+          <a class="chip" href="#contact" data-topic={topic}>
+            <i aria-hidden="true">{column + 1}</i>
+            <span>
+              {start} {word}
+            </span>
+            <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+      ))
+    }
+  </div>
+  <div class="guide"></div>
+</section>

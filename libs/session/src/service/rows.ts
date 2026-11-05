@@ -1,4 +1,4 @@
-import { blocks, fmt } from "./format.ts";
+import { blocks, fmt } from "../helper/format.ts";
 import type { SessionData, Step } from "./registry.ts";
 
 /**
@@ -49,50 +49,6 @@ export type Row =
 
 const LEAD = "line-marker mk-accent";
 const PLAIN = "line-marker";
-
-export function line(marker: string, mk: string, text: string, txCls: string, cls: string): Row {
-  return { kind: "line", cls, marker, mkCls: `line-marker ${mk}`, text, txCls };
-}
-
-function kvRow(
-  k: string,
-  v: string,
-  marker: string,
-  mkCls: string,
-  cls: string,
-  indent: boolean,
-): Row {
-  const placeholder = /^\[.*\]$/.test(v);
-  return {
-    kind: "kv",
-    cls,
-    marker,
-    mkCls,
-    k,
-    v,
-    rowCls: indent ? "kv-ind" : "kv-row",
-    valCls: placeholder ? "kv-ph" : "kv-val",
-  };
-}
-
-export function commandRow(label: string): Row {
-  return { kind: "command", cls: "slot gap-lg", label, stats: "" };
-}
-
-export function pendingRow(): Row {
-  return { kind: "pending", cls: "slot gap-sm", glyph: "✳", elapsed: "(0s · ↓ 0 tokens)" };
-}
-
-export function cookedRow(out: number, seconds: number, tools: number): Row {
-  const calls = `${tools} tool call${tools === 1 ? "" : "s"}`;
-  return line(
-    "✻",
-    "mk-quiet",
-    `Cooked for ${seconds.toFixed(1)}s · ${fmt(out)} tokens · ${calls}`,
-    "tx-quiet",
-    "slot gap-md",
-  );
-}
 
 /** One flow step turns into a flat list of terminal rows. */
 export function expandStep(step: Step, data: SessionData): Row[] {
@@ -193,4 +149,48 @@ export function expandStep(step: Step, data: SessionData): Row[] {
     case "hint":
       return [line("›", "mk-dim", step.text, "tx-quiet", "slot gap-sm")];
   }
+}
+
+export function commandRow(label: string): Row {
+  return { kind: "command", cls: "slot gap-lg", label, stats: "" };
+}
+
+export function pendingRow(): Row {
+  return { kind: "pending", cls: "slot gap-sm", glyph: "✳", elapsed: "(0s · ↓ 0 tokens)" };
+}
+
+export function cookedRow(out: number, seconds: number, tools: number): Row {
+  const calls = `${tools} tool call${tools === 1 ? "" : "s"}`;
+  return line(
+    "✻",
+    "mk-quiet",
+    `Cooked for ${seconds.toFixed(1)}s · ${fmt(out)} tokens · ${calls}`,
+    "tx-quiet",
+    "slot gap-md",
+  );
+}
+
+export function line(marker: string, mk: string, text: string, txCls: string, cls: string): Row {
+  return { kind: "line", cls, marker, mkCls: `line-marker ${mk}`, text, txCls };
+}
+
+function kvRow(
+  k: string,
+  v: string,
+  marker: string,
+  mkCls: string,
+  cls: string,
+  isIndented: boolean,
+): Row {
+  const isPlaceholder = /^\[.*\]$/.test(v);
+  return {
+    kind: "kv",
+    cls,
+    marker,
+    mkCls,
+    k,
+    v,
+    rowCls: isIndented ? "kv-ind" : "kv-row",
+    valCls: isPlaceholder ? "kv-ph" : "kv-val",
+  };
 }

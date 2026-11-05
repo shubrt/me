@@ -1,0 +1,33 @@
+---
+import { toLocalePath, type Lang } from "../helper/i18n.ts";
+
+type Props = {
+  lang: Lang;
+  /** The page's path without the language prefix. */
+  path?: string;
+};
+
+const { lang, path } = Astro.props;
+---
+
+<span class="lang">
+  {
+    lang === "de" ? (
+      <b>DE</b>
+    ) : (
+      <a href={toLocalePath("de", path)} hreflang="de" lang="de" aria-label="DE, Deutsch">
+        DE
+      </a>
+    )
+  }
+  {" / "}
+  {
+    lang === "en" ? (
+      <b>EN</b>
+    ) : (
+      <a href={toLocalePath("en", path)} hreflang="en" lang="en" aria-label="EN, English">
+        EN
+      </a>
+    )
+  }
+</span>

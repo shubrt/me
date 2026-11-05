@@ -1,0 +1,863 @@
+.hero {
+  container-type: inline-size;
+  padding: 40px 0 56px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: min(88px, 8vw);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.058em;
+}
+
+.hero h1 > span {
+  display: inline-block;
+}
+
+.hero .line {
+  width: min(var(--content), 100% - 2 * var(--gutter));
+  margin: 18px auto 0;
+  font-size: 21px;
+  line-height: 1.35;
+  letter-spacing: -0.018em;
+  color: var(--muted);
+  text-wrap: balance;
+}
+
+.hero .actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px 22px;
+  margin-top: 22px;
+  padding-inline: var(--gutter);
+}
+
+.hero .link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.hero .link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* The stage scales as one piece: 1u is 1px once its column is 1120 wide. */
+.hero .fit {
+  container-type: inline-size;
+  margin-top: 34px;
+}
+
+.hero .stage {
+  --u: min(1px, 100cqw / 1120);
+  position: relative;
+  width: calc(var(--u) * 1120);
+  height: calc(var(--u) * 392);
+  margin-inline: auto;
+  text-align: left;
+}
+
+.hero .window {
+  position: absolute;
+  top: calc(var(--u) * 6);
+  height: calc(var(--u) * 376);
+  overflow: hidden;
+  background: #fff;
+  border-radius: calc(var(--u) * 12);
+  box-shadow:
+    0 0 0 calc(var(--u) * 1) #e6e6e2,
+    0 calc(var(--u) * 2) calc(var(--u) * 5) rgba(0, 0, 0, 0.03),
+    0 calc(var(--u) * 22) calc(var(--u) * 54) rgba(0, 0, 0, 0.09);
+}
+
+.hero .invoices {
+  left: 0;
+  width: calc(var(--u) * 700);
+}
+
+.hero .chat {
+  left: calc(var(--u) * 724);
+  width: calc(var(--u) * 396);
+}
+
+.hero .bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 6);
+  height: calc(var(--u) * 38);
+  padding: 0 calc(var(--u) * 14);
+  font-size: max(11px, calc(var(--u) * 12.5));
+  color: #77776f;
+  border-bottom: calc(var(--u) * 1) solid #eeeeea;
+}
+
+.hero .bar > i {
+  width: calc(var(--u) * 10);
+  height: calc(var(--u) * 10);
+  border-radius: 50%;
+  background: #e2e2de;
+}
+
+.hero .bar .title {
+  flex: 1;
+  margin-right: calc(var(--u) * 42);
+  line-height: calc(var(--u) * 18);
+  text-align: center;
+}
+
+.hero .bar small {
+  position: absolute;
+  right: calc(var(--u) * 14);
+  font-size: max(11px, calc(var(--u) * 12));
+  color: #747470;
+}
+
+.hero .table {
+  --rh: 56;
+  --cols: calc(var(--u) * 230) calc(var(--u) * 118) calc(var(--u) * 124) 1fr;
+  position: relative;
+  height: calc(var(--u) * (36 + var(--rh) * 5));
+  overflow: hidden;
+  font-size: calc(var(--u) * 16);
+}
+
+.hero .head,
+.hero .row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: var(--cols);
+  align-items: center;
+  padding: 0 calc(var(--u) * 20);
+}
+
+.hero .head {
+  top: 0;
+  height: calc(var(--u) * 36);
+  font-size: max(11px, calc(var(--u) * 12.5));
+  font-weight: 500;
+  color: #77776f;
+  border-bottom: calc(var(--u) * 1) solid #ebebe7;
+}
+
+.hero .head .right,
+.hero .cell.right {
+  padding-right: calc(var(--u) * 26);
+  text-align: right;
+}
+
+.hero .row {
+  top: calc(var(--u) * (36 + var(--n) * var(--rh)));
+  height: calc(var(--u) * var(--rh));
+  isolation: isolate;
+}
+
+.hero .row::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--u) * 20);
+  right: calc(var(--u) * 20);
+  bottom: 0;
+  height: calc(var(--u) * 1);
+  background: #f0f0ec;
+}
+
+.hero .row:nth-last-child(2)::after {
+  display: none;
+}
+
+.hero .cell {
+  position: relative;
+  white-space: nowrap;
+}
+
+.hero .cell b {
+  font-weight: 400;
+}
+
+.hero .cell i,
+.hero .cell u {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  font-style: normal;
+  text-decoration: none;
+}
+
+.hero .cell u {
+  width: calc(var(--u) * 70);
+  height: calc(var(--u) * 24);
+  border: calc(var(--u) * 1.5) dashed #c6c6c0;
+  border-radius: calc(var(--u) * 4);
+}
+
+.hero .cell.right u {
+  left: auto;
+  right: calc(var(--u) * 26);
+}
+
+.hero .tag {
+  display: inline-block;
+  padding: calc(var(--u) * 2) calc(var(--u) * 9);
+  font-size: max(11px, calc(var(--u) * 13));
+  font-weight: 500;
+  line-height: 1.5;
+  border-radius: calc(var(--u) * 5);
+}
+
+/* Darker than --acc-text, which misses 4.5:1 on this tint. */
+.hero .tag.overdue {
+  background: #fdeae3;
+  color: #bd4019;
+}
+
+.hero .tag.paid {
+  background: #f0f0ed;
+  color: #6a6a64;
+}
+
+/* The rows the Agent picks out. */
+.hero .selection {
+  position: absolute;
+  z-index: -1;
+  left: calc(var(--u) * 8);
+  right: calc(var(--u) * 8);
+  top: calc(var(--u) * 3);
+  bottom: calc(var(--u) * 3);
+  border-radius: calc(var(--u) * 7);
+  background: #fff6f2;
+}
+
+.hero .sweep {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--u) * 36);
+  height: calc(var(--u) * var(--rh));
+  opacity: 0;
+  background: linear-gradient(transparent, rgba(10, 10, 10, 0.05));
+  box-shadow: 0 calc(var(--u) * 1.5) 0 var(--ink);
+}
+
+/* Loose files: visible only while the animation plays, gone in the finished state. */
+.hero .card {
+  --fx: calc(var(--tx) * var(--u));
+  --fy: calc(var(--ty) * var(--u));
+  position: absolute;
+  left: calc(var(--x) * var(--u));
+  top: calc(var(--y) * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 8);
+  padding: calc(var(--u) * 10) calc(var(--u) * 12);
+  opacity: 0;
+  font-size: calc(var(--u) * 13.5);
+  font-weight: 500;
+  line-height: 1.25;
+  white-space: nowrap;
+  background: #fff;
+  border-radius: calc(var(--u) * 8);
+  box-shadow:
+    0 0 0 calc(var(--u) * 1) #e3e3df,
+    0 calc(var(--u) * 8) calc(var(--u) * 22) rgba(0, 0, 0, 0.09);
+  transform: rotate(calc(var(--r) * 1deg));
+}
+
+.hero .card em {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: calc(var(--u) * 32);
+  height: calc(var(--u) * 36);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  color: #fff;
+  border-radius: calc(var(--u) * 4);
+}
+
+.hero .card em.sheet {
+  background: #2a8250;
+}
+
+.hero .card em.pdf {
+  background: #d4483f;
+}
+
+.hero .card em.mail {
+  background: #4a78d0;
+}
+
+/* "Email" is the one label wider than the 32 units the others share. */
+.hero .card em.mail:lang(en) {
+  width: auto;
+  padding-inline: 4px;
+}
+
+.hero .card em.image {
+  background: #8a8a84;
+}
+
+.hero .card.note {
+  align-items: flex-start;
+  width: calc(var(--u) * 136);
+  height: calc(var(--u) * 112);
+  padding: calc(var(--u) * 12);
+  font-size: calc(var(--u) * 15);
+  white-space: normal;
+  background: #ffe98f;
+  box-shadow: 0 calc(var(--u) * 8) calc(var(--u) * 18) rgba(0, 0, 0, 0.12);
+}
+
+.hero .chat-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.hero .chat-head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: calc(var(--u) * 8);
+  height: calc(var(--u) * 44);
+  padding: 0 calc(var(--u) * 16);
+  font-size: calc(var(--u) * 14);
+  font-weight: 600;
+  border-bottom: calc(var(--u) * 1) solid #eeeeea;
+}
+
+.hero .spark {
+  width: calc(var(--u) * 15);
+  height: calc(var(--u) * 15);
+  color: var(--acc);
+}
+
+.hero .messages {
+  position: relative;
+  flex: 1;
+}
+
+.hero .exchange {
+  position: absolute;
+  left: calc(var(--u) * 16);
+  right: calc(var(--u) * 16);
+  top: calc(var(--u) * 16);
+}
+
+.hero .exchange-first {
+  opacity: 0.6;
+}
+
+.hero .exchange-second {
+  top: calc(var(--u) * 128);
+}
+
+.hero .question {
+  width: max-content;
+  max-width: 100%;
+  margin-left: auto;
+  padding: calc(var(--u) * 9) calc(var(--u) * 13);
+  font-size: calc(var(--u) * 15);
+  line-height: 1.3;
+  background: #f0f0ed;
+  border-radius: calc(var(--u) * 16) calc(var(--u) * 16) calc(var(--u) * 4) calc(var(--u) * 16);
+}
+
+.hero .answer-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 9);
+  min-height: calc(var(--u) * 30);
+  margin-top: calc(var(--u) * 14);
+}
+
+.hero .avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: calc(var(--u) * 28);
+  height: calc(var(--u) * 28);
+  border-radius: 50%;
+  background: #efefec;
+  color: #a2a29c;
+}
+
+.hero .avatar .spark {
+  color: inherit;
+}
+
+.hero .exchange-second .avatar {
+  background: var(--acc);
+  color: #fff;
+}
+
+.hero .answer {
+  font-size: calc(var(--u) * 18.5);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.022em;
+  white-space: nowrap;
+}
+
+.hero .dots {
+  position: absolute;
+  left: calc(var(--u) * 37);
+  top: 50%;
+  display: flex;
+  gap: calc(var(--u) * 4);
+  margin-top: calc(var(--u) * -3);
+  opacity: 0;
+}
+
+.hero .dots i {
+  width: calc(var(--u) * 6.5);
+  height: calc(var(--u) * 6.5);
+  border-radius: 50%;
+  background: #8f8f89;
+}
+
+.hero .verdict {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: calc(var(--u) * 23);
+  height: calc(var(--u) * 23);
+  border-radius: 50%;
+}
+
+.hero .verdict svg {
+  width: calc(var(--u) * 13);
+  height: calc(var(--u) * 13);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hero .verdict.no {
+  background: #fde7e6;
+  color: #d4322c;
+}
+
+.hero .verdict.ok {
+  background: #e2f5e9;
+  color: #179550;
+}
+
+.hero .input {
+  position: relative;
+  flex: none;
+  height: calc(var(--u) * 46);
+  margin: 0 calc(var(--u) * 14) calc(var(--u) * 14);
+  font-size: calc(var(--u) * 14.5);
+  line-height: calc(var(--u) * 46);
+  border-radius: calc(var(--u) * 14);
+  box-shadow: inset 0 0 0 calc(var(--u) * 1) #dddcd8;
+}
+
+.hero .input > span {
+  position: absolute;
+  left: calc(var(--u) * 14);
+  white-space: nowrap;
+}
+
+.hero .placeholder {
+  color: #747470;
+}
+
+.hero .typed {
+  opacity: 0;
+}
+
+.hero .input .send {
+  left: auto;
+  right: calc(var(--u) * 7);
+  top: calc(var(--u) * 7);
+  display: grid;
+  place-items: center;
+  width: calc(var(--u) * 32);
+  height: calc(var(--u) * 32);
+  background: var(--ink);
+  color: #fff;
+  border-radius: 50%;
+}
+
+.hero .send svg {
+  width: calc(var(--u) * 15);
+  height: calc(var(--u) * 15);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Too narrow for two windows at a readable size: stack them at real pixel sizes. */
+@container (max-width: 939px) {
+  .hero .stage {
+    --u: 1px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero .window {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero .chat {
+    height: 326px;
+  }
+
+  .hero .table {
+    --rh: 46;
+    --cols: minmax(0, 1.55fr) minmax(0, 0.9fr) minmax(0, 0.95fr) minmax(0, 1.2fr);
+    font-size: clamp(13.5px, 4cqw, 16px);
+  }
+
+  .hero .head,
+  .hero .row {
+    padding: 0 12px;
+  }
+
+  .hero .row::after {
+    left: 12px;
+    right: 12px;
+  }
+
+  .hero .selection {
+    left: 4px;
+    right: 4px;
+  }
+
+  .hero .head .right,
+  .hero .cell.right {
+    padding-right: 10px;
+  }
+
+  .hero .cell u {
+    width: min(70px, 84%);
+    height: 22px;
+  }
+
+  .hero .cell.right u {
+    right: 10px;
+  }
+
+  .hero .tag {
+    padding: 2px 6px;
+    font-size: 11.5px;
+  }
+
+  .hero .card {
+    --fx: calc((36 - var(--mx)) * 1cqw);
+    --fy: calc((140 - var(--my)) * 1px);
+    left: calc(var(--mx) * 1%);
+    top: calc(var(--my) * 1px);
+  }
+
+  .hero .card.note {
+    width: 112px;
+    height: 92px;
+  }
+
+  .hero .exchange-second {
+    top: 112px;
+  }
+}
+
+@media (max-width: 719px) {
+  .hero {
+    padding: 20px 0 44px;
+  }
+
+  .hero .line {
+    font-size: 18px;
+  }
+}
+
+/* Phones: one word per line, sized so the longest word nearly fills the column. */
+@media (max-width: 519px) {
+  .hero h1 {
+    font-size: 21vw;
+    line-height: 0.98;
+  }
+
+  .hero h1 > span {
+    display: block;
+  }
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Dims, never hides: the H1 is the LCP element and has to count from first paint. */
+@keyframes hero-on {
+  from {
+    opacity: 0.15;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-dim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.6;
+  }
+}
+
+@keyframes hero-up {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--u) * 9));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-pop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes hero-type {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 1;
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+
+@keyframes hero-dot {
+  0%,
+  100% {
+    transform: none;
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(calc(var(--u) * -3));
+    opacity: 1;
+  }
+}
+
+/* Placeholder of the chat input, off while a question is being typed. */
+@keyframes hero-ph {
+  0%,
+  5.7% {
+    opacity: 1;
+  }
+  5.8%,
+  17.3% {
+    opacity: 0;
+  }
+  17.4%,
+  91.8% {
+    opacity: 1;
+  }
+  91.9%,
+  99.3% {
+    opacity: 0;
+  }
+  99.4%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-sweep {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  96% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(calc(var(--u) * var(--rh) * 5));
+  }
+}
+
+@keyframes hero-fly {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) rotate(calc(var(--r) * 1deg));
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--fx), var(--fy)) rotate(0) scale(0.45);
+  }
+}
+
+/* One shared timeline, pure CSS. The rules above are the finished state, so no-JS
+   and reduced motion land there directly; `both` fills hold the start until each cue. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Held on the first frame until the chat is on screen, see the script in hero.astro.
+     Important because every `animation` shorthand below resets the play state. */
+  html.js .hero:not(.play) *,
+  html.js .hero:not(.play) *::after {
+    animation-play-state: paused !important;
+  }
+
+  html.js .hero {
+    .card {
+      animation: hero-fly 0.6s cubic-bezier(0.55, 0, 0.3, 1) calc(4.35s + var(--i) * 0.05s) both;
+    }
+    .invoices {
+      animation: hero-in 0.3s 4.65s both;
+    }
+
+    .row {
+      --cue: calc(6.2s + var(--n) * 0.3s);
+    }
+    .row::after {
+      animation: hero-in 0.3s 4.8s both;
+    }
+    .cell i {
+      animation:
+        hero-in 0.2s 4.75s both,
+        hero-out 0.2s var(--cue) forwards;
+    }
+    .cell u {
+      animation:
+        hero-in 0.3s 4.9s both,
+        hero-out 0.15s var(--cue) forwards;
+    }
+    .fill {
+      animation: hero-in 0.22s var(--cue) both;
+    }
+    .sweep {
+      animation: hero-sweep 1.65s linear 6.1s forwards;
+    }
+    .selection {
+      animation: hero-in 0.4s 9.2s both;
+    }
+
+    .placeholder {
+      animation: hero-ph 8.6s linear both;
+    }
+    .typed-first {
+      animation:
+        hero-type 0.9s steps(34) 0.5s both,
+        hero-out 0.01s 1.5s forwards;
+    }
+    .typed-second {
+      animation:
+        hero-type 0.6s steps(34) 7.9s both,
+        hero-out 0.01s 8.55s forwards;
+    }
+
+    .exchange-first {
+      animation: hero-dim 0.3s 7.75s both;
+    }
+    .exchange-first .question {
+      animation: hero-up 0.3s 1.55s both;
+    }
+    .exchange-first .avatar {
+      animation: hero-in 0.15s 1.95s both;
+    }
+    .exchange-first .dots {
+      animation:
+        hero-in 0.12s 1.95s both,
+        hero-out 0.12s 2.6s forwards;
+    }
+    .exchange-first .dots i {
+      animation: hero-dot 0.45s ease-in-out calc(1.95s + var(--j) * 0.1s) 2;
+    }
+    .exchange-first .answer {
+      animation: hero-in 0.25s 2.65s both;
+    }
+    .exchange-first .verdict {
+      animation: hero-pop 0.25s cubic-bezier(0.3, 1.6, 0.5, 1) 3s both;
+    }
+
+    .exchange-second .question {
+      animation: hero-up 0.3s 8.55s both;
+    }
+    .exchange-second .avatar {
+      animation: hero-in 0.2s 8.6s both;
+    }
+    .exchange-second .dots {
+      animation:
+        hero-in 0.12s 8.8s both,
+        hero-out 0.12s 9.1s forwards;
+    }
+    .exchange-second .dots i {
+      animation: hero-dot 0.3s ease-in-out calc(8.8s + var(--j) * 0.06s);
+    }
+    .exchange-second .answer {
+      animation: hero-in 0.25s 9.15s both;
+    }
+    .exchange-second .verdict {
+      animation: hero-pop 0.25s cubic-bezier(0.3, 1.6, 0.5, 1) 9.5s both;
+    }
+  }
+}
+
+/* The headline lights up word by word only while the chat starts in view. Stacked or in a short
+   window it starts below the fold, and the headline must not wait dimmed for it. 1011px is the
+   stack limit of .fit (939px) plus its two 36px gutters, and it measures .hero because a media
+   query would count a classic scrollbar as width. .done ends the rules once the timeline is over:
+   crossing these conditions by rotating or resizing would otherwise replay them. */
+@media (prefers-reduced-motion: no-preference) and (min-height: 500px) {
+  @container (width > 1011px) {
+    html.js .hero:not(.done) {
+      .word-structure {
+        animation: hero-on 0.4s 4.4s both;
+      }
+      .word-workflow {
+        animation: hero-on 0.4s 6.2s both;
+      }
+      .word-agent {
+        animation: hero-on 0.4s 9.15s both;
+      }
+    }
+  }
+}

@@ -2,9 +2,9 @@ import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   // `vp test` runs every workspace suite from the repository root; each package
-  // keeps its tests in `test/` next to `src/`.
+  // keeps its tests in `src/test/`.
   test: {
-    include: ["{apps,libs}/*/test/**/*.test.ts"],
+    include: ["{apps,libs}/*/src/test/**/*.test.ts"],
   },
 
   lint: {
@@ -21,7 +21,7 @@ export default defineConfig({
       "**/*.gen.ts",
       "**/.astro/**",
       "**/.wrangler/**",
-      "apps/web/data/*.json",
+      "apps/web/archive/**",
       "docs/reference-prototype.html",
     ],
     options: { typeAware: true, typeCheck: true },
@@ -41,7 +41,7 @@ export default defineConfig({
       "**/*.gen.ts",
       "**/.astro/**",
       "**/.wrangler/**",
-      "apps/web/data/*.json",
+      "apps/web/archive/**",
       "docs/reference-prototype.html",
     ],
   },

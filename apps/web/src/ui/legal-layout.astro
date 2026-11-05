@@ -1,0 +1,30 @@
+---
+import Footer from "./footer.astro";
+import LangSwitch from "./lang-switch.astro";
+import { toLocalePath, type Lang } from "../helper/i18n.ts";
+import "./legal-layout.css";
+import Base from "./base-layout.astro";
+
+type Props = {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** See base-layout.astro. Without a path there is no counterpart page to switch to. */
+  path?: string;
+};
+
+const { lang, title, description, path } = Astro.props;
+---
+
+<Base lang={lang} title={title} description={description} path={path}>
+  <div class="legal">
+    <header>
+      <a class="brand" href={toLocalePath(lang)}>shubrt</a>
+      {path && <LangSwitch lang={lang} path={path} />}
+    </header>
+    <main>
+      <slot />
+    </main>
+  </div>
+  <Footer lang={lang} />
+</Base>

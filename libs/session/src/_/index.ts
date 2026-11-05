@@ -1,6 +1,6 @@
 // Public API of the terminal core. Pure functions, no React, no DOM.
 
-export { ageVersion, blocks, fmt, round100, tk } from "./format.ts";
+export { ageVersion, blocks, fmt, round100, tk } from "../helper/format.ts";
 export {
   prepareData,
   type Answer,
@@ -8,8 +8,8 @@ export {
   type Rng,
   type SessionData,
   type Step,
-} from "./registry.ts";
-export { commandRow, cookedRow, expandStep, line, pendingRow, type Row } from "./rows.ts";
+} from "../service/registry.ts";
+export { commandRow, cookedRow, expandStep, line, pendingRow, type Row } from "../service/rows.ts";
 export {
   contextUsage,
   createInitialState,
@@ -24,5 +24,5 @@ export {
   type PlannedStep,
   type SessionAction,
   type SessionState,
-} from "./session.ts";
-export { CONTEXT_LIMIT, outTokens, resTokens } from "./tokens.ts";
+} from "../service/session.ts";
+export { CONTEXT_LIMIT, outTokens, resTokens } from "../service/tokens.ts";

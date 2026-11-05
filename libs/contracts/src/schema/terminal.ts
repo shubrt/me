@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-// One public repo as the terminal shows it. Built at build time from the
-// GitHub API, cached as JSON, and rendered by the /projects command.
+// One public repo as the parked terminal shows it, see apps/web/archive/terminal.
 export const repoSchema = z.object({
   /** Display index "01".."06", assigned after sorting by push date. */
   id: z.string(),
@@ -23,7 +22,7 @@ export const repoSchema = z.object({
 
 export const reposSchema = z.array(repoSchema).min(1).max(12);
 
-// One titled group of key/value rows, the shape /whoami renders.
+// One titled group of key/value rows, the shape the parked /whoami renders.
 export const whoamiGroupSchema = z.object({
   title: z.string(),
   rows: z.array(z.tuple([z.string(), z.string()])).min(1),

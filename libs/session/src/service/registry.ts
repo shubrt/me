@@ -38,9 +38,6 @@ export type SessionData = {
   activityMax: number;
 };
 
-const rnd = (rng: Rng, min: number, max: number) => min + rng() * (max - min);
-const irnd = (rng: Rng, min: number, max: number) => Math.round(rnd(rng, min, max));
-
 /**
  * Bundles repos and whoami groups into SessionData. Line counts and file
  * sizes are rolled once here and stay stable for the whole session, so the
@@ -51,13 +48,13 @@ export function prepareData(
   rng: Rng = Math.random,
 ): SessionData {
   const { repos, whoami } = input;
-  const fx = {
-    whoamiLines: irnd(rng, 24, 38),
-    nowLines: irnd(rng, 12, 20),
-    stackLines: irnd(rng, 18, 30),
-    whoamiSize: rnd(rng, 1.2, 2.4).toFixed(1),
-    reposSize: rnd(rng, 5.8, 9.4).toFixed(1),
-    stackSize: rnd(rng, 1.1, 2.0).toFixed(1),
+  const rolled = {
+    whoamiLines: rollInteger(rng, 24, 38),
+    nowLines: rollInteger(rng, 12, 20),
+    stackLines: rollInteger(rng, 18, 30),
+    whoamiSize: rollNumber(rng, 1.2, 2.4).toFixed(1),
+    reposSize: rollNumber(rng, 5.8, 9.4).toFixed(1),
+    stackSize: rollNumber(rng, 1.1, 2.0).toFixed(1),
   };
 
   const commands: CommandMeta[] = [
@@ -69,13 +66,13 @@ export function prepareData(
           kind: "tool",
           title: "Read",
           arg: "~/dev/whoami.json",
-          meta: `Read ${fx.whoamiLines} lines`,
+          meta: `Read ${rolled.whoamiLines} lines`,
         },
         {
           kind: "tool",
           title: "Read",
           arg: "~/dev/now.md",
-          meta: `Read ${fx.nowLines} lines, cached`,
+          meta: `Read ${rolled.nowLines} lines, cached`,
           chance: 0.4,
         },
         { kind: "groups", groups: whoami },
@@ -125,9 +122,9 @@ export function prepareData(
         {
           kind: "files",
           rows: [
-            ["whoami.json", `${fx.whoamiSize} kB`, "today"],
-            ["repos.cache.json", `${fx.reposSize} kB`, "2h ago"],
-            ["stack.md", `${fx.stackSize} kB`, "3w ago"],
+            ["whoami.json", `${rolled.whoamiSize} kB`, "today"],
+            ["repos.cache.json", `${rolled.reposSize} kB`, "2h ago"],
+            ["stack.md", `${rolled.stackSize} kB`, "3w ago"],
           ],
         },
         {
@@ -142,7 +139,12 @@ export function prepareData(
     {
       match: ["stack", "tech", "tools", "language"],
       steps: [
-        { kind: "tool", title: "Read", arg: "~/dev/stack.md", meta: `Read ${fx.stackLines} lines` },
+        {
+          kind: "tool",
+          title: "Read",
+          arg: "~/dev/stack.md",
+          meta: `Read ${rolled.stackLines} lines`,
+        },
         {
           kind: "kv",
           rows: [
@@ -182,4 +184,12 @@ export function prepareData(
   const activityMax = repos.reduce((top, r) => Math.max(top, ...r.activity), 1);
 
   return { repos, whoami, commands, answers, activityMax };
+}
+
+function rollNumber(rng: Rng, min: number, max: number) {
+  return min + rng() * (max - min);
+}
+
+function rollInteger(rng: Rng, min: number, max: number) {
+  return Math.round(rollNumber(rng, min, max));
 }

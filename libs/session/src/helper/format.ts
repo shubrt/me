@@ -27,18 +27,21 @@ export function blocks(values: number[], globalMax: number): string {
  * birthday . additional days. Born 1998-09-18.
  */
 export function ageVersion(now = new Date()): string {
-  let y = now.getFullYear() - 1998;
-  let m = now.getMonth() - 8;
-  let d = now.getDate() - 18;
-  if (d < 0) {
-    m -= 1;
-    d += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+  let years = now.getFullYear() - 1998;
+  let months = now.getMonth() - 8;
+  let days = now.getDate() - 18;
+
+  if (days < 0) {
+    months -= 1;
+    days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
   }
-  if (m < 0) {
-    y -= 1;
-    m += 12;
+
+  if (months < 0) {
+    years -= 1;
+    months += 12;
   }
-  return `v${y}.${m}.${d}`;
+
+  return `v${years}.${months}.${days}`;
 }
 
 /** Round to the nearest hundred, never below 100. */

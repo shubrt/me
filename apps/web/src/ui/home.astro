@@ -1,0 +1,42 @@
+---
+import Base from "./base-layout.astro";
+import { t, type Lang } from "../helper/i18n.ts";
+import Chaos from "./chaos.astro";
+import Contact from "./contact.astro";
+import Footer from "./footer.astro";
+import Hero from "./hero.astro";
+import Nav from "./nav.astro";
+import Steps from "./steps.astro";
+import Towers from "./towers.astro";
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+---
+
+<Base
+  lang={lang}
+  path="/"
+  title={t(
+    lang,
+    "Software-Architekt für KI und Automatisierung | Janis Schubert",
+    "Software architect for AI and automation | Janis Schubert",
+  )}
+  description={t(
+    lang,
+    "Erst die Daten, dann die KI. Software-Architektur für Startups und Mittelstand: Daten strukturieren, Abläufe automatisieren, KI-Assistenten anbinden.",
+    "Data first, AI second. Software architecture for startups and SMEs: structure data, automate processes, connect AI assistants.",
+  )}
+>
+  <Nav lang={lang} />
+  <main>
+    <Hero lang={lang} />
+    <Chaos lang={lang} />
+    <Steps lang={lang} />
+    <Towers lang={lang} />
+    <Contact lang={lang} />
+  </main>
+  <Footer lang={lang} />
+</Base>

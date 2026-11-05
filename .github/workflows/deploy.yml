@@ -3,9 +3,6 @@ name: Deploy
 on:
   push:
     branches: [main]
-  schedule:
-    # Daily rebuild: refreshes the repo data and the age-based version.
-    - cron: "17 4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -49,8 +46,6 @@ jobs:
 
       - name: Build
         run: pnpm run build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # wrangler-action expects wrangler at the workspace root and trips over
       # pnpm's root-check; the workspace dependency in apps/web is enough.

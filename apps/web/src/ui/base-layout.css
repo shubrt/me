@@ -1,0 +1,156 @@
+/* Design tokens and the few elements every section shares. Section styles live
+   in their own file and scope every selector under the section root class. */
+:root {
+  --ink: #0a0a0a;
+  --muted: #5c5c5c;
+  --hairline: #e4e4e1;
+  --soft: #f6f6f3;
+  --acc: #ee5a2b;
+  --acc-text: #c4441c;
+  --acc-tint: #fff4ee;
+  --acc-wash: #fff1ea;
+  --gutter: clamp(16px, 4vw, 36px);
+  --content: 1120px;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  overflow-x: clip;
+  background: #fff;
+  color: var(--ink);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.012em;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+svg,
+img {
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Centered content column; the page is 1280 wide at most, its content 1120. */
+.wrap {
+  width: min(var(--content), 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+.brand {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.lang {
+  font-size: 14px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.lang b {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.lang a:hover {
+  color: var(--ink);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 7px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* The guide line that runs through the page, and the numbered node on it. */
+.guide {
+  width: 1.5px;
+  height: 84px;
+  margin: 0 auto;
+  background: var(--ink);
+}
+
+.guide.to-accent {
+  background: linear-gradient(var(--ink), var(--acc));
+}
+
+.guide.from-accent {
+  background: linear-gradient(var(--acc), var(--ink));
+}
+
+.node {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 0 auto;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  font-weight: 600;
+}
+
+.node.accent {
+  border-color: var(--acc);
+  background: var(--acc);
+  color: #fff;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

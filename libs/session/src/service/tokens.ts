@@ -1,4 +1,4 @@
-import { tk } from "./format.ts";
+import { tk } from "../helper/format.ts";
 import type { SessionData, Step } from "./registry.ts";
 
 /** The model's context window, as shown in the status bar. */

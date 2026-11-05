@@ -1,0 +1,292 @@
+---
+import { buildChaosScene } from "./chaos-scene.ts";
+import type { Lang } from "../helper/i18n.ts";
+import "./chaos.css";
+
+type Props = {
+  lang: Lang;
+};
+
+const CHECK_PATH = "M3 8.5l3.2 3.2L13 4.5";
+const CROSS_PATH = "M4 4l8 8M12 4l-8 8";
+
+const { lang } = Astro.props;
+const scene = buildChaosScene(lang);
+---
+
+<section class="chaos" data-state="idle">
+  <div class="wrap">
+    <h2>{scene.heading}</h2>
+    <div class="box">
+      <div class="stage" data-nosnippet>
+        <p class="sr-only">{scene.summary}</p>
+        <div class="pile" aria-hidden="true">
+          {
+            scene.windows.map(({ id, style }) => (
+              <div class="window" style={style}>
+                <div class="bar">
+                  <i />
+                  <i />
+                  <i />
+                  <span>{scene.titles[id]}</span>
+                </div>
+                {id === "chat" &&
+                  scene.chat.map(({ who, tint, time, text }, i) => (
+                    <div class="message" style={`--i:${i}`}>
+                      <span class="avatar" style={`background:${tint}`}>
+                        {who[0]}
+                      </span>
+                      <div>
+                        <b>{who}</b>
+                        <em>{time}</em>
+                        <p>{text}</p>
+                      </div>
+                    </div>
+                  ))}
+                {id === "calendar" && (
+                  <div class="calendar">
+                    {scene.days.map((day) => (
+                      <span>{day}</span>
+                    ))}
+                    {scene.slots.map(([col, y, h, text, cls], i) => (
+                      <div class:list={["slot", cls]} style={`--c:${col};--y:${y};--h:${h};--i:${i}`}>
+                        {text}
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {id === "sheet" && (
+                  <>
+                    <div class="sheet">
+                      {["", "A", "B", "C", "D"].map((col) => (
+                        <span class="header">{col}</span>
+                      ))}
+                      <span class="header">1</span>
+                      {scene.sheetHead.map((text) => (
+                        <span class="bold">{text}</span>
+                      ))}
+                      {scene.sheet.map((row, r) => (
+                        <>
+                          <span class="header">{r + 2}</span>
+                          {row.map(({ text, cls, slot }) => (
+                            <span class={cls}>
+                              {slot === undefined ? (
+                                text
+                              ) : (
+                                <>
+                                  <i class="value" style={`--i:${slot}`}>
+                                    {text}
+                                  </i>
+                                  <i class="error" style={`--i:${slot}`}>
+                                    {scene.error}
+                                  </i>
+                                </>
+                              )}
+                            </span>
+                          ))}
+                        </>
+                      ))}
+                    </div>
+                    <div class="note">{scene.note}</div>
+                  </>
+                )}
+                {id === "macro" && (
+                  <>
+                    <div class="code">
+                      <span class="comment">{scene.macro.comment}</span>
+                      {scene.macro.code}
+                    </div>
+                    <div class="dialog">
+                      <b>{scene.macro.error}</b>
+                      <p>{scene.macro.detail}</p>
+                      <div class="buttons">
+                        <span>{scene.macro.end}</span>
+                        <span class="primary">{scene.macro.debug}</span>
+                      </div>
+                    </div>
+                    <p class="foot">{scene.macro.foot}</p>
+                  </>
+                )}
+                {id === "files" &&
+                  scene.files.map(([name, date], i) => (
+                    <div class="file" style={`--i:${i}`}>
+                      <u>XLS</u>
+                      {name}
+                      <small>{date}</small>
+                    </div>
+                  ))}
+                {id === "paper" && (
+                  <div class="paper">
+                    <p>{scene.paper.ask}</p>
+                    {scene.paper.steps.map((text, i) => (
+                      <div class="task" style={`--i:${i}`}>
+                        <span class="mark ok">
+                          <svg viewBox="0 0 16 16">
+                            <path d={CHECK_PATH} />
+                          </svg>
+                        </span>
+                        {text}
+                      </div>
+                    ))}
+                    <div class="task" style="--i:3">
+                      <span class="mark no">
+                        <svg viewBox="0 0 16 16">
+                          <path d={CROSS_PATH} />
+                        </svg>
+                      </span>
+                      {scene.paper.failed}
+                      <small>{scene.paper.reason}</small>
+                    </div>
+                  </div>
+                )}
+                {id === "reply" &&
+                  scene.replies.map(([who, text], i) => (
+                    <div class="reply" style={`--i:${i}`}>
+                      <b>{who}</b>
+                      <span>{text}</span>
+                    </div>
+                  ))}
+                {id === "pc" && (
+                  <div class="computer">
+                    <p>{scene.pc.ask}</p>
+                    <div class="desk" />
+                    <div class="tower">
+                      <i />
+                      <u />
+                    </div>
+                    <div class="sign">
+                      {scene.pc.sign[0]}
+                      <br />
+                      {scene.pc.sign[1]}
+                    </div>
+                    <span class="uptime">{scene.pc.uptime}</span>
+                  </div>
+                )}
+              </div>
+            ))
+          }
+          {
+            scene.toasts.map(({ text, isHot, style }) => (
+              <div class:list={["toast", { hot: isHot }]} style={style}>
+                {text}
+              </div>
+            ))
+          }
+        </div>
+        <p class="card">
+          <span class="check">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d={CHECK_PATH} />
+            </svg>
+          </span>
+          {scene.card}
+        </p>
+        <button class="btn fix" type="button">
+          <span>{scene.tidy}</span>
+          <span>{scene.back}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>(".chaos");
+  const stage = root?.querySelector(".stage");
+  const card = root?.querySelector<HTMLElement>(".card");
+  const button = root?.querySelector("button");
+  const firstNode = document.querySelector("[data-first-node]");
+  const firstStep = document.getElementById("structure");
+
+  if (root && stage && card && button && firstNode && firstStep) {
+    startChaos({ root, stage, card, button, firstNode, firstStep });
+  }
+
+  type ChaosElements = {
+    root: HTMLElement;
+    stage: Element;
+    card: HTMLElement;
+    button: HTMLButtonElement;
+    firstNode: Element;
+    firstStep: HTMLElement;
+  };
+
+  function startChaos({ root, stage, card, button, firstNode, firstStep }: ChaosElements) {
+    const { dataset } = root;
+    const isCalm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let scrollTarget = 0;
+    let lastClick = 0;
+    // Scroll input hands the page back to the visitor until the next click.
+    let hasYielded = false;
+
+    for (const input of ["wheel", "touchmove", "keydown"]) {
+      addEventListener(input, () => (hasYielded = true), { passive: true });
+    }
+
+    if (!isCalm) playWhenInView();
+
+    button.onclick = toggleTidy;
+    card.onanimationstart = scrollWithCard;
+
+    function playWhenInView() {
+      new IntersectionObserver(
+        ([entry], observer) => {
+          if (!entry?.isIntersecting) return;
+
+          observer.disconnect();
+          // Tall monitors show the stage at load: the hero goes first, up to its last cue.
+          setTimeout(play, scrollY ? 0 : 10_000);
+          addEventListener("scroll", play, { once: true });
+        },
+        { threshold: 0.35 },
+      ).observe(stage);
+    }
+
+    function play() {
+      if (dataset.state === "idle") dataset.state = "play";
+    }
+
+    function toggleTidy({ timeStamp }: MouseEvent) {
+      // The second half of a double-click would undo the first.
+      if (timeStamp - lastClick < 400) return;
+
+      lastClick = timeStamp;
+      hasYielded = false;
+
+      if (dataset.state === "tidy") {
+        dataset.state = "mess";
+        return;
+      }
+
+      const from = card.getBoundingClientRect();
+      const to = firstNode.getBoundingClientRect();
+      const dock = to.y + to.height / 2 - from.y - from.height / 2;
+      card.style.cssText = `--dock:${dock}px;--dock-s:${to.width / from.width}`;
+      scrollTarget = scrollY + to.y - 24;
+      dataset.state = "tidy";
+
+      if (isCalm) firstStep.scrollIntoView({ behavior: "instant" });
+    }
+
+    // The card takes off here, so the scroll starts in the same frame. The empty animation
+    // supplies the eased progress, which saves a bezier solver. "instant" because
+    // base-layout.css sets smooth scrolling, which would lag behind every step.
+    function scrollWithCard({ animationName }: AnimationEvent) {
+      if (animationName !== "chaos-dock") return;
+
+      const start = scrollY;
+      const { effect } = card.animate(null, { duration: 1150, easing: "cubic-bezier(.65,0,.2,1)" });
+
+      step();
+
+      function step() {
+        if (hasYielded || dataset.state !== "tidy") return;
+
+        const progress = effect?.getComputedTiming().progress ?? 1;
+        scrollTo({ top: start + (scrollTarget - start) * progress, behavior: "instant" });
+
+        if (progress < 1) requestAnimationFrame(step);
+      }
+    }
+  }
+</script>
