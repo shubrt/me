@@ -1,0 +1,83 @@
+---
+import "./scroll-draw.css";
+---
+
+<script>
+  type Cue = {
+    selector: string;
+    state: "arrived" | "drawn";
+    /** How far the top of a box has to be above the fold, in pixels. */
+    rise: (height: number) => number;
+  };
+
+  const STACKED = matchMedia("(width < 1024px)");
+
+  // The distances set the order of the build-up. See scroll-draw.css.
+  const CUES: readonly Cue[] = [
+    { selector: ".steps .title", state: "arrived", rise: resolveArrival },
+    {
+      selector: ".steps .node, .towers h2, .contact img",
+      state: "arrived",
+      rise: () => resolveArrival() + 30,
+    },
+    {
+      selector: ".steps .main",
+      state: "arrived",
+      rise: (height) => (STACKED.matches ? height * 0.3 : resolveArrival() + 30),
+    },
+    { selector: ".steps .tile", state: "arrived", rise: (height) => height * 0.35 },
+    {
+      selector: ".steps .main, .steps .tile, .towers .column, .contact form",
+      state: "drawn",
+      rise: (height) => Math.min(height, innerHeight * 0.42),
+    },
+    { selector: ".contact", state: "drawn", rise: () => 350 },
+  ];
+
+  const cues = CUES.map((cue) => ({ ...cue, boxes: document.querySelectorAll(cue.selector) }));
+
+  numberShapes();
+  updateBoxes();
+
+  addEventListener("scroll", updateBoxes, { passive: true });
+  addEventListener("resize", updateBoxes);
+
+  // Last, so that a script that never ran leaves the page complete. Hiding is the way up, which a
+  // reload would otherwise play on finished boxes, so it ends at once.
+  document.documentElement.classList.add("scroll-draw");
+  for (const animation of document.getAnimations()) {
+    if (animation instanceof CSSTransition) animation.finish();
+  }
+
+  // The scroll position alone decides every state, so a jump or a reload lands on the right one.
+  function updateBoxes() {
+    for (const { boxes, state, rise } of cues) {
+      for (const box of boxes) {
+        const { top, height } = box.getBoundingClientRect();
+        box.classList.toggle(state, innerHeight - top >= rise(height));
+      }
+    }
+  }
+
+  // Where the guide line arrives, up from the fold. Same value as --arrival in scroll-draw.css.
+  function resolveArrival() {
+    return Math.min(innerHeight * 0.2, 170);
+  }
+
+  // --n counts shapes in drawing order and --m counts back from the last one. pathLength lets one
+  // dash trace any shape, so shapes with a dash of their own keep their real length.
+  function numberShapes() {
+    for (const picture of document.querySelectorAll(".steps svg, .towers svg")) {
+      const shapes = picture.querySelectorAll<SVGElement>("path, rect, circle, text");
+
+      shapes.forEach((shape, i) => {
+        shape.style.setProperty("--n", String(i));
+        shape.style.setProperty("--m", String(shapes.length - 1 - i));
+
+        if (!shape.matches("text, [stroke-dasharray], .next, .ahead")) {
+          shape.setAttribute("pathLength", "1");
+        }
+      });
+    }
+  }
+</script>
