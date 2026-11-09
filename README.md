@@ -124,4 +124,4 @@ After the first deploy, send one real form and check the Gmail inbox. If it fail
 
 ## License
 
-All rights reserved. The code is public to read but comes with no license.
+Private, all rights reserved.
