@@ -12,8 +12,12 @@ const MAX_BODY_BYTES = 64 * 1024;
 export async function handleContact(ctx: Context, request: Request): Promise<Response> {
   const form = await readForm(request);
 
-  // The fake success: spam gets the same answer as a sent inquiry, and nothing goes out.
-  if (isSpam(form)) {
+  // The fake success: spam gets the same answer as a sent inquiry, and nothing goes out. The
+  // log names the trap only, so a real inquiry that got caught at least leaves a trace.
+  const trap = findSpamTrap(form);
+  if (trap) {
+    console.info("contact discarded by spam trap", trap);
+
     return reply(request, form, 200);
   }
 
@@ -47,16 +51,19 @@ async function readForm(request: Request) {
   return request.formData().catch(() => new FormData());
 }
 
-function isSpam(form: FormData) {
-  if (form.get("website")) {
-    return true;
+function findSpamTrap(form: FormData) {
+  if (form.get("trap")) {
+    return "honeypot";
   }
 
   // `elapsed` is the time on the page in ms, so no clocks get compared. Only the page's
   // script sends it: no-JS visitors have no such field and pass.
   const elapsed = form.get("elapsed");
+  if (elapsed !== null && Number(elapsed) < MIN_FILL_MS) {
+    return "too-fast";
+  }
 
-  return elapsed !== null && Number(elapsed) < MIN_FILL_MS;
+  return null;
 }
 
 function composeMail({ name, email, topic, message, lang }: Contact) {

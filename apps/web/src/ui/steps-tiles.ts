@@ -37,19 +37,15 @@ export function listStructureTiles(lang: Lang): readonly Tile[] {
     },
     {
       title: t(lang, "Eine Quelle", "One source"),
-      text: t(
-        lang,
-        "Jede Information liegt genau einmal.",
-        "Every fact lives in exactly one place.",
-      ),
+      text: t(lang, "Eine Kundenliste statt sieben.", "One customer list instead of seven."),
       picture: renderSourcePicture(lang),
     },
     {
       title: t(lang, "Schnittstellen", "APIs"),
       text: t(
         lang,
-        "Systeme tauschen Daten von selbst aus.",
-        "Systems exchange data on their own.",
+        "CRM und Shop arbeiten mit denselben Kundendaten.",
+        "Your CRM and shop use the same customer data.",
       ),
       picture: renderApiPicture(lang),
     },
@@ -60,21 +56,29 @@ export function listWorkflowTiles(lang: Lang): readonly Tile[] {
   return [
     {
       title: t(lang, "Automatisierung", "Automation"),
-      text: t(lang, "Was sich wiederholt, läuft von selbst.", "What repeats runs by itself."),
+      text: t(
+        lang,
+        "Rechnungen werden automatisch verbucht.",
+        "Invoices get posted automatically.",
+      ),
       picture: renderAutomationPicture(lang),
     },
     {
       title: t(lang, "Prüfregeln", "Validation"),
       text: t(
         lang,
-        "Fehler fallen auf, bevor sie stören.",
-        "Errors show up before they cause trouble.",
+        "Fehlt ein Feld, meldet das System es sofort.",
+        "If a field is missing, the system flags it right away.",
       ),
       picture: renderRulesPicture(lang),
     },
     {
       title: t(lang, "Integrationen", "Integrations"),
-      text: t(lang, "Systeme reden direkt miteinander.", "Systems talk to each other directly."),
+      text: t(
+        lang,
+        "Ein Zahlungseingang stößt den nächsten Schritt an.",
+        "An incoming payment triggers the next step.",
+      ),
       picture: renderIntegrationsPicture(lang),
     },
   ];
@@ -86,8 +90,8 @@ export function listAgentTiles(lang: Lang): readonly Tile[] {
       title: t(lang, "KI-Assistenten", "AI assistants"),
       text: t(
         lang,
-        "Lesen, einordnen, Vorschläge machen.",
-        "Reading, sorting, making suggestions.",
+        "Die KI liest Mails, ordnet sie ein und schlägt eine Antwort vor.",
+        "AI reads emails, sorts them and suggests a reply.",
       ),
       picture: renderAssistantPicture(lang),
     },
@@ -95,8 +99,8 @@ export function listAgentTiles(lang: Lang): readonly Tile[] {
       title: t(lang, "Eigene Daten", "Company data"),
       text: t(
         lang,
-        "Antworten aus der Datenbasis, nicht geraten.",
-        "Answers from the database, not guesses.",
+        "Jede Antwort zeigt, aus welchen Daten sie stammt.",
+        "Every answer shows which data it came from.",
       ),
       picture: renderDataPicture(lang),
     },
@@ -104,8 +108,8 @@ export function listAgentTiles(lang: Lang): readonly Tile[] {
       title: t(lang, "Klare Grenzen", "Clear limits"),
       text: t(
         lang,
-        "Der Agent bereitet vor, der Mensch entscheidet.",
-        "The agent prepares, the human decides.",
+        "Der Agent bereitet vor. Auf Senden klickt immer ein Mensch.",
+        "The agent prepares. A person always hits send.",
       ),
       picture: renderLimitsPicture(lang),
     },
@@ -303,9 +307,9 @@ function renderDataPicture(lang: Lang) {
     t(lang, "Verträge", "Contracts"),
   ];
   return renderPicture(
-    t(lang, "Der Agent liest aus der Datenbasis", "The agent reads from the database"),
+    t(lang, "Der Agent liest aus der Datenbank", "The agent reads from the database"),
     [
-      circle(80, 107, 40, ACC),
+      circle(80, 107, 40, ACC_TEXT),
       text(80, 112, "Agent", { weight: 700, fill: WHITE, anchor: "middle" }),
       line(
         [
@@ -315,7 +319,7 @@ function renderDataPicture(lang: Lang) {
         { sw: 1.6 },
       ),
       rect(188, 34, 120, 146, { fill: INK, sw: 1, r: 10 }),
-      text(248, 62, t(lang, "Datenbasis", "Database"), {
+      text(248, 62, t(lang, "Datenbank", "Database"), {
         size: 13.5,
         weight: 700,
         fill: WHITE,
@@ -339,8 +343,8 @@ function renderLimitsPicture(lang: Lang) {
   return renderPicture(
     t(
       lang,
-      "Der Agent bereitet vor, der Mensch entscheidet",
-      "The agent prepares, the human decides",
+      "Der Agent entwirft, prüft und schlägt vor, Tom sendet",
+      "The agent drafts, checks and suggests, Tom sends",
     ),
     [
       rect(20, 24, 180, 166, { stroke: ACC, sw: 1.5, r: 12, dash: "7 5" }),

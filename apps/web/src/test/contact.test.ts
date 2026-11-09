@@ -13,7 +13,7 @@ const FIELDS = {
   topic: "workflow",
   message: "Rechnungen laufen noch per Hand.",
   lang: "de",
-  website: "",
+  trap: "",
 };
 
 afterEach(() => {
@@ -105,16 +105,22 @@ describe("invalid input", () => {
 
 describe("spam traps", () => {
   it.each([
-    ["a filled honeypot", { website: "https://spam.example" }],
-    ["a form sent after 2 seconds", { elapsed: "2000" }],
-    ["a bot that also fails validation", { website: "x", email: "nope" }],
-  ])("answers %s with a fake success and sends nothing", async (_, overrides) => {
-    const { send, response } = await submit(post(overrides, JSON_TYPE));
+    ["a filled honeypot", { trap: "https://spam.example" }, "honeypot"],
+    ["a form sent after 2 seconds", { elapsed: "2000" }, "too-fast"],
+    ["a bot that also fails validation", { trap: "x", email: "nope" }, "honeypot"],
+  ])(
+    "answers %s with a fake success, sends nothing and logs only the trap",
+    async (_, overrides, trap) => {
+      const log = vi.spyOn(console, "info").mockImplementation(() => {});
 
-    expect(response.status).toBe(200);
-    expect(await response.json()).toEqual({ ok: true });
-    expect(send).not.toHaveBeenCalled();
-  });
+      const { send, response } = await submit(post(overrides, JSON_TYPE));
+
+      expect(response.status).toBe(200);
+      expect(await response.json()).toEqual({ ok: true });
+      expect(send).not.toHaveBeenCalled();
+      expect(log.mock.calls).toEqual([["contact discarded by spam trap", trap]]);
+    },
+  );
 
   it.each([
     ["a form sent after exactly 3 seconds", { elapsed: "3000" }],

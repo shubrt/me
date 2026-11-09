@@ -1,0 +1,29 @@
+---
+import "./reveal.css";
+---
+
+<script>
+  // Fades each picture of the steps and towers in once, the first time it is on screen. Texts never
+  // wait for it, and nothing hides again on the way back up. Same pictures as in reveal.css.
+  const pictures = document.querySelectorAll(".steps .main, .steps .picture, .towers svg");
+
+  // The bottom tenth of the window does not count, so a picture fades once it is clearly in view.
+  const observer = new IntersectionObserver(showPictures, { rootMargin: "0px 0px -10% 0px" });
+
+  // Pictures already on screen, or above it after a reload, stay as they are.
+  for (const picture of pictures) {
+    if (picture.getBoundingClientRect().top < innerHeight) picture.classList.add("revealed");
+    else observer.observe(picture);
+  }
+
+  // Last, so that a script that never ran leaves every picture visible.
+  document.documentElement.classList.add("reveal");
+
+  function showPictures(entries: IntersectionObserverEntry[]) {
+    for (const { isIntersecting, target } of entries) {
+      if (!isIntersecting) continue;
+      target.classList.add("revealed");
+      observer.unobserve(target);
+    }
+  }
+</script>

@@ -10,7 +10,7 @@
 | Step            | One of the three offers, always in this order: Structure, Workflow, Agent. Their IDs are `structure`, `workflow`, `agent`. |
 | Section         | A top-level part of the one-pager: nav, hero, chaos, steps, towers, contact, footer.                                       |
 | Chaos           | The "Kommt das bekannt vor?" section: a pile of windows that a click tidies into a card, which docks on the first step.    |
-| Towers          | The "Wo anfangen?" section. Each tower has a chip that selects its topic in the contact form.                              |
+| Towers          | The "Wo stehen Sie gerade?" section. Each tower has a chip that selects its topic in the contact form.                     |
 | Inquiry         | One contact form submission.                                                                                               |
 | Parked terminal | The previous site. `apps/web/archive/terminal` and `libs/session` keep it for later use; the site does not ship or use it. |
 

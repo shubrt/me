@@ -9,7 +9,6 @@ import {
   INK,
   line,
   LINE,
-  markers,
   MUTED,
   rect,
   SOFT,
@@ -29,15 +28,13 @@ const NOTE = { size: 13, weight: 600, fill: MUTED };
 const EXCEPTION = { fill: TINT, stroke: ACC, sw: 1.2, r: 8 };
 const LATER_CHIP = { fill: TINT, stroke: ACC, color: ACC_TEXT };
 const LATER_LINE = { color: ACC, dash: "6 5" };
-// Small type on orange is ink: white fails contrast here, the headline above it is large enough.
-const TEXT_ON_ACC = { weight: 500, fill: INK };
 
 /** Step 1: scattered sources feed one database that everyone works with. */
 export function renderHubDiagram(lang: Lang): string {
   const scattered = t(lang, "Heute verstreut", "Scattered today");
   const source = t(lang, "Eine Quelle", "One source");
   const everyone = t(lang, "Alle arbeiten damit", "Everyone works with it");
-  const database = t(lang, "Datenbasis", "Database");
+  const database = t(lang, "Datenbank", "Database");
   const sources = [
     t(lang, "Excel-Listen", "Spreadsheets"),
     t(lang, "Postfächer", "Inboxes"),
@@ -65,7 +62,7 @@ export function renderHubDiagram(lang: Lang): string {
   const later = t(lang, "Später: Agent", "Later: Agent");
   const label = t(
     lang,
-    "Verstreute Quellen laufen in eine Datenbasis, mit der alle arbeiten",
+    "Verstreute Quellen laufen in eine Datenbank, mit der alle arbeiten",
     "Scattered sources flow into one database that everyone works with",
   );
 
@@ -101,11 +98,6 @@ export function renderHubDiagram(lang: Lang): string {
         ) + chip(620, y, 140, name, { h: 42, size: 14, ...(isLater ? LATER_CHIP : {}) })
       );
     }),
-    markers([
-      [246, 61, "a"],
-      [514, 61, "b"],
-      [152, 104, "c"],
-    ]),
   ]);
 
   // Chips sit in two columns around a vertical trunk that carries the flow.
@@ -161,11 +153,6 @@ export function renderHubDiagram(lang: Lang): string {
         ) + chip(x, cy - 19, columnWidth, name, { size: 14, ...(isLater ? LATER_CHIP : {}) })
       );
     }),
-    markers([
-      [28, 226, "a"],
-      [352, 226, "b"],
-      [244, 143, "c"],
-    ]),
   ]);
 
   return wide + narrow;
@@ -253,12 +240,6 @@ export function renderLanesDiagram(lang: Lang): string {
       fill: MUTED,
       anchor: "end",
     }),
-    markers([
-      [86, 21, "a"],
-      [dx, 34, "b"],
-      [110, 54, "c"],
-      [502, 54, "c"],
-    ]),
   ]);
 
   // The two lanes turn into columns: the flow runs down, the exception branches off sideways.
@@ -313,12 +294,6 @@ export function renderLanesDiagram(lang: Lang): string {
     ...noteLines.map((row, i) =>
       text(258, 440 + i * 20, row, { size: 14, weight: 500, fill: MUTED }),
     ),
-    markers([
-      [90, 21, "a"],
-      [190, 228, "b"],
-      [207, 109, "c"],
-      [24, 377, "c"],
-    ]),
   ]);
 
   return wide + narrow;
@@ -343,7 +318,7 @@ export function renderMailDiagram(lang: Lang): string {
     [t(lang, "Anliegen", "Issue"), t(lang, "strittig", "disputed")],
     [t(lang, "Ton", "Tone"), t(lang, "verärgert", "annoyed")],
   ] as const;
-  const fromData = t(lang, "Aus der Datenbasis", "From the database");
+  const fromData = t(lang, "Aus der Datenbank", "From the database");
   const records = [
     t(lang, "Zahlt seit 2019 pünktlich", "Has paid on time since 2019"),
     t(lang, "Umsatz 2026: 84.200 €", "Revenue 2026: €84,200"),
@@ -358,7 +333,7 @@ export function renderMailDiagram(lang: Lang): string {
   const decides = t(lang, "Tom entscheidet", "Tom decides");
   const label = t(
     lang,
-    "Der Agent liest eine verärgerte Mail, sucht in der Datenbasis und schlägt einen Anruf vor",
+    "Der Agent liest eine verärgerte Mail, sucht in der Datenbank und schlägt einen Anruf vor",
     "The agent reads an annoyed email, searches the database and suggests a call",
   );
 
@@ -392,19 +367,13 @@ export function renderMailDiagram(lang: Lang): string {
       ],
       { color: ACC, sw: 1.8 },
     ),
-    rect(532, 32, 228, 252, { fill: ACC, stroke: ACC, sw: 1, r: 12 }),
+    rect(532, 32, 228, 252, { fill: ACC_TEXT, stroke: ACC_TEXT, sw: 1, r: 12 }),
     text(548, 72, advice, { size: 18.5, weight: 700, fill: WHITE }),
-    ...reasons.map((row, i) => text(548, 106 + i * 25, row, { ...TEXT_ON_ACC, size: 13.5 })),
+    ...reasons.map((row, i) =>
+      text(548, 106 + i * 25, row, { size: 13.5, weight: 500, fill: WHITE }),
+    ),
     rect(548, 222, 196, 44, { stroke: WHITE, sw: 1, r: 8 }),
     text(646, 250, decides, { size: 15, weight: 700, fill: ACC_TEXT, anchor: "middle" }),
-    markers(
-      [
-        [444, 12, "a"],
-        [472, 176, "b"],
-        [726, 196, "c", true],
-      ],
-      ACC,
-    ),
   ]);
 
   const narrow = svg("diagram narrow", 380, 766, label, [
@@ -437,19 +406,13 @@ export function renderMailDiagram(lang: Lang): string {
       { color: ACC, sw: 1.8 },
     ),
     text(0, 542, suggests, HEADING),
-    rect(0, 556, 380, 210, { fill: ACC, stroke: ACC, sw: 1, r: 12 }),
+    rect(0, 556, 380, 210, { fill: ACC_TEXT, stroke: ACC_TEXT, sw: 1, r: 12 }),
     text(18, 596, advice, { size: 20, weight: 700, fill: WHITE }),
-    ...reasons.map((row, i) => text(18, 628 + i * 25, row, { ...TEXT_ON_ACC, size: 14.5 })),
+    ...reasons.map((row, i) =>
+      text(18, 628 + i * 25, row, { size: 14.5, weight: 500, fill: WHITE }),
+    ),
     rect(18, 704, 344, 44, { stroke: WHITE, sw: 1, r: 8 }),
     text(190, 732, decides, { size: 15.5, weight: 700, fill: ACC_TEXT, anchor: "middle" }),
-    markers(
-      [
-        [362, 236, "a"],
-        [352, 416, "b"],
-        [344, 590, "c", true],
-      ],
-      ACC,
-    ),
   ]);
 
   return wide + narrow;

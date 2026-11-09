@@ -11,7 +11,14 @@
   --acc-wash: #fff1ea;
   --gutter: clamp(16px, 4vw, 36px);
   --content: 1120px;
+  --nav-height: 72px;
   color-scheme: light;
+}
+
+@media (max-width: 719px) {
+  :root {
+    --nav-height: 64px;
+  }
 }
 
 *,
@@ -22,14 +29,10 @@
   padding: 0;
 }
 
+/* Anchor jumps land below the sticky nav. */
 html {
+  scroll-padding-top: var(--nav-height);
   -webkit-text-size-adjust: 100%;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
 }
 
 body {
@@ -141,8 +144,8 @@ img {
 }
 
 .node.accent {
-  border-color: var(--acc);
-  background: var(--acc);
+  border-color: var(--acc-text);
+  background: var(--acc-text);
   color: #fff;
 }
 

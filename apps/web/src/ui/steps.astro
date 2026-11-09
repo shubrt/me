@@ -14,11 +14,11 @@ const steps = [
   {
     id: "structure",
     title: t(lang, "Struktur", "Structure"),
-    tag: t(lang, "Die Basis.", "The foundation."),
+    tag: t(lang, "Wo liegt was?", "What lives where?"),
     text: t(
       lang,
-      "Jede Information bekommt einen festen Platz und eine klare Quelle.",
-      "Every piece of information gets one place and one clear source.",
+      "Jede Information liegt an genau einer Stelle, und alle wissen, an welcher.",
+      "Every piece of information lives in one place, and everyone knows where.",
     ),
     diagram: renderHubDiagram(lang),
     tiles: listStructureTiles(lang),
@@ -26,11 +26,11 @@ const steps = [
   {
     id: "workflow",
     title: "Workflow",
-    tag: t(lang, "Der Ablauf.", "The process."),
+    tag: t(lang, "Was passiert wann?", "What happens when?"),
     text: t(
       lang,
-      "Was sich wiederholt, läuft von selbst. Fehler und Lücken entstehen gar nicht erst.",
-      "What repeats runs by itself. Errors and gaps never get in.",
+      "Wiederkehrende Arbeit läuft automatisch. Ihr Team kümmert sich nur noch um die Ausnahmen.",
+      "Repetitive work runs automatically. Your team only handles the exceptions.",
     ),
     diagram: renderLanesDiagram(lang),
     tiles: listWorkflowTiles(lang),
@@ -38,11 +38,11 @@ const steps = [
   {
     id: "agent",
     title: "Agent",
-    tag: t(lang, "Der Rest.", "The rest."),
+    tag: t(lang, "Was bleibt für die KI?", "What's left for AI?"),
     text: t(
       lang,
-      "KI übernimmt, was keine Regel abdeckt. Das ist weniger, als die meisten denken.",
-      "AI takes over what no rule covers. That is less than most people think.",
+      "KI übernimmt nur, was keine feste Regel abdeckt. Das ist weniger, als die meisten denken.",
+      "AI only handles what a fixed rule can't. That's less than most people think.",
     ),
     diagram: renderMailDiagram(lang),
     tiles: listAgentTiles(lang),
@@ -68,11 +68,8 @@ const steps = [
                 <p>{step.text}</p>
               </div>
               <div class="main" set:html={step.diagram} />
-              {step.tiles.map((tile, j) => (
+              {step.tiles.map((tile) => (
                 <div class="tile">
-                  <i class="mark" aria-hidden="true">
-                    {"abc"[j]}
-                  </i>
                   <h4>{tile.title}</h4>
                   <p>{tile.text}</p>
                   <Fragment set:html={tile.picture} />

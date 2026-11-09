@@ -9,7 +9,7 @@ export default defineConfig({
   build: { inlineStylesheets: "always" },
   integrations: [
     sitemap({
-      i18n: { defaultLocale: "de", locales: { de: "de-DE", en: "en-US" } },
+      i18n: { defaultLocale: "de", locales: { de: "de", en: "en" } },
     }),
   ],
   devToolbar: { enabled: false },

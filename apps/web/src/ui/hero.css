@@ -1,5 +1,4 @@
 .hero {
-  container-type: inline-size;
   padding: 40px 0 56px;
   text-align: center;
 }
@@ -291,11 +290,11 @@
 }
 
 .hero .card em.pdf {
-  background: #d4483f;
+  background: #c9403a;
 }
 
 .hero .card em.mail {
-  background: #4a78d0;
+  background: #3f6ec6;
 }
 
 /* "Email" is the one label wider than the 32 units the others share. */
@@ -305,7 +304,7 @@
 }
 
 .hero .card em.image {
-  background: #8a8a84;
+  background: #6f6f6a;
 }
 
 .hero .card.note {
@@ -625,16 +624,6 @@
   }
 }
 
-/* Dims, never hides: the H1 is the LCP element and has to count from first paint. */
-@keyframes hero-on {
-  from {
-    opacity: 0.15;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes hero-dim {
   from {
     opacity: 1;
@@ -837,27 +826,6 @@
     }
     .exchange-second .verdict {
       animation: hero-pop 0.25s cubic-bezier(0.3, 1.6, 0.5, 1) 9.5s both;
-    }
-  }
-}
-
-/* The headline lights up word by word only while the chat starts in view. Stacked or in a short
-   window it starts below the fold, and the headline must not wait dimmed for it. 1011px is the
-   stack limit of .fit (939px) plus its two 36px gutters, and it measures .hero because a media
-   query would count a classic scrollbar as width. .done ends the rules once the timeline is over:
-   crossing these conditions by rotating or resizing would otherwise replay them. */
-@media (prefers-reduced-motion: no-preference) and (min-height: 500px) {
-  @container (width > 1011px) {
-    html.js .hero:not(.done) {
-      .word-structure {
-        animation: hero-on 0.4s 4.4s both;
-      }
-      .word-workflow {
-        animation: hero-on 0.4s 6.2s both;
-      }
-      .word-agent {
-        animation: hero-on 0.4s 9.15s both;
-      }
     }
   }
 }

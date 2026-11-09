@@ -10,13 +10,13 @@ type Props = {
 
 const { lang } = Astro.props;
 
-const MAILTO = "mailto:shubrt.me@gmail.com";
+const MAILTO = "mailto:kontakt@shubrt.me";
 const email = t(lang, "E-Mail", "Email");
-const about = t(lang, "Worum geht es? Optional", "What is it about? Optional");
+const message = t(lang, "Nachricht, optional", "Message, optional");
 const topics = [
-  { value: "structure", label: t(lang, "1 Struktur", "1 Structure") },
-  { value: "workflow", label: "2 Workflow" },
-  { value: "agent", label: "3 Agent" },
+  { value: "structure", label: t(lang, "Struktur", "Structure") },
+  { value: "workflow", label: "Workflow" },
+  { value: "agent", label: "Agent" },
   { value: "unsure", label: t(lang, "Noch unklar", "Not sure yet") },
 ];
 ---
@@ -36,22 +36,43 @@ const topics = [
       "Portrait of Janis Schubert, smiling, with glasses and a beard",
     )}
   />
-  <p class="who">{t(lang, "Janis Schubert, Software-Architekt", "Janis Schubert, software architect")}</p>
-  <h2>{t(lang, "Reden wir.", "Let's talk.")}</h2>
+  <p class="who">
+    {
+      t(
+        lang,
+        "Janis Schubert, Software-Architekt im Rhein-Main-Gebiet",
+        "Janis Schubert, software architect in the Rhine-Main area",
+      )
+    }
+  </p>
+  <h2>{t(lang, "Wo hakt es?", "Where does it hurt?")}</h2>
   <p class="lead">
     {
       t(
         lang,
-        "30 Minuten, kostenlos. Danach steht fest, wo es losgeht, auch wenn die Antwort lautet: Das braucht keine KI.",
-        "30 minutes, free. After that it is clear where to begin, even if the answer is: this does not need AI.",
+        "In 30 kostenlosen Minuten klären wir, wo Sie anfangen sollten. Manchmal lautet die Antwort: Das braucht keine KI.",
+        "In 30 free minutes we work out where you should start. Sometimes the answer is: you don't need AI.",
+      )
+    }
+  </p>
+  <p class="lead">
+    {
+      t(
+        lang,
+        "Der erste Auftrag ist meist ein Struktur-Check. Nach zwei Tagen haben Sie eine Karte Ihrer Datenquellen und wissen, was zuerst kommt.",
+        "The first project is usually a Structure Check. After two days you have a map of your data sources and know what comes first.",
       )
     }
   </p>
 
   <form method="post" action="/api/contact">
     <input type="hidden" name="lang" value={lang} />
+    {/* The honeypot. Name and label mean nothing to autofill, so password managers leave it empty. */}
     <div class="trap" aria-hidden="true">
-      <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+      <label>
+        Leave this field empty
+        <input type="text" name="trap" tabindex="-1" autocomplete="off" data-1p-ignore data-lpignore="true" />
+      </label>
     </div>
 
     <label class="field">
@@ -64,7 +85,7 @@ const topics = [
     </label>
 
     <fieldset>
-      <legend class="sr-only">{t(lang, "Wo anfangen?", "Where to start?")}</legend>
+      <legend>{t(lang, "Worum geht es am ehesten?", "What is it mainly about?")}</legend>
       {
         topics.map(({ value, label }) => (
           <label class="option">
@@ -76,15 +97,21 @@ const topics = [
     </fieldset>
 
     <label class="field wide">
-      <span class="sr-only">{about}</span>
-      <textarea name="message" maxlength="5000" placeholder={about}></textarea>
+      <span class="sr-only">{message}</span>
+      <textarea name="message" maxlength="5000" placeholder={message}></textarea>
     </label>
-    <button class="btn" type="submit">{t(lang, "Erstgespräch vereinbaren", "Book an intro call")}</button>
+    <button class="btn" type="submit">{t(lang, "Erstgespräch anfragen", "Request an intro call")}</button>
   </form>
 
   <!-- Shown by the script, or by :target after the no-JS redirect from /api/contact. -->
   <div class="status" role="status">
-    <p id="sent" tabindex="-1">{t(lang, "Danke. Ich melde mich.", "Thanks. I'll be in touch.")}</p>
+    <p id="sent" tabindex="-1">{
+        t(
+          lang,
+          "Danke. Ich melde mich innerhalb von zwei Werktagen.",
+          "Thanks. I'll get back to you within two working days.",
+        )
+      }</p>
     <p id="error">
       {t(lang, "Das hat nicht geklappt.", "That did not work.")}{" "}
       <a href={MAILTO}>{t(lang, "Bitte direkt per E-Mail schreiben.", "Please send an email instead.")}</a>

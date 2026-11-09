@@ -13,7 +13,8 @@
 
 .footer .links {
   display: flex;
-  gap: 11px;
+  flex-wrap: wrap;
+  gap: 4px 11px;
 }
 
 /* Tap target above 24px; the footer padding gives these 2px back. */
