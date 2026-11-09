@@ -168,11 +168,11 @@ export function renderLanesDiagram(lang: Lang): string {
   const no = t(lang, "Nein", "No");
   const match = [t(lang, "Zahlung", "Match"), t(lang, "abgleichen", "payment")] as const;
   const status = [t(lang, "Status", "Set"), t(lang, "setzen", "status")] as const;
-  const review = [t(lang, "Klärfall", "Review"), t(lang, "prüfen", "exception")] as const;
+  const review = [t(lang, "Ausnahme", "Review"), t(lang, "prüfen", "exception")] as const;
   const label = t(
     lang,
-    "Ablauf einer Rechnung, Menschen prüfen nur Klärfälle",
-    "How an invoice runs through the system. People only review exceptions.",
+    "So läuft eine Rechnung durchs System. Ein Mensch prüft nur die Ausnahmen.",
+    "How an invoice runs through the system. A person only reviews exceptions.",
   );
 
   const y = 76;
@@ -228,13 +228,13 @@ export function renderLanesDiagram(lang: Lang): string {
       [502, 264],
       [502, y + 48],
     ]),
-    text(744, 256, t(lang, "Menschen nur noch", "People step in"), {
+    text(744, 256, t(lang, "Ein Mensch prüft", "A person only"), {
       size: 14,
       weight: 500,
       fill: MUTED,
       anchor: "end",
     }),
-    text(744, 276, t(lang, "bei Ausnahmen.", "for exceptions only."), {
+    text(744, 276, t(lang, "nur die Ausnahmen.", "reviews exceptions."), {
       size: 14,
       weight: 500,
       fill: MUTED,
@@ -256,8 +256,8 @@ export function renderLanesDiagram(lang: Lang): string {
     ]);
   const noteLines = t(
     lang,
-    ["Menschen", "nur noch bei", "Ausnahmen."],
-    ["People step in", "only for", "exceptions."],
+    ["Ein Mensch", "prüft nur die", "Ausnahmen."],
+    ["A person", "only reviews", "exceptions."],
   );
   const narrow = svg("diagram narrow", 380, 544, label, [
     rect(0, 0, 232, 544, { fill: SOFT, stroke: SOFT, sw: 0, r: 12 }),
@@ -302,13 +302,13 @@ export function renderLanesDiagram(lang: Lang): string {
 /** Step 3: the agent reads a mail, checks the database and suggests the next move. */
 export function renderMailDiagram(lang: Lang): string {
   const incoming = t(lang, "Mail kommt rein", "Email comes in");
-  const understands = t(lang, "Er versteht und sucht", "It reads and searches");
+  const understands = t(lang, "Er liest und sucht", "It reads and searches");
   const suggests = t(lang, "Er schlägt vor", "It suggests");
   const sender = "Eva Brandt, Müller GmbH";
   const body = [
-    t(lang, "Hallo, die letzte Rechnung", "Hello, the last invoice"),
-    t(lang, "stimmt so nicht. Bitte prüfen,", "is not right. Please check it,"),
-    t(lang, "sonst müssen wir reden.", "or we will have to talk."),
+    t(lang, "Hallo, die letzte Rechnung", "Hi, your last invoice"),
+    t(lang, "stimmt so nicht. Bitte prüfen,", "isn't right. Please check it,"),
+    t(lang, "sonst müssen wir reden.", "or we'll need to talk."),
     "",
     t(lang, "Viele Grüße", "Best regards"),
     "Eva Brandt",
@@ -324,11 +324,11 @@ export function renderMailDiagram(lang: Lang): string {
     t(lang, "Umsatz 2026: 84.200 €", "Revenue 2026: €84,200"),
     t(lang, "Rabatt fehlt auf Rechnung", "Discount missing on invoice"),
   ];
-  const advice = t(lang, "Anrufen statt mahnen.", "Call, don't chase.");
+  const advice = t(lang, "Lieber anrufen.", "Better to call.");
   const reasons = [
     t(lang, "Rabatt fehlt auf der Rechnung.", "The discount is missing."),
-    t(lang, "Korrektur ist vorbereitet.", "Correction prepared."),
-    t(lang, "Antwort liegt als Entwurf vor.", "Reply drafted."),
+    t(lang, "Korrektur ist vorbereitet.", "The correction is ready."),
+    t(lang, "Antwort liegt als Entwurf vor.", "A reply is drafted."),
   ];
   const decides = t(lang, "Tom entscheidet", "Tom decides");
   const label = t(

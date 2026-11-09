@@ -27,6 +27,7 @@
 
 .contact .lead {
   max-width: 560px;
+  text-wrap: pretty;
   margin: 8px auto 0;
   font-size: 18px;
   line-height: 1.45;
@@ -145,6 +146,7 @@
 
 .contact .status p {
   display: none;
+  text-wrap: pretty;
   margin-top: 14px;
   font-size: 15px;
   scroll-margin-top: 40vh;
@@ -174,6 +176,7 @@
 
 .contact .status a,
 .contact .note a {
+  white-space: nowrap;
   text-decoration: underline;
   text-underline-offset: 2px;
 }

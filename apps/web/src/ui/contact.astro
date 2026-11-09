@@ -50,8 +50,8 @@ const topics = [
     {
       t(
         lang,
-        "In 30 kostenlosen Minuten klären wir, wo Sie anfangen sollten. Manchmal lautet die Antwort: Das braucht keine KI.",
-        "In 30 free minutes we work out where you should start. Sometimes the answer is: you don't need AI.",
+        "Das Erstgespräch dauert 30 Minuten und kostet nichts. Wir klären, wo Sie am besten anfangen. Manchmal ist die ehrliche Antwort, dass Sie keine KI brauchen.",
+        "The intro call takes 30 minutes and costs nothing. We work out where you should start. Sometimes the honest answer is that you don't need AI at all.",
       )
     }
   </p>
@@ -59,8 +59,8 @@ const topics = [
     {
       t(
         lang,
-        "Der erste Auftrag ist meist ein Struktur-Check. Nach zwei Tagen haben Sie eine Karte Ihrer Datenquellen und wissen, was zuerst kommt.",
-        "The first project is usually a Structure Check. After two days you have a map of your data sources and know what comes first.",
+        "Der erste Auftrag ist immer eine Analyse von zwei Tagen. Ich schaue mir an, was bei Ihnen schon steht. Danach bekommen Sie schriftlich, was ich bei Struktur, Workflow und Agent empfehle.",
+        "The first paid job is always a two-day analysis. I look at what you already have in place. Then you get my recommendations for Structure, Workflow and Agent in writing.",
       )
     }
   </p>
@@ -108,19 +108,23 @@ const topics = [
     <p id="sent" tabindex="-1">{
         t(
           lang,
-          "Danke. Ich melde mich innerhalb von zwei Werktagen.",
-          "Thanks. I'll get back to you within two working days.",
+          "Danke, Ihre Anfrage ist angekommen. Ich melde mich innerhalb einer Woche.",
+          "Thanks, your request is in. I'll get back to you within a week.",
         )
       }</p>
     <p id="error">
-      {t(lang, "Das hat nicht geklappt.", "That did not work.")}{" "}
-      <a href={MAILTO}>{t(lang, "Bitte direkt per E-Mail schreiben.", "Please send an email instead.")}</a>
+      {t(lang, "Das hat leider nicht geklappt.", "Sorry, that didn't work.")}{" "}
+      <a href={MAILTO}>{t(lang, "Schreiben Sie mir bitte direkt per E-Mail.", "Please email me directly.")}</a>
     </p>
   </div>
 
   <p class="note">
-    {t(lang, "Die Angaben nutze ich nur für die Antwort. Oder", "I only use these details to reply. Or")}{" "}
-    <a href={MAILTO}>{t(lang, "direkt per E-Mail", "send an email")}</a>.
+    {t(
+      lang,
+      "Ich nutze Ihre Angaben nur, um Ihnen zu antworten. Sie können mir auch",
+      "I only use your details to reply to you. You can also",
+    )}{" "}
+    <a href={MAILTO}>{t(lang, "direkt eine E-Mail schreiben", "email me directly")}</a>.
   </p>
 </section>
 

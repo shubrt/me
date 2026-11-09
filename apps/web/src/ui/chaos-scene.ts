@@ -43,14 +43,14 @@ export function buildChaosScene(lang: Lang) {
   const listLeft = t(lang, "Bitte aus dem Verteiler nehmen.", "Please remove me from this list.");
 
   return {
-    heading: t(lang, "Kommt das bekannt vor?", "Sound familiar?"),
+    heading: t(lang, "Kommt Ihnen das bekannt vor?", "Sound familiar?"),
     summary: t(
       lang,
       "Acht überlappende Fenster mit Chat, Kalender, Tabellen, Makro und E-Mails. Es gibt sieben Versionen der Kundenliste, und niemand weiß, welche gilt.",
       "Eight overlapping windows of chat, calendar, spreadsheets, macro and email. There are seven versions of the customer list, and nobody knows which one is current.",
     ),
-    card: t(lang, "Eine Quelle für alle.", "One source for everyone."),
-    tidy: t(lang, "Reicht. Aufräumen.", "Enough. Clean it up."),
+    card: t(lang, "Nur noch eine Liste.", "Now there's only one list."),
+    tidy: t(lang, "Aufräumen", "Clean it up"),
     back: t(lang, "Zurück ins Chaos", "Back to chaos"),
     titles: {
       chat: t(lang, "# vertrieb", "# sales"),

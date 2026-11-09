@@ -32,20 +32,24 @@ export function listStructureTiles(lang: Lang): readonly Tile[] {
   return [
     {
       title: t(lang, "Datenmodell", "Data model"),
-      text: t(lang, "Was es gibt und wie es zusammenhängt.", "What exists and how it connects."),
+      text: t(
+        lang,
+        "Wir legen fest, wie Kunde, Auftrag und Rechnung zusammenhängen.",
+        "We pin down how customers, orders and invoices fit together.",
+      ),
       picture: renderModelPicture(lang),
     },
     {
       title: t(lang, "Eine Quelle", "One source"),
-      text: t(lang, "Eine Kundenliste statt sieben.", "One customer list instead of seven."),
+      text: t(lang, "Aus sieben Kundenlisten wird eine.", "Seven customer lists become one."),
       picture: renderSourcePicture(lang),
     },
     {
-      title: t(lang, "Schnittstellen", "APIs"),
+      title: t(lang, "Schnittstellen", "Connections"),
       text: t(
         lang,
-        "CRM und Shop arbeiten mit denselben Kundendaten.",
-        "Your CRM and shop use the same customer data.",
+        "Bestellungen aus Ihrem Shop landen ohne Abtippen im CRM.",
+        "Shop orders show up in your CRM without anyone retyping them.",
       ),
       picture: renderApiPicture(lang),
     },
@@ -67,8 +71,8 @@ export function listWorkflowTiles(lang: Lang): readonly Tile[] {
       title: t(lang, "Prüfregeln", "Validation"),
       text: t(
         lang,
-        "Fehlt ein Feld, meldet das System es sofort.",
-        "If a field is missing, the system flags it right away.",
+        "Fehlt ein Fälligkeitsdatum, sehen Sie das sofort.",
+        "If a due date is missing, you'll see it right away.",
       ),
       picture: renderRulesPicture(lang),
     },
@@ -76,8 +80,8 @@ export function listWorkflowTiles(lang: Lang): readonly Tile[] {
       title: t(lang, "Integrationen", "Integrations"),
       text: t(
         lang,
-        "Ein Zahlungseingang stößt den nächsten Schritt an.",
-        "An incoming payment triggers the next step.",
+        "Ist die Zahlung da, geht die Bestellung direkt in den Versand.",
+        "Once the payment is in, the order goes straight to shipping.",
       ),
       picture: renderIntegrationsPicture(lang),
     },
@@ -91,16 +95,16 @@ export function listAgentTiles(lang: Lang): readonly Tile[] {
       text: t(
         lang,
         "Die KI liest Mails, ordnet sie ein und schlägt eine Antwort vor.",
-        "AI reads emails, sorts them and suggests a reply.",
+        "The AI reads emails, sorts them and suggests a reply.",
       ),
       picture: renderAssistantPicture(lang),
     },
     {
-      title: t(lang, "Eigene Daten", "Company data"),
+      title: t(lang, "Eigene Daten", "Your own data"),
       text: t(
         lang,
-        "Jede Antwort zeigt, aus welchen Daten sie stammt.",
-        "Every answer shows which data it came from.",
+        "Der Agent holt seine Antworten aus Ihren Daten.",
+        "The agent pulls its answers from your data.",
       ),
       picture: renderDataPicture(lang),
     },
@@ -108,8 +112,8 @@ export function listAgentTiles(lang: Lang): readonly Tile[] {
       title: t(lang, "Klare Grenzen", "Clear limits"),
       text: t(
         lang,
-        "Der Agent bereitet vor. Auf Senden klickt immer ein Mensch.",
-        "The agent prepares. A person always hits send.",
+        "Der Agent entwirft die Antwort. Auf Senden klickt immer ein Mensch.",
+        "The agent drafts the reply. A person always hits send.",
       ),
       picture: renderLimitsPicture(lang),
     },
@@ -248,7 +252,7 @@ function renderRulesPicture(lang: Lang) {
 
 function renderIntegrationsPicture(lang: Lang) {
   const nodes = [
-    [t(lang, "Mail", "Email"), 24, 28],
+    [t(lang, "Versand", "Shipping"), 24, 28],
     ["Shop", 24, 138],
     ["Bank", 206, 28],
     ["CRM", 206, 138],
@@ -256,8 +260,8 @@ function renderIntegrationsPicture(lang: Lang) {
   return renderPicture(
     t(
       lang,
-      "Mail, Shop, Bank und CRM hängen an denselben Daten",
-      "Email, shop, bank and CRM share the same data",
+      "Shop, Bank, Versand und CRM hängen an denselben Daten",
+      "Shop, bank, shipping and CRM share the same data",
     ),
     [
       ...nodes.map(([, x, y]) =>
