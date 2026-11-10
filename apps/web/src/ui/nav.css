@@ -51,15 +51,8 @@
 }
 
 @media (max-width: 719px) {
-  /* Sized so the name stays on one line next to the button from 360px. */
   .nav {
     grid-template-columns: auto 1fr;
-    column-gap: 12px;
-  }
-
-  .nav .brand {
-    font-size: 17px;
-    line-height: 1.2;
   }
 
   .nav .links {
@@ -68,6 +61,6 @@
 
   .nav .actions {
     grid-column: 2;
-    gap: 12px;
+    gap: 14px;
   }
 }

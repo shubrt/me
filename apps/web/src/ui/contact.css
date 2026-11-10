@@ -34,11 +34,6 @@
   color: var(--muted);
 }
 
-/* Without the extra space a second paragraph reads as a line break. */
-.contact .lead + .lead {
-  margin-top: 12px;
-}
-
 .contact form {
   display: grid;
   grid-template-columns: 1fr 1fr;
