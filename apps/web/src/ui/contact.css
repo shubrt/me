@@ -14,6 +14,7 @@
   margin-top: 12px;
   font-size: 15px;
   color: var(--muted);
+  text-wrap: balance;
 }
 
 .contact h2 {
@@ -26,6 +27,7 @@
 
 .contact .lead {
   max-width: 560px;
+  text-wrap: pretty;
   margin: 8px auto 0;
   font-size: 18px;
   line-height: 1.45;
@@ -87,6 +89,12 @@
   border: 0;
 }
 
+/* The rendered legend sits above the options, outside the flex or grid layout. */
+.contact legend {
+  padding-block: 8px 6px;
+  font-size: 14px;
+}
+
 .contact .option {
   position: relative;
   flex: 1;
@@ -117,13 +125,6 @@
   color: #fff;
 }
 
-/* Ink, not white: white on --acc is only 3.4:1 at this size. */
-.contact .option input[value="agent"]:checked + span {
-  border-color: var(--acc);
-  background: var(--acc);
-  color: var(--ink);
-}
-
 .contact .option input:focus-visible + span {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
@@ -140,6 +141,7 @@
 
 .contact .status p {
   display: none;
+  text-wrap: pretty;
   margin-top: 14px;
   font-size: 15px;
   scroll-margin-top: 40vh;
@@ -169,6 +171,7 @@
 
 .contact .status a,
 .contact .note a {
+  white-space: nowrap;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -206,7 +209,7 @@
 
 /* Forced colours drop backgrounds, which is all that marks the selection. */
 @media (forced-colors: active) {
-  .contact .option input[value]:checked + span {
+  .contact .option input:checked + span {
     border-color: Highlight;
     background: Highlight;
     color: HighlightText;

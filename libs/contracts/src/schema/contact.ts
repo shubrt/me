@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// One contact form submission. The worker handles the spam fields (`website`,
+// One contact form submission. The worker handles the spam fields (`trap`,
 // `elapsed`) before parsing, so they are not part of the contract. contact.astro
 // repeats the limits as maxlength.
 export const contactSchema = z.object({

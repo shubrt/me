@@ -32,24 +32,24 @@ export function listStructureTiles(lang: Lang): readonly Tile[] {
   return [
     {
       title: t(lang, "Datenmodell", "Data model"),
-      text: t(lang, "Was es gibt und wie es zusammenhängt.", "What exists and how it connects."),
+      text: t(
+        lang,
+        "Wir legen fest, wie Kunde, Auftrag und Rechnung zusammenhängen.",
+        "We pin down how customers, orders and invoices fit together.",
+      ),
       picture: renderModelPicture(lang),
     },
     {
       title: t(lang, "Eine Quelle", "One source"),
-      text: t(
-        lang,
-        "Jede Information liegt genau einmal.",
-        "Every fact lives in exactly one place.",
-      ),
+      text: t(lang, "Aus sieben Kundenlisten wird eine.", "Seven customer lists become one."),
       picture: renderSourcePicture(lang),
     },
     {
-      title: t(lang, "Schnittstellen", "APIs"),
+      title: t(lang, "Schnittstellen", "Connections"),
       text: t(
         lang,
-        "Systeme tauschen Daten von selbst aus.",
-        "Systems exchange data on their own.",
+        "Bestellungen aus Ihrem Shop landen ohne Abtippen im CRM.",
+        "Shop orders show up in your CRM without anyone retyping them.",
       ),
       picture: renderApiPicture(lang),
     },
@@ -60,21 +60,29 @@ export function listWorkflowTiles(lang: Lang): readonly Tile[] {
   return [
     {
       title: t(lang, "Automatisierung", "Automation"),
-      text: t(lang, "Was sich wiederholt, läuft von selbst.", "What repeats runs by itself."),
+      text: t(
+        lang,
+        "Rechnungen werden automatisch verbucht.",
+        "Invoices get posted automatically.",
+      ),
       picture: renderAutomationPicture(lang),
     },
     {
       title: t(lang, "Prüfregeln", "Validation"),
       text: t(
         lang,
-        "Fehler fallen auf, bevor sie stören.",
-        "Errors show up before they cause trouble.",
+        "Fehlt ein Fälligkeitsdatum, sehen Sie das sofort.",
+        "If a due date is missing, you'll see it right away.",
       ),
       picture: renderRulesPicture(lang),
     },
     {
       title: t(lang, "Integrationen", "Integrations"),
-      text: t(lang, "Systeme reden direkt miteinander.", "Systems talk to each other directly."),
+      text: t(
+        lang,
+        "Ist die Zahlung da, geht die Bestellung direkt in den Versand.",
+        "Once the payment is in, the order goes straight to shipping.",
+      ),
       picture: renderIntegrationsPicture(lang),
     },
   ];
@@ -86,17 +94,17 @@ export function listAgentTiles(lang: Lang): readonly Tile[] {
       title: t(lang, "KI-Assistenten", "AI assistants"),
       text: t(
         lang,
-        "Lesen, einordnen, Vorschläge machen.",
-        "Reading, sorting, making suggestions.",
+        "Die KI liest Mails, ordnet sie ein und schlägt eine Antwort vor.",
+        "The AI reads emails, sorts them and suggests a reply.",
       ),
       picture: renderAssistantPicture(lang),
     },
     {
-      title: t(lang, "Eigene Daten", "Company data"),
+      title: t(lang, "Eigene Daten", "Your own data"),
       text: t(
         lang,
-        "Antworten aus der Datenbasis, nicht geraten.",
-        "Answers from the database, not guesses.",
+        "Der Agent holt seine Antworten aus Ihren Daten.",
+        "The agent pulls its answers from your data.",
       ),
       picture: renderDataPicture(lang),
     },
@@ -104,8 +112,8 @@ export function listAgentTiles(lang: Lang): readonly Tile[] {
       title: t(lang, "Klare Grenzen", "Clear limits"),
       text: t(
         lang,
-        "Der Agent bereitet vor, der Mensch entscheidet.",
-        "The agent prepares, the human decides.",
+        "Der Agent entwirft die Antwort. Auf Senden klickt immer ein Mensch.",
+        "The agent drafts the reply. A person always hits send.",
       ),
       picture: renderLimitsPicture(lang),
     },
@@ -244,7 +252,7 @@ function renderRulesPicture(lang: Lang) {
 
 function renderIntegrationsPicture(lang: Lang) {
   const nodes = [
-    [t(lang, "Mail", "Email"), 24, 28],
+    [t(lang, "Versand", "Shipping"), 24, 28],
     ["Shop", 24, 138],
     ["Bank", 206, 28],
     ["CRM", 206, 138],
@@ -252,8 +260,8 @@ function renderIntegrationsPicture(lang: Lang) {
   return renderPicture(
     t(
       lang,
-      "Mail, Shop, Bank und CRM hängen an denselben Daten",
-      "Email, shop, bank and CRM share the same data",
+      "Shop, Bank, Versand und CRM hängen an denselben Daten",
+      "Shop, bank, shipping and CRM share the same data",
     ),
     [
       ...nodes.map(([, x, y]) =>
@@ -303,9 +311,9 @@ function renderDataPicture(lang: Lang) {
     t(lang, "Verträge", "Contracts"),
   ];
   return renderPicture(
-    t(lang, "Der Agent liest aus der Datenbasis", "The agent reads from the database"),
+    t(lang, "Der Agent liest aus der Datenbank", "The agent reads from the database"),
     [
-      circle(80, 107, 40, ACC),
+      circle(80, 107, 40, ACC_TEXT),
       text(80, 112, "Agent", { weight: 700, fill: WHITE, anchor: "middle" }),
       line(
         [
@@ -315,7 +323,7 @@ function renderDataPicture(lang: Lang) {
         { sw: 1.6 },
       ),
       rect(188, 34, 120, 146, { fill: INK, sw: 1, r: 10 }),
-      text(248, 62, t(lang, "Datenbasis", "Database"), {
+      text(248, 62, t(lang, "Datenbank", "Database"), {
         size: 13.5,
         weight: 700,
         fill: WHITE,
@@ -339,8 +347,8 @@ function renderLimitsPicture(lang: Lang) {
   return renderPicture(
     t(
       lang,
-      "Der Agent bereitet vor, der Mensch entscheidet",
-      "The agent prepares, the human decides",
+      "Der Agent entwirft, prüft und schlägt vor, Tom sendet",
+      "The agent drafts, checks and suggests, Tom sends",
     ),
     [
       rect(20, 24, 180, 166, { stroke: ACC, sw: 1.5, r: 12, dash: "7 5" }),

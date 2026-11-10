@@ -139,25 +139,3 @@ export function svg(
 ): string {
   return `<svg class="${className}" viewBox="0 0 ${width} ${height}" role="img" aria-label="${label}">${body.join("")}</svg>`;
 }
-
-type Marker = readonly [x: number, y: number, letter: "a" | "b" | "c", isInverted?: boolean];
-
-/**
- * Lettered circles that tie a spot in a main diagram to a tile. `isInverted` is the white
- * version for coloured surfaces. The radius with its stroke is 16.5.
- */
-export function markers(items: readonly Marker[], color = INK): string {
-  return items
-    .map(([x, y, letter, isInverted]) => {
-      const fill = isInverted ? WHITE : color;
-      return (
-        `<circle cx="${x}" cy="${y}" r="15" fill="${fill}" stroke="${WHITE}" stroke-width="3"/>` +
-        text(x, y + 5.5, letter, {
-          weight: 700,
-          fill: isInverted ? ACC_TEXT : WHITE,
-          anchor: "middle",
-        })
-      );
-    })
-    .join("");
-}

@@ -43,6 +43,7 @@ const jsonLd = {
       url,
       sameAs: SAME_AS,
       address: ADDRESS,
+      areaServed: { "@type": "Place", name: "Rhein-Main" },
       founder: { "@id": personId },
     },
   ],
@@ -61,7 +62,9 @@ function toAbsoluteUrl(href: string) {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {
       path ? (
         <>
@@ -79,6 +82,14 @@ function toAbsoluteUrl(href: string) {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={toAbsoluteUrl(`/og-${lang}.png`)} />
+    <meta
+      property="og:image:alt"
+      content={t(
+        lang,
+        "Struktur. Workflow. Agent. Erst die Daten, dann die KI. Software für den Mittelstand.",
+        "Structure. Workflow. Agent. Data first, AI second. Software for mid-sized companies.",
+      )}
+    />
     <meta property="og:locale" content={t(lang, "de_DE", "en_US")} />
     <meta name="twitter:card" content="summary_large_image" />
     {

@@ -6,7 +6,7 @@ import Contact from "./contact.astro";
 import Footer from "./footer.astro";
 import Hero from "./hero.astro";
 import Nav from "./nav.astro";
-import ScrollDraw from "./scroll-draw.astro";
+import Reveal from "./reveal.astro";
 import Steps from "./steps.astro";
 import Towers from "./towers.astro";
 
@@ -27,8 +27,8 @@ const { lang } = Astro.props;
   )}
   description={t(
     lang,
-    "Erst die Daten, dann die KI. Software-Architektur für Startups und Mittelstand: Daten strukturieren, Abläufe automatisieren, KI-Assistenten anbinden.",
-    "Data first, AI second. Software architecture for startups and SMEs: structure data, automate processes, connect AI assistants.",
+    "Ich baue Software für den Mittelstand im Rhein-Main-Gebiet. Zuerst bringe ich die Daten in Ordnung, danach kommt die KI. Das Erstgespräch ist kostenlos.",
+    "I build software for mid-sized businesses in the Rhine-Main area. I sort out the data first and bring in AI after that. The intro call is free.",
   )}
 >
   <Nav lang={lang} />
@@ -40,5 +40,5 @@ const { lang } = Astro.props;
     <Contact lang={lang} />
   </main>
   <Footer lang={lang} />
-  <ScrollDraw />
+  <Reveal />
 </Base>

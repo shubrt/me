@@ -125,21 +125,21 @@ function isOverdue(cell: string | Cell | undefined) {
 
 <section class="hero">
   <h1>
-    <span class="word-structure">{t(lang, "Struktur.", "Structure.")}</span>{" "}
-    <span class="word-workflow">Workflow.</span>{" "}
-    <span class="word-agent">Agent.</span>
+    <span>{t(lang, "Struktur.", "Structure.")}</span>{" "}
+    <span>Workflow.</span>{" "}
+    <span>Agent.</span>
   </h1>
   <p class="line">
     {
       t(
         lang,
-        "Erst die Daten, dann die KI. Software-Architektur für Startups und Mittelstand.",
-        "Data first, AI second. Software architecture for startups and SMEs.",
+        "Steckt Ihr Wissen in Excel, Postfächern und Köpfen? Dann bringe ich zuerst die Daten in Ordnung. Die KI kommt danach.",
+        "Is your know-how stuck in spreadsheets, inboxes and people's heads? I'll sort out the data first. AI comes after that.",
       )
     }
   </p>
   <div class="actions">
-    <a class="btn" href="#contact">{t(lang, "Erstgespräch vereinbaren", "Book an intro call")}</a>
+    <a class="btn" href="#contact">{t(lang, "Erstgespräch anfragen", "Request an intro call")}</a>
     <a class="link" href="#structure">
       {t(lang, "So arbeite ich", "How I work")}
       <span aria-hidden="true">↓</span>
@@ -265,7 +265,6 @@ function isOverdue(cell: string | Cell | undefined) {
       ([entry], observer) => {
         if (!entry?.isIntersecting) return;
         hero.classList.add("play");
-        setTimeout(() => hero.classList.add("done"), 10_000);
         observer.disconnect();
       },
       { threshold: 0.35 },

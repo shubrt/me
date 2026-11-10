@@ -17,7 +17,7 @@
 }
 
 .steps .accent .title {
-  background: var(--acc);
+  background: var(--acc-text);
 }
 
 .steps .title h2 {
@@ -37,19 +37,15 @@
 
 .steps .title p {
   margin-top: 6px;
+  text-wrap: pretty;
   font-size: 16.5px;
   line-height: 1.38;
   color: #d6d6d1;
 }
 
-/* White fails AA at this size on the approved orange (3.4:1), near-black passes (5.8:1). */
+/* The grey reaches only 3.4:1 on the orange, white 5:1. */
 .steps .accent .title p {
-  color: var(--ink);
-}
-
-/* Large text only needs 3:1, and at 22px only bold counts as large. */
-.steps .accent .title h3 {
-  font-weight: 700;
+  color: #fff;
 }
 
 .steps .main {
@@ -75,7 +71,6 @@
 }
 
 .steps .tile {
-  position: relative;
   display: flex;
   grid-column: span 4;
   flex-direction: column;
@@ -89,7 +84,6 @@
 }
 
 .steps .tile h4 {
-  padding-right: 36px;
   font-size: 21px;
   font-weight: 700;
   line-height: 1.2;
@@ -98,6 +92,7 @@
 
 .steps .tile p {
   margin-top: 3px;
+  text-wrap: pretty;
   font-size: 15px;
   line-height: 1.35;
   color: var(--muted);
@@ -108,26 +103,6 @@
   height: auto;
   margin-top: auto;
   padding-top: 6px;
-}
-
-.steps .mark {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--ink);
-  color: #fff;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 700;
-}
-
-.steps .accent .mark {
-  background: var(--acc);
 }
 
 /* 13px diagram text only reaches the 11px minimum down to this width, so it grows a little.
@@ -167,19 +142,10 @@
   }
 
   .steps .tile h4 {
-    padding-right: 30px;
     font-size: 18px;
   }
 
   .steps .tile p {
-    font-size: 14px;
-  }
-
-  .steps .mark {
-    top: 10px;
-    right: 10px;
-    width: 26px;
-    height: 26px;
     font-size: 14px;
   }
 
@@ -216,13 +182,13 @@
     margin-inline: auto;
   }
 
+  /* Phones show the tiles without their pictures, which keeps the page short. */
   .steps .tile {
     grid-column: 1 / -1;
-    padding: 18px 16px 10px;
+    padding: 18px 16px;
   }
 
   .steps .picture {
-    max-width: 380px;
-    margin-inline: auto;
+    display: none;
   }
 }

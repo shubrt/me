@@ -664,14 +664,12 @@ html.js .chaos .fix {
     visibility: hidden;
   }
 
-  .chaos[data-state="play"] .pile {
-    animation: chaos-shake 0.09s linear 6.3s 14;
-  }
-
   .chaos[data-state="play"] .window {
     animation: chaos-open 0.28s var(--t) both;
   }
 
+  /* The last toast starts at 5.74s and lands at 5.88s. The button follows right after it,
+     and the toasts stay until 7.7s so the last one can be read. */
   .chaos[data-state="play"] .toast {
     animation:
       chaos-pin 0.14s var(--a) both,
@@ -679,7 +677,7 @@ html.js .chaos .fix {
   }
 
   .chaos[data-state="play"] .fix {
-    animation: chaos-reveal 0.35s 8.1s both;
+    animation: chaos-reveal 0.35s 6s both;
   }
 
   .chaos[data-state="play"] .message {
@@ -791,20 +789,6 @@ html.js .chaos .fix {
 @keyframes chaos-pop {
   from {
     transform: scale(0);
-  }
-}
-
-@keyframes chaos-shake {
-  25% {
-    transform: translate(calc(var(--u) * -3), calc(var(--u) * 2));
-  }
-
-  50% {
-    transform: translate(calc(var(--u) * 3), calc(var(--u) * -2));
-  }
-
-  75% {
-    transform: translate(calc(var(--u) * -2), calc(var(--u) * -3));
   }
 }
 

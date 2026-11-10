@@ -262,15 +262,16 @@ const scene = buildChaosScene(lang);
       const to = firstNode.getBoundingClientRect();
       const dock = to.y + to.height / 2 - from.y - from.height / 2;
       card.style.cssText = `--dock:${dock}px;--dock-s:${to.width / from.width}`;
-      scrollTarget = scrollY + to.y - 24;
+      // The node lands 24px below the sticky nav, whose height is the scroll padding (base-layout.css).
+      const navHeight = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop);
+      scrollTarget = scrollY + to.y - navHeight - 24;
       dataset.state = "tidy";
 
-      if (isCalm) firstStep.scrollIntoView({ behavior: "instant" });
+      if (isCalm) firstStep.scrollIntoView();
     }
 
     // The card takes off here, so the scroll starts in the same frame. The empty animation
-    // supplies the eased progress, which saves a bezier solver. "instant" because
-    // base-layout.css sets smooth scrolling, which would lag behind every step.
+    // supplies the eased progress, which saves a bezier solver.
     function scrollWithCard({ animationName }: AnimationEvent) {
       if (animationName !== "chaos-dock") return;
 
@@ -283,7 +284,7 @@ const scene = buildChaosScene(lang);
         if (hasYielded || dataset.state !== "tidy") return;
 
         const progress = effect?.getComputedTiming().progress ?? 1;
-        scrollTo({ top: start + (scrollTarget - start) * progress, behavior: "instant" });
+        scrollTo({ top: start + (scrollTarget - start) * progress });
 
         if (progress < 1) requestAnimationFrame(step);
       }

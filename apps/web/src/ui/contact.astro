@@ -10,13 +10,13 @@ type Props = {
 
 const { lang } = Astro.props;
 
-const MAILTO = "mailto:shubrt.me@gmail.com";
+const MAILTO = "mailto:kontakt@shubrt.me";
 const email = t(lang, "E-Mail", "Email");
-const about = t(lang, "Worum geht es? Optional", "What is it about? Optional");
+const message = t(lang, "Nachricht, optional", "Message, optional");
 const topics = [
-  { value: "structure", label: t(lang, "1 Struktur", "1 Structure") },
-  { value: "workflow", label: "2 Workflow" },
-  { value: "agent", label: "3 Agent" },
+  { value: "structure", label: t(lang, "Struktur", "Structure") },
+  { value: "workflow", label: "Workflow" },
+  { value: "agent", label: "Agent" },
   { value: "unsure", label: t(lang, "Noch unklar", "Not sure yet") },
 ];
 ---
@@ -36,22 +36,34 @@ const topics = [
       "Portrait of Janis Schubert, smiling, with glasses and a beard",
     )}
   />
-  <p class="who">{t(lang, "Janis Schubert, Software-Architekt", "Janis Schubert, software architect")}</p>
-  <h2>{t(lang, "Reden wir.", "Let's talk.")}</h2>
+  <p class="who">
+    {
+      t(
+        lang,
+        "Janis Schubert, Software-Architekt im Rhein-Main-Gebiet",
+        "Janis Schubert, software architect in the Rhine-Main area",
+      )
+    }
+  </p>
+  <h2>{t(lang, "Wo hakt es?", "Where does it hurt?")}</h2>
   <p class="lead">
     {
       t(
         lang,
-        "30 Minuten, kostenlos. Danach steht fest, wo es losgeht, auch wenn die Antwort lautet: Das braucht keine KI.",
-        "30 minutes, free. After that it is clear where to begin, even if the answer is: this does not need AI.",
+        "Das Erstgespräch dauert 30 Minuten und kostet nichts. Wir klären, wo Sie am besten anfangen. Manchmal ist die ehrliche Antwort, dass Sie keine KI brauchen.",
+        "The intro call takes 30 minutes and costs nothing. We work out where you should start. Sometimes the honest answer is that you don't need AI at all.",
       )
     }
   </p>
 
   <form method="post" action="/api/contact">
     <input type="hidden" name="lang" value={lang} />
+    {/* The honeypot. Name and label mean nothing to autofill, so password managers leave it empty. */}
     <div class="trap" aria-hidden="true">
-      <label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+      <label>
+        Leave this field empty
+        <input type="text" name="trap" tabindex="-1" autocomplete="off" data-1p-ignore data-lpignore="true" />
+      </label>
     </div>
 
     <label class="field">
@@ -64,7 +76,7 @@ const topics = [
     </label>
 
     <fieldset>
-      <legend class="sr-only">{t(lang, "Wo anfangen?", "Where to start?")}</legend>
+      <legend>{t(lang, "Worum geht es am ehesten?", "What is it mainly about?")}</legend>
       {
         topics.map(({ value, label }) => (
           <label class="option">
@@ -76,24 +88,34 @@ const topics = [
     </fieldset>
 
     <label class="field wide">
-      <span class="sr-only">{about}</span>
-      <textarea name="message" maxlength="5000" placeholder={about}></textarea>
+      <span class="sr-only">{message}</span>
+      <textarea name="message" maxlength="5000" placeholder={message}></textarea>
     </label>
-    <button class="btn" type="submit">{t(lang, "Erstgespräch vereinbaren", "Book an intro call")}</button>
+    <button class="btn" type="submit">{t(lang, "Erstgespräch anfragen", "Request an intro call")}</button>
   </form>
 
   <!-- Shown by the script, or by :target after the no-JS redirect from /api/contact. -->
   <div class="status" role="status">
-    <p id="sent" tabindex="-1">{t(lang, "Danke. Ich melde mich.", "Thanks. I'll be in touch.")}</p>
+    <p id="sent" tabindex="-1">{
+        t(
+          lang,
+          "Danke, Ihre Anfrage ist angekommen. Ich melde mich innerhalb einer Woche.",
+          "Thanks, your request is in. I'll get back to you within a week.",
+        )
+      }</p>
     <p id="error">
-      {t(lang, "Das hat nicht geklappt.", "That did not work.")}{" "}
-      <a href={MAILTO}>{t(lang, "Bitte direkt per E-Mail schreiben.", "Please send an email instead.")}</a>
+      {t(lang, "Das hat leider nicht geklappt.", "Sorry, that didn't work.")}{" "}
+      <a href={MAILTO}>{t(lang, "Schreiben Sie mir bitte direkt per E-Mail.", "Please email me directly.")}</a>
     </p>
   </div>
 
   <p class="note">
-    {t(lang, "Die Angaben nutze ich nur für die Antwort. Oder", "I only use these details to reply. Or")}{" "}
-    <a href={MAILTO}>{t(lang, "direkt per E-Mail", "send an email")}</a>.
+    {t(
+      lang,
+      "Ich nutze Ihre Angaben nur, um Ihnen zu antworten. Sie können mir auch",
+      "I only use your details to reply to you. You can also",
+    )}{" "}
+    <a href={MAILTO}>{t(lang, "direkt eine E-Mail schreiben", "email me directly")}</a>.
   </p>
 </section>
 

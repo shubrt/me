@@ -49,8 +49,8 @@ The worker gives spam a fake success and sends nothing: a filled honeypot, or a
 form sent less than 3 seconds after the page loaded. A body declared over 64 KB stays
 unread and fails validation. Everything else goes through
 `contactSchema` and then out as plain text from `kontakt@shubrt.me` to
-`shubrt.me@gmail.com`, with the visitor as reply-to. The worker stores nothing and
-logs only the Email Service error code.
+`shubrt.me@gmail.com`, with the visitor as reply-to. The worker stores nothing. It
+logs only which spam trap fired and the Email Service error code.
 
 The subject holds only the time, because Cloudflare keeps sender, recipient and subject
 of every mail in its event data for 31 days. Visitor data belongs in the body only, or
@@ -94,13 +94,22 @@ submission ends on the error anchor.
    arbitrary recipients.
 2. **Destination.** Under Email Routing > Destination Addresses, add
    `shubrt.me@gmail.com` and confirm the verification mail.
-3. **www.** Add a proxied DNS record for `www.shubrt.me` and a redirect rule to
+3. **Contact address.** Under Email Routing > Routing Rules, create the custom
+   address `kontakt@shubrt.me` with the action Send to an email and the verified
+   `shubrt.me@gmail.com` as destination. The contact section and the legal pages
+   show this address, and mail to it bounces until the rule exists.
+4. **www.** Add a proxied DNS record for `www.shubrt.me` and a redirect rule to
    `https://shubrt.me` that keeps path and query. The custom domain in
    `wrangler.jsonc` binds the apex only.
-4. **Cookies and analytics.** The privacy page says the site sets no cookies and
+5. **HTTPS.** Under SSL/TLS > Edge Certificates, turn on Always Use HTTPS. The
+   `Strict-Transport-Security` header in `apps/web/public/_headers` only reaches
+   visitors who already came in over HTTPS. Then check that
+   `curl -I http://shubrt.me/` and `curl -I http://www.shubrt.me/` both answer with
+   a redirect to `https://`.
+6. **Cookies and analytics.** The privacy page says the site sets no cookies and
    uses no analytics. Leave Bot Fight Mode (it sets `__cf_bm`) and Cloudflare Web
    Analytics off, or update the page.
-5. **Email preview.** If `shubrt.me` ever moves to Email Sending, turn Email preview
+7. **Email preview.** If `shubrt.me` ever moves to Email Sending, turn Email preview
    off for the domain. New sending domains get it by default, and it keeps full
    messages for about seven days, which the privacy page does not cover.
 

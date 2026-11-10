@@ -1,0 +1,15 @@
+/* Each picture of the steps and towers fades in once as a whole. reveal.astro marks the pictures
+   that are on screen as .revealed and sets html.reveal last, so a script that never ran leaves them
+   visible. Only the fade in has a transition: the rest hide at once, while still off screen. Screens
+   only, so a printout shows everything. With reduced motion nothing here applies. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  html.reveal :is(.steps .main, .steps .picture, .towers svg) {
+    &:not(.revealed) {
+      opacity: 0;
+    }
+
+    &.revealed {
+      transition: opacity 400ms ease-out;
+    }
+  }
+}
