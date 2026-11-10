@@ -48,7 +48,7 @@ the worker (`assets.run_worker_first`), every other path is a static asset.
 The worker gives spam a fake success and sends nothing: a filled honeypot, or a
 form sent less than 3 seconds after the page loaded. A body declared over 64 KB stays
 unread and fails validation. Everything else goes through
-`contactSchema` and then out as plain text from `kontakt@shubrt.me` to
+`contactSchema` and then out as plain text from `contact@shubrt.me` to
 `shubrt.me@gmail.com`, with the visitor as reply-to. The worker stores nothing. It
 logs only which spam trap fired and the Email Service error code.
 
@@ -95,7 +95,7 @@ submission ends on the error anchor.
 2. **Destination.** Under Email Routing > Destination Addresses, add
    `shubrt.me@gmail.com` and confirm the verification mail.
 3. **Contact address.** Under Email Routing > Routing Rules, create the custom
-   address `kontakt@shubrt.me` with the action Send to an email and the verified
+   address `contact@shubrt.me` with the action Send to an email and the verified
    `shubrt.me@gmail.com` as destination. The contact section and the legal pages
    show this address, and mail to it bounces until the rule exists.
 4. **www.** Add a proxied DNS record for `www.shubrt.me` and a redirect rule to

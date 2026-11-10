@@ -27,7 +27,7 @@ describe("contact mail", () => {
     expect(send).toHaveBeenCalledOnce();
     expect(mail).toMatchObject({
       to: "shubrt.me@gmail.com",
-      from: "kontakt@shubrt.me",
+      from: "contact@shubrt.me",
       replyTo: "eva@example.com",
     });
     expect(mail).not.toHaveProperty("html");

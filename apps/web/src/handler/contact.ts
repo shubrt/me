@@ -4,7 +4,7 @@ import type { Context } from "../_/context.ts";
 
 const TO = "shubrt.me@gmail.com";
 // Must sit on a domain set up in Cloudflare Email Service, see the README.
-const FROM = "kontakt@shubrt.me";
+const FROM = "contact@shubrt.me";
 const MIN_FILL_MS = 3000;
 // The longest valid form, percent-encoded, stays well below this.
 const MAX_BODY_BYTES = 64 * 1024;
