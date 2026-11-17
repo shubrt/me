@@ -1,4 +1,5 @@
 ---
+import portrait from "../asset/janis-schubert.jpg";
 import { t, toLocalePath, type Lang } from "../helper/i18n.ts";
 import "./base-layout.css";
 
@@ -22,23 +23,40 @@ const ADDRESS = {
   addressLocality: "Sulzheim",
   addressCountry: "DE",
 };
-const SAME_AS = ["https://github.com/shubrt"];
+// Google shows this name above search results; the WebSite node sets it, and
+// og:site_name and the titles back it up.
+const NAME = "Janis Schubert";
+const SAME_AS = [
+  "https://github.com/shubrt",
+  "https://www.xing.com/profile/Janis_Schubert2",
+  "https://www.linkedin.com/in/janis-schubert-272439450/",
+];
 const personId = toAbsoluteUrl("/#person");
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebSite",
+      "@id": toAbsoluteUrl("/#website"),
+      name: NAME,
+      alternateName: ["shubrt", "shubrt.me"],
+      url: toAbsoluteUrl("/"),
+      publisher: { "@id": personId },
+    },
+    {
       "@type": "Person",
       "@id": personId,
-      name: "Janis Schubert",
+      name: NAME,
+      alternateName: "shubrt",
       jobTitle: t(lang, "Software-Architekt", "Software architect"),
       url,
+      image: toAbsoluteUrl(portrait.src),
       sameAs: SAME_AS,
       address: ADDRESS,
     },
     {
       "@type": "ProfessionalService",
-      name: "Janis Schubert",
+      name: NAME,
       description,
       url,
       sameAs: SAME_AS,
@@ -79,6 +97,7 @@ function toAbsoluteUrl(href: string) {
       )
     }
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={NAME} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={toAbsoluteUrl(`/og-${lang}.png`)} />
