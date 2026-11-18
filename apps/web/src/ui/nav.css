@@ -64,3 +64,14 @@
     gap: 14px;
   }
 }
+
+/* Below 375px the name and the button no longer fit side by side, so the button drops the photo. */
+@media (max-width: 374px) {
+  .nav .btn {
+    padding: 0 14px;
+  }
+
+  .nav .btn img {
+    display: none;
+  }
+}
